@@ -1,9 +1,9 @@
 import { Product, ProductObject } from "./@types/ProductObject";
 import { ProductCollectionObject, Products } from "./@types/ProductsCollection";
 
-const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
+const domain = process.env.SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
-    process.env.NEXT_PUBLIC_SHOPIFY_STROREFRONT_ACCESS_TOKEN || "";
+    process.env.SHOPIFY_STROREFRONT_ACCESS_TOKEN || "";
 
 async function ShopifyData(query: string): Promise<any> {
     const URL = `https://${domain}/api/2024-04/graphql.json`;
