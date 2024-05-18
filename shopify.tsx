@@ -23,6 +23,7 @@ async function ShopifyData(query: string): Promise<any> {
         const data = await fetch(URL, options);
         return data.json();
     } catch (error) {
+        console.log(`erro na busca de produtos`, error);
         throw new Error(`Erro ao buscar produtos`);
     }
 }
@@ -139,7 +140,7 @@ export async function getProductsInCollection() {
 
 export async function getProductShopify(handle: string): Promise<Product> {
     const query = `{
-        product(handle: "vitamina-c-bisyou") {
+        product(handle: "${handle}") {
           availableForSale
           collections(first: 10) {
             edges {

@@ -7,7 +7,7 @@ import { getProductShopify, getProductsInCollection } from "@/shopify";
 
 async function getData() {
     const products = await getProductsInCollection();
-    const product = await getProductShopify("produto-para-teste");
+    const product = await getProductShopify("vitamina-c-bisyou");
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
 
