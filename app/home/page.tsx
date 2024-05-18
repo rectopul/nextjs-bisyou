@@ -1,12 +1,9 @@
-import { Products } from "@/@types/ProductsCollection";
 import { Header } from "@/components/Header";
 import { Avaliation } from "@/components/product/Avaliation";
 import { ImageTool } from "@/components/product/ImageTool";
 import { ProductProperties } from "@/components/product/Properties";
-import { ProductsRecomended } from "@/components/product/Recomended";
 import { ProductSummary } from "@/components/product/Sumary";
 import { getProductShopify, getProductsInCollection } from "@/shopify";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 
 async function getData() {
     const products = await getProductsInCollection();
