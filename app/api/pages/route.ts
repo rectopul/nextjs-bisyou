@@ -228,9 +228,3 @@ export async function PUT(req: NextRequest, res: NextApiResponse) {
         await prisma.$disconnect();
     }
 }
-
-export const config = {
-    api: {
-        bodyParser: false, // Disallow body parsing, consume as stream
-    },
-};

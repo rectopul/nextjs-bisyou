@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileCreator } from "@/util/fileCreator";
 
+export const dynamic = "force-dynamic";
 export async function PUT(
     req: NextRequest,
     { params }: { params: { page_id: string } }
