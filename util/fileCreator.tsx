@@ -10,6 +10,7 @@ import path from "path";
 interface fileCreatorObject {
     name: string;
     slug: string;
+    src: string;
     metadata: {
         width: number;
         heigth: number;
@@ -39,6 +40,7 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
         return {
             name: file.name,
             slug: image_slug,
+            src: newFilename,
             metadata: {
                 width: metadata.width as number,
                 heigth: metadata.height as number,

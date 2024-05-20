@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import logo from "../public/assets/img/logo-small_large.webp";
+import { Search } from "./header/Search";
+import { Cart } from "./header/Cart";
 
 export function Header() {
     return (
@@ -17,7 +19,7 @@ export function Header() {
                 </div>
             </div>
 
-            <div className="w-full max-w-bisyouContainer mx-auto py-6 text-center flex justify-center">
+            <div className="w-full max-w-bisyouContainer mx-auto py-6 text-center flex justify-center relative">
                 <Image
                     alt="bistou"
                     src={logo}
@@ -25,6 +27,11 @@ export function Header() {
                     width={150}
                     height={100}
                 />
+
+                <div className="absolute right-0 top-[50%] -translate-y-[50%]">
+                    <Search />
+                    <Cart />
+                </div>
             </div>
 
             <div className="w-full mx-auto bg-bisyou-gray">

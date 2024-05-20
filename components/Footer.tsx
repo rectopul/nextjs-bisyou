@@ -25,6 +25,7 @@ export default async function Footer() {
                                     <a
                                         className="text-bisyou-font hover:underline"
                                         href={`pages/${p.slug}`}
+                                        aria-label={p.description}
                                     >
                                         {p.title}
                                     </a>
@@ -58,7 +59,11 @@ export default async function Footer() {
                         </h2>
 
                         <div className="flex justify-between gap-5">
-                            <a href="#" className="hover:text-bisyou-green">
+                            <a
+                                href="#"
+                                className="hover:text-bisyou-green"
+                                aria-label="Pagina do facebook da bisyou"
+                            >
                                 <Facebook
                                     size={30}
                                     fill="#6e4945"
@@ -66,15 +71,27 @@ export default async function Footer() {
                                 />
                             </a>
 
-                            <a href="#" className="hover:text-bisyou-green">
+                            <a
+                                href="#"
+                                className="hover:text-bisyou-green"
+                                aria-label="Pagina do facebook da bisyou"
+                            >
                                 <Pinterest size={30} />
                             </a>
 
-                            <a href="#" className="hover:text-bisyou-green">
+                            <a
+                                href="#"
+                                className="hover:text-bisyou-green"
+                                aria-label="Pagina do facebook da bisyou"
+                            >
                                 <Instagram size={30} />
                             </a>
 
-                            <a href="#" className="hover:text-bisyou-green">
+                            <a
+                                href="#"
+                                className="hover:text-bisyou-green"
+                                aria-label="Pagina do facebook da bisyou"
+                            >
                                 <TikTok size={30} />
                             </a>
                         </div>

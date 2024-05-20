@@ -33,6 +33,15 @@ export function Avaliation() {
                 </div>
             </div>
 
+            <div className="w-full max-w-bisyouContainer mx-auto my-10">
+                <h2 className="text-bisyou-font text-2xl font-medium">
+                    Clientes & Fãs da Bisyou{" "}
+                    <span className="ml-2 text-bisyou-default font-normal text-xl">
+                        o que estão falando...
+                    </span>
+                </h2>
+            </div>
+
             <div className="w-full px-4 my-6">
                 <Carousel
                     opts={{

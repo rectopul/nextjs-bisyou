@@ -23,15 +23,16 @@ import Image from "next/image";
 export function ProductSlide({ images, prices }: ProductSummary) {
     return (
         <>
-            <div className="w-full rounded-xl shadow relative bg-bisyou-gray">
+            <div className="w-full rounded-xl shadow relative">
                 <div className="px-3 py-1 text-sm font-medium absolute top-5 left-7 bg-bisyou-yellow rounded-full z-10">
-                    {discountCalculator(prices.price, prices.discount)}% OFF
+                    {discountCalculator(prices.discount, prices.price)}% OFF
                 </div>
                 <div className="w-[60px] h-[70%] overflow-hidden absolute bottom-10 left-7 z-10">
                     <Carousel
                         orientation="vertical"
                         opts={{
-                            align: "end",
+                            align: "start",
+                            slidesToScroll: 2,
                             direction: "rtl",
                             dragFree: true,
                         }}
@@ -40,7 +41,7 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                             {images.edges.map((i) => (
                                 <CarouselItem
                                     key={`thumb-${i.node.id}`}
-                                    className="basis-1/5"
+                                    className="basis-1/6"
                                 >
                                     <button
                                         key={`thumb-${i.node.id}`}
@@ -69,6 +70,7 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                                     height={1000}
                                     src={i.node.url}
                                     alt={i.node.altText}
+                                    className="rounded-xl"
                                 />
                             </CarouselItem>
                         ))}
