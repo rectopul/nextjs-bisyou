@@ -28,6 +28,7 @@ const config = {
             colors: {
                 bisyou: {
                     default: "#f2d5cf",
+                    secondary: "#fdf6f6",
                     gray: "#e6e6e6",
                     font: "#6e4945",
                     green: "#55b100",

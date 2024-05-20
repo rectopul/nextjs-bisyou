@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  name          String
+  username      String   @unique @db.VarChar(255)
+  password_hash String
+  role          String
+
+  @@map("users")
+}
+
+model ImagesSlideDefault {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  alt       String
+  src       String
+  width     Int
+  heigth    Int
+
+  @@map("images_slide_default")
+}
+
+model ImagePages {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  alt       String
+  src       String
+  width     Int
+  heigth    Int
+  page      Pages    @relation(fields: [page_id], references: [id])
+  page_id   Int      @unique
+
+  @@map("image_page")
+}
+
+model Pages {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  title       String
+  slug        String
+  category    Int
+  excerpt     String
+  description String
+  content     String
+  image       ImagePages?
+}

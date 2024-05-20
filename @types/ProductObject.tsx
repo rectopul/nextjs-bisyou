@@ -6,7 +6,7 @@ export interface ProductObject {
 }
 
 export interface Data {
-    product: Product;
+    product: Product | null;
 }
 
 export interface Product {
@@ -21,9 +21,9 @@ export interface Product {
     seo: Seo;
     images: Images;
     featuredImage: FeaturedImage;
-    metafield: MetaFieldObject;
+    metafield: MetaFieldObject | null;
     collections: CollectionInProduct;
-    comparator: ComparatorObject;
+    comparator: ComparatorObject | null;
 }
 
 export interface ComparatorObject {

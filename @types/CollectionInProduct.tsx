@@ -1,21 +1,22 @@
 export interface CollectionInProduct {
-    edges: Edge[];
+    edges: CollectionEdge[];
 }
 
-export interface Edge {
-    node: Node;
+export interface CollectionEdge {
+    node: ColectionNode;
 }
 
-export interface Node {
+export interface ColectionNode {
     title: string;
+    handle: string;
     products: Products;
 }
 
 export interface Products {
-    edges: Edge2[];
+    edges: ProductNode[];
 }
 
-export interface Edge2 {
+export interface ProductNode {
     node: Node2;
 }
 

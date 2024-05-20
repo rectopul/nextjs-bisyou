@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import logo from "../public/assets/img/logo-small_large.webp";
 
 export function Header() {
     return (
@@ -17,7 +18,13 @@ export function Header() {
             </div>
 
             <div className="w-full max-w-bisyouContainer mx-auto py-6 text-center flex justify-center">
-                <img src="https://placehold.co/150x100" alt="bistou" />
+                <Image
+                    alt="bistou"
+                    src={logo}
+                    unoptimized
+                    width={150}
+                    height={100}
+                />
             </div>
 
             <div className="w-full mx-auto bg-bisyou-gray">

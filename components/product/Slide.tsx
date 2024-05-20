@@ -18,6 +18,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { discountCalculator } from "@/util/discountCalculator";
+import Image from "next/image";
 
 export function ProductSlide({ images, prices }: ProductSummary) {
     return (
@@ -26,25 +27,49 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                 <div className="px-3 py-1 text-sm font-medium absolute top-5 left-7 bg-bisyou-yellow rounded-full z-10">
                     {discountCalculator(prices.price, prices.discount)}% OFF
                 </div>
-                <div className="w-[60px] flex flex-col gap-2 absolute bottom-10 left-7 z-10">
-                    {images.edges.map((i) => (
-                        <button
-                            key={`thumb-${i.node.id}`}
-                            className="rounded-full h-[60px] overflow-hidden shadow-sm w-full border-4 border-bisyou-yellow hover:border-bisyou-font"
-                        >
-                            <img
-                                src={i.node.thumbnail}
-                                className="w-full"
-                                alt={i.node.altText}
-                            />
-                        </button>
-                    ))}
+                <div className="w-[60px] h-[70%] overflow-hidden absolute bottom-10 left-7 z-10">
+                    <Carousel
+                        orientation="vertical"
+                        opts={{
+                            align: "end",
+                            direction: "rtl",
+                            dragFree: true,
+                        }}
+                    >
+                        <CarouselContent>
+                            {images.edges.map((i) => (
+                                <CarouselItem
+                                    key={`thumb-${i.node.id}`}
+                                    className="basis-1/5"
+                                >
+                                    <button
+                                        key={`thumb-${i.node.id}`}
+                                        className="rounded-full h-[60px] overflow-hidden shadow-sm w-full border-4 border-bisyou-yellow hover:border-bisyou-font"
+                                    >
+                                        <Image
+                                            width={100}
+                                            height={100}
+                                            src={i.node.thumbnail}
+                                            alt={i.node.altText}
+                                        />
+                                    </button>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                    </Carousel>
                 </div>
                 <Carousel>
                     <CarouselContent>
                         {images.edges.map((i) => (
                             <CarouselItem key={i.node.id}>
-                                <img src={i.node.url} alt={i.node.altText} />
+                                <Image
+                                    width={1000}
+                                    height={1000}
+                                    src={i.node.url}
+                                    alt={i.node.altText}
+                                />
                             </CarouselItem>
                         ))}
                     </CarouselContent>

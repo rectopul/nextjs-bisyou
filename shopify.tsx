@@ -138,7 +138,9 @@ export async function getProductsInCollection() {
     }
 }
 
-export async function getProductShopify(handle: string): Promise<Product> {
+export async function getProductShopify(
+    handle: string
+): Promise<Product | null> {
     const query = `{
         product(handle: "${handle}") {
           availableForSale
@@ -146,6 +148,7 @@ export async function getProductShopify(handle: string): Promise<Product> {
             edges {
               node {
                 title
+                handle
                 products(first: 10) {
                   edges {
                     node {
@@ -292,7 +295,7 @@ export async function getProductShopify(handle: string): Promise<Product> {
     try {
         const response: ProductObject = await ShopifyData(query);
 
-        const product: Product = response.data.product;
+        const product: Product | null = response.data.product;
 
         return product;
     } catch (error) {

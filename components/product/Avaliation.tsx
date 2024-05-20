@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
+import Image from "next/image";
 
 const avaliationTest = {
     ratting: 5,
@@ -67,10 +68,11 @@ export function Avaliation() {
                                     </h2>
 
                                     <span className="absolute -bottom-[25px] left-[50%] -translate-x-[50%] w-[50px] h-[50px] rounded-full border-2 border-bisyou-font overflow-hidden">
-                                        <img
+                                        <Image
                                             src="https://cdn.shopify.com/s/files/1/0572/8036/4640/files/Bisyou_02_720x_f10db7b7-8cd4-46c0-8554-7b0698c9763c_1000x.webp?v=1715999369"
                                             alt="product"
-                                            className="w-full"
+                                            width={300}
+                                            height={300}
                                         />
                                     </span>
                                 </div>
