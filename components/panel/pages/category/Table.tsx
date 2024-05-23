@@ -13,8 +13,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash } from "lucide-react";
 import { toast } from "sonner";
-import { Pages } from "@/api/pages";
 import { useState } from "react";
+import { Pages } from "@/api/pagesController";
 
 interface CategoriesTableProps {
     categories: Category[];

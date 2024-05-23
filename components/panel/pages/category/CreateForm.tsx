@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { Pages } from "@/api/pages";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Spinner } from "@/components/Spinner";
+import { Pages } from "@/api/pagesController";
 
 export interface CreateCategoryPayload {
     title: string;
