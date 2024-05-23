@@ -1,4 +1,3 @@
-import { PageResponse } from "@/@types/PageResponse";
 import { PageWithImage, PagesTable } from "./Table";
 
 interface PagesListProps {

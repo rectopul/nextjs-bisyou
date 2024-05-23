@@ -14,7 +14,6 @@ import { Category } from "@prisma/client";
 import { DropZone } from "@/components/DropZone";
 import { Button } from "@/components/ui/button";
 import { RichText } from "@/components/RichText";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { Spinner } from "@/components/Spinner";
 import { Pages } from "@/api/pagesController";
@@ -31,12 +30,15 @@ export interface CreatePagePayload {
 
 const page_controller = new Pages();
 
-export function CreatePageForm() {
+interface CreatePageFormProps {
+    categories: Category[];
+}
+
+export function CreatePageForm({ categories }: CreatePageFormProps) {
     const [cookieValue, setCookieValue] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { register, setValue, handleSubmit, reset } =
         useForm<CreatePagePayload>();
-    const [categories, setCategories] = useState<Category[] | null>(null);
 
     const onSubmit: SubmitHandler<CreatePagePayload> = async (data) => {
         try {
@@ -58,11 +60,6 @@ export function CreatePageForm() {
         }
     };
 
-    const fetchCategories = useCallback(async () => {
-        const cats = await page_controller.categories();
-        setCategories(cats);
-    }, []);
-
     const getCookie = async () => {
         const value = await localStorage.getItem("authToken");
 
@@ -74,16 +71,6 @@ export function CreatePageForm() {
         // Pegue o valor do cookie chamado 'exampleCookie'
         getCookie();
     }, []);
-
-    useEffect(() => {
-        if (!categories) {
-            fetchCategories();
-        }
-    }, [fetchCategories, categories]);
-
-    // useEffect(() => {
-    //     register("content", { required: true });
-    // }, [register]);
 
     return (
         <>

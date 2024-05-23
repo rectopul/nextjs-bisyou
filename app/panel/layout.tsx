@@ -35,22 +35,21 @@ export default async function RootLayout({
 }) {
     const header = await headers();
 
-    const keys = await header.get("referer");
+    const keys = await header.get("x-pathname");
 
     const isOnLoginPage = keys && keys.includes("panel/login");
 
     let userData = null;
 
-    console.log(typeof keys);
+    console.log(keys);
 
-    if (isOnLoginPage == null || false) {
+    if (!isOnLoginPage) {
         userData = await isLogged();
     }
     return (
         <html>
             <body>
-                {isOnLoginPage == null ||
-                (isOnLoginPage == false && userData) ? (
+                {!isOnLoginPage && userData ? (
                     <div className="p-4 xl:ml-80">
                         <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
                             <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
@@ -191,7 +190,9 @@ export default async function RootLayout({
 
                         <div className="min-h-screen bg-blue-gray-50/50">
                             {userData && <Aside name={userData.name} />}
-                            <div className="w-full flex flex-col"></div>
+                            <div className="w-full flex flex-col">
+                                {children}
+                            </div>
                         </div>
                     </div>
                 ) : (

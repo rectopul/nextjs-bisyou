@@ -1,6 +1,5 @@
 "use client";
 
-import { PageResponse } from "@/@types/PageResponse";
 import {
     Table,
     TableBody,
