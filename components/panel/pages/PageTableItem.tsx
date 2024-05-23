@@ -1,7 +1,7 @@
 "use client";
 
 import { PageResponse } from "@/@types/PageResponse";
-import { Pages } from "@/api/pages";
+import { Pages } from "@/api/pagesController";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Pencil, Trash } from "lucide-react";
