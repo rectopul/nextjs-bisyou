@@ -47,7 +47,10 @@ export function ProductItem({ product, variant }: ProductItemProps) {
                             width={300}
                             height={300}
                             src={product.node.featuredImage.url}
-                            alt={product.node.featuredImage.altText}
+                            alt={
+                                product.node.featuredImage.altText ||
+                                product.node.handle
+                            }
                         />
                     </figure>
 

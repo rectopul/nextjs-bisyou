@@ -21,7 +21,10 @@ export function ShopCollections({ collections }: ShopCollections) {
                             >
                                 {c.node.image && (
                                     <Image
-                                        alt={c.node.image.altText}
+                                        alt={
+                                            c.node.image.altText ||
+                                            c.node.handle
+                                        }
                                         src={c.node.image.thumbnail}
                                         width={300}
                                         height={300}

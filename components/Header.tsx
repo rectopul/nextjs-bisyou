@@ -22,7 +22,7 @@ export function Header() {
 
             <div className="w-full max-w-bisyouContainer mx-auto py-6 text-center flex justify-center relative">
                 <Image
-                    alt="bistou"
+                    alt="bisyou"
                     src={logo}
                     unoptimized
                     width={150}

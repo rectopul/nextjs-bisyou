@@ -22,9 +22,6 @@ export function ItemPageSidebar() {
     const separatorPath = pathName.split("/");
     const currentPage = separatorPath.at(-1);
 
-    console.log(`current`, currentPage);
-    console.log(`path includes: `, pathName.includes("pages/create"));
-
     return (
         <li
             className={

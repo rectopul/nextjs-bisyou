@@ -77,7 +77,9 @@ export function BlogArticlesCarousel({
                                                                 .thumbnail
                                                         }
                                                         alt={
-                                                            a.node.image.altText
+                                                            a.node.image
+                                                                .altText ||
+                                                            a.node.handle
                                                         }
                                                         width={520}
                                                         height={210}

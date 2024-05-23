@@ -33,7 +33,10 @@ export function FeaturedProductWithMedia({
                             <Image
                                 width={product.featuredImage.width}
                                 height={product.featuredImage.height}
-                                alt={product.featuredImage.altText}
+                                alt={
+                                    product.featuredImage.altText ||
+                                    product.handle
+                                }
                                 src={product.featuredImage.thumbnail}
                                 className="rounded-t-xl"
                             />

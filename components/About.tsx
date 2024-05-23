@@ -1,3 +1,4 @@
+import { YouTubePlayer } from "@/util/youtubePlayer";
 import { Settings } from "@prisma/client";
 
 interface AboutProps {
@@ -33,15 +34,8 @@ export function About({ settings }: AboutProps) {
                     )}
 
                     <div className="rounded-xl overflow-hidden h-[480px] flex-1">
-                        {embedUrl && (
-                            <iframe
-                                className="w-full h-full"
-                                src={embedUrl}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen
-                            ></iframe>
+                        {embedUrl && videoId && (
+                            <YouTubePlayer id={videoId} url={embedUrl} />
                         )}
                     </div>
                 </div>

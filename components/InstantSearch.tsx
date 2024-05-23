@@ -80,7 +80,7 @@ function HitResult({ hit }: HitResultProps) {
             <div className="w-full grid grid-cols-[86px_auto] gap-3 mx-auto p-2 hover:bg-slate-100 rounded-sm">
                 <figure>
                     <Image
-                        alt={results.featuredImage.altText}
+                        alt={results.featuredImage.altText || results.handle}
                         width={90}
                         height={90}
                         src={results.featuredImage.url}

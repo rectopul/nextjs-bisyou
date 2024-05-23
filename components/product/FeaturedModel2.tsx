@@ -26,7 +26,10 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                                 }
                             </span>
                             <Image
-                                alt={product.featuredImage.altText}
+                                alt={
+                                    product.featuredImage.altText ||
+                                    product.handle
+                                }
                                 width={product.featuredImage.width}
                                 height={product.featuredImage.height}
                                 src={product.featuredImage.url}

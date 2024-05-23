@@ -15,6 +15,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "nextjs-bisyou.vercel.app",
             },
+            {
+                protocol: "https",
+                hostname: "img.youtube.com",
+            },
         ],
     },
 };

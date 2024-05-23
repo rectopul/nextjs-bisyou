@@ -51,7 +51,10 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                                             width={100}
                                             height={100}
                                             src={i.node.thumbnail}
-                                            alt={i.node.altText}
+                                            alt={
+                                                i.node.altText ||
+                                                "thumb-product"
+                                            }
                                         />
                                     </button>
                                 </CarouselItem>
@@ -69,7 +72,7 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                                     width={1000}
                                     height={1000}
                                     src={i.node.url}
-                                    alt={i.node.altText}
+                                    alt={i.node.altText || "product image"}
                                     className="rounded-xl"
                                 />
                             </CarouselItem>
