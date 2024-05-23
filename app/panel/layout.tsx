@@ -49,7 +49,8 @@ export default async function RootLayout({
     return (
         <html>
             <body>
-                {isOnLoginPage == null || (false && userData) ? (
+                {isOnLoginPage == null ||
+                (isOnLoginPage == false && userData) ? (
                     <div className="p-4 xl:ml-80">
                         <nav className="block w-full max-w-full bg-transparent text-white shadow-none rounded-xl transition-all px-0 py-1">
                             <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
