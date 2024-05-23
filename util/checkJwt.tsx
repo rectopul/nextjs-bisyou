@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify, type JWTPayload } from "jose";
+import { jwtVerify, type JWTPayload } from "jose";
 
 export async function checkToken(token: string, host: string) {
     if (!token) {

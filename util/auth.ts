@@ -1,7 +1,7 @@
 import { UserDto } from "@/@types/user/UserDto";
 import * as jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import argon2 from "argon2";
 
 interface UserData {
     password: string;
@@ -35,7 +35,8 @@ export class UserByToken {
 
     async hashPassword(password: string): Promise<string> {
         try {
-            const hash = await argon2.hash(password);
+            const saltRounds = 10;
+            const hash = await bcrypt.hash(password, saltRounds);
             return hash;
         } catch (err) {
             throw new Error("Error hashing password");
@@ -44,8 +45,8 @@ export class UserByToken {
 
     async checkPassword({ password, password_hash }: UserData) {
         try {
-            const isValid = await argon2.verify(password_hash, password);
-            return isValid;
+            const match = await bcrypt.compare(password, password_hash);
+            return match;
         } catch (error) {
             throw new Error("Error verifying password");
         }
