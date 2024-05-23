@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
@@ -9,19 +10,22 @@ interface DropZoneProps {
 
 export function DropZone({ onDragFile }: DropZoneProps) {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        // Aqui você pode fazer o que quiser com os arquivos aceitos
-        const reader = new FileReader();
+    const onDrop = useCallback(
+        (acceptedFiles: File[]) => {
+            // Aqui você pode fazer o que quiser com os arquivos aceitos
+            const reader = new FileReader();
 
-        reader.onload = () => {
-            setImagePreview(reader.result as string);
-        };
+            reader.onload = () => {
+                setImagePreview(reader.result as string);
+            };
 
-        onDragFile(acceptedFiles[0]);
+            onDragFile(acceptedFiles[0]);
 
-        console.log(`file accepted`, acceptedFiles);
-        reader.readAsDataURL(acceptedFiles[0]);
-    }, []);
+            console.log(`file accepted`, acceptedFiles);
+            reader.readAsDataURL(acceptedFiles[0]);
+        },
+        [onDragFile]
+    );
 
     const { getRootProps, getInputProps, isDragActive, fileRejections } =
         useDropzone({
@@ -97,17 +101,21 @@ export function DropZone({ onDragFile }: DropZoneProps) {
 
                 {fileRejections &&
                     fileRejections.length > 0 &&
-                    fileRejections.map((f) => (
-                        <span className="text-red-600">{f.errors[0].code}</span>
+                    fileRejections.map((f, k) => (
+                        <span className="text-red-600" key={`rej-${k}`}>
+                            {f.errors[0].code}
+                        </span>
                     ))}
 
                 {imagePreview && (
                     <div className="mt-4 w-32 h-32">
                         <p className="">Preview:</p>
                         <div className="w-full overflow-hidden h-full flex justify-center items-center">
-                            <img
+                            <Image
                                 src={imagePreview}
                                 alt="Preview"
+                                width={150}
+                                height={150}
                                 className="mt-2 max-w-full h-auto"
                             />
                         </div>

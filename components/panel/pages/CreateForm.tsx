@@ -79,7 +79,7 @@ export function CreatePageForm() {
         if (!categories) {
             fetchCategories();
         }
-    }, [fetchCategories]);
+    }, [fetchCategories, categories]);
 
     // useEffect(() => {
     //     register("content", { required: true });
@@ -136,6 +136,7 @@ export function CreatePageForm() {
                                                         <SelectTrigger className="w-full outline-none">
                                                             <SelectValue placeholder="Selecione uma categoria" />
                                                         </SelectTrigger>
+
                                                         <SelectContent>
                                                             {categories.map(
                                                                 (c) => (

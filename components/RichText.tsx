@@ -31,17 +31,18 @@ const content =
 function InsertStarControl() {
     const { editor } = useRichTextEditorContext();
 
+    const addImage = useCallback(() => {
+        const url = window.prompt("URL");
+
+        if (url && editor) {
+            editor.chain().focus().setImage({ src: url }).run();
+        }
+    }, [editor]);
+
     if (!editor) {
         return null;
     }
 
-    const addImage = useCallback(() => {
-        const url = window.prompt("URL");
-
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run();
-        }
-    }, [editor]);
     return (
         <RichTextEditor.Control
             onClick={addImage}
@@ -56,14 +57,10 @@ function InsertStarControl() {
 function YoutubeEmbbed() {
     const { editor } = useRichTextEditorContext();
 
-    if (!editor) {
-        return null;
-    }
-
     const addImage = useCallback(() => {
         const url = window.prompt("Enter YouTube URL");
 
-        if (url) {
+        if (url && editor) {
             editor.commands.setYoutubeVideo({
                 width: 700,
                 height: 393,
@@ -71,6 +68,11 @@ function YoutubeEmbbed() {
             });
         }
     }, [editor]);
+
+    if (!editor) {
+        return null;
+    }
+
     return (
         <RichTextEditor.Control
             onClick={addImage}

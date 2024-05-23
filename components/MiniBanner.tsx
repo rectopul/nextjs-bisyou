@@ -16,11 +16,7 @@ export function MiniBanner({ miniBanner }: MiniBannerProps) {
         <>
             <div className="w-full px-4 my-[40px]">
                 <div className="w-full max-w-bisyouContainerHome mx-auto">
-                    <a
-                        href={miniBanner.url}
-                        aria-label={miniBanner.slug}
-                        aria-description={miniBanner.name}
-                    >
+                    <a href={miniBanner.url} aria-label={miniBanner.slug}>
                         <Image
                             alt={miniBanner.image.alt}
                             width={1200}
