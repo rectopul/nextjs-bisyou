@@ -17,9 +17,15 @@ import { ProductItem } from "../product/ProductItem";
 
 interface CollectionProps {
     collection: CollectionEdge;
+    transparent?: boolean;
+    center?: boolean;
 }
 
-export function Collection({ collection }: CollectionProps) {
+export function Collection({
+    collection,
+    transparent = false,
+    center = false,
+}: CollectionProps) {
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState<number>(0);
 
@@ -44,9 +50,15 @@ export function Collection({ collection }: CollectionProps) {
 
     return (
         <>
-            <div className="w-full px-4 py-10 bg-bisyou-secondary flex flex-col gap-10">
+            <div
+                data-transparent={transparent}
+                className="w-full px-4 py-10 bg-bisyou-secondary data-[transparent=true]:bg-transparent flex flex-col gap-10"
+            >
                 <div className="max-w-bisyouContainer w-full mx-auto">
-                    <h2 className="text-3xl font-medium text-bisyou-font">
+                    <h2
+                        data-center={center}
+                        className="text-3xl data-[center=true]:mx-auto data-[center=true]:text-center font-medium text-bisyou-font"
+                    >
                         {collection.node.title}
                     </h2>
                 </div>
@@ -66,7 +78,7 @@ export function Collection({ collection }: CollectionProps) {
                         <Button
                             variant="bisCarousel"
                             onClick={handleNext}
-                            className="rounded-full w-[50px] h-[50px] p-0 absolute right-0 top-[50%] -translate-y-[50px]"
+                            className="rounded-full w-[50px] h-[50px] p-0 absolute right-0 xl:right-32 top-[50%] -translate-y-[50px]"
                         >
                             <ChevronRight size={30} strokeWidth={1} />
                         </Button>
@@ -74,7 +86,7 @@ export function Collection({ collection }: CollectionProps) {
                         <Button
                             variant="bisCarousel"
                             onClick={handlePrev}
-                            className="rounded-full w-[50px] h-[50px] p-0 absolute left-0 top-[50%] -translate-y-[50px]"
+                            className="rounded-full w-[50px] h-[50px] p-0 absolute left-0 xl:left-32 top-[50%] -translate-y-[50px]"
                         >
                             <ChevronLeft size={30} strokeWidth={1} />
                         </Button>

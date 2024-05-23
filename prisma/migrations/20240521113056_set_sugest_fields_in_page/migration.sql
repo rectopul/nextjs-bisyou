@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Pages" ALTER COLUMN "category" DROP NOT NULL,
+ALTER COLUMN "excerpt" DROP NOT NULL,
+ALTER COLUMN "description" DROP NOT NULL;

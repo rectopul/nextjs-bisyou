@@ -6,6 +6,7 @@ import path from "path";
 import { fileCreator } from "@/util/fileCreator";
 
 export const dynamic = "force-dynamic";
+
 export async function PUT(
     req: NextRequest,
     { params }: { params: { page_id: string } }
@@ -62,7 +63,7 @@ export async function PUT(
 
                     const file = files[0];
 
-                    const { metadata, slug } = await fileCreator(file);
+                    const { metadata, slug, src } = await fileCreator(file);
 
                     await prisma.imagePages.update({
                         where: {
@@ -70,7 +71,7 @@ export async function PUT(
                         },
                         data: {
                             alt: slug,
-                            src: slug,
+                            src,
                             heigth: metadata.heigth,
                             width: metadata.width,
                             page_id,
@@ -86,7 +87,7 @@ export async function PUT(
                 } else {
                     const file = files[0];
 
-                    const { metadata, slug } = await fileCreator(file);
+                    const { metadata, slug, src } = await fileCreator(file);
 
                     const page_image = await prisma.imagePages.update({
                         where: {
@@ -94,7 +95,7 @@ export async function PUT(
                         },
                         data: {
                             alt: slug,
-                            src: slug,
+                            src,
                             heigth: metadata.heigth,
                             width: metadata.width,
                             page_id,

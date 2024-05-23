@@ -123,4 +123,58 @@ const Pinterest = ({ fill, size, className }: IconsProps) => {
     );
 };
 
-export { Pinterest, TikTok, Instagram, SearchIcon };
+const YoutubeIcon = ({ fill, size, className }: IconsProps) => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            width={size || 20}
+            height={size || 20}
+            x="0"
+            y="0"
+            viewBox="0 0 310 310"
+            xmlSpace="preserve"
+            className={className}
+        >
+            <g>
+                <path
+                    d="M297.917 64.645c-11.19-13.302-31.85-18.728-71.306-18.728H83.386c-40.359 0-61.369 5.776-72.517 19.938C0 79.663 0 100.008 0 128.166v53.669c0 54.551 12.896 82.248 83.386 82.248h143.226c34.216 0 53.176-4.788 65.442-16.527C304.633 235.518 310 215.863 310 181.835v-53.669c0-29.695-.841-50.16-12.083-63.521zm-98.896 97.765-65.038 33.991a9.997 9.997 0 0 1-14.632-8.863v-67.764a10 10 0 0 1 14.609-8.874l65.038 33.772a10 10 0 0 1 .023 17.738z"
+                    fill={fill || "currentColor"}
+                    opacity="1"
+                    data-original={fill || "currentColor"}
+                    className=""
+                ></path>
+            </g>
+        </svg>
+    );
+};
+
+const FacebookIcon = ({ fill, size, className }: IconsProps) => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            width={size || 20}
+            height={size || 20}
+            x="0"
+            y="0"
+            viewBox="0 0 512 512"
+            xmlSpace="preserve"
+            className={className}
+        >
+            <g>
+                <path
+                    d="M437 0H75C33.648 0 0 33.648 0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352 0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"
+                    fill={fill || `currentColor`}
+                    opacity="1"
+                    data-original={fill || `currentColor`}
+                    className=""
+                ></path>
+            </g>
+        </svg>
+    );
+};
+
+export { Pinterest, TikTok, Instagram, SearchIcon, YoutubeIcon, FacebookIcon };

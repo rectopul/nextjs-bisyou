@@ -1,3 +1,5 @@
+import { NavBar } from "@/components/panel/NavBar";
+import { Aside } from "@/components/panel/Sidebar";
 import { UserByToken } from "@/util/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -25,10 +27,7 @@ export default async function Panel() {
 
     return (
         <>
-            <div className="w-full px-4">
-                <h2>{userData.name}</h2>
-                <a href="/panel/logout">Logout</a>
-            </div>
+            <h1>DashBoard</h1>
         </>
     );
 }

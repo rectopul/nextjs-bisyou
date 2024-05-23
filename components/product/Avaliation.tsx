@@ -20,18 +20,24 @@ const avaliationTest = {
     para importar reviews em minhas lojas, é impressionante`,
 };
 
-export function Avaliation() {
+interface AvaliationProps {
+    hasInsert?: boolean;
+}
+
+export function Avaliation({ hasInsert = true }: AvaliationProps) {
     const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
     return (
         <>
-            <div className="w-full px-4 my-10">
-                <div className="w-full max-w-bisyouContainer mx-auto flex flex-col gap-10">
-                    <Button className="bg-bisyou-font text-bisyou-yellow font-medium text-lg w-[300px] max-w-[300px] h-14 py-4 rounded-full mx-auto">
-                        escreva sua avaliação
-                    </Button>
+            {hasInsert && (
+                <div className="w-full px-4 my-10">
+                    <div className="w-full max-w-bisyouContainer mx-auto flex flex-col gap-10">
+                        <Button className="bg-bisyou-font text-bisyou-yellow font-medium text-lg w-[300px] max-w-[300px] h-14 py-4 rounded-full mx-auto">
+                            escreva sua avaliação
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             <div className="w-full max-w-bisyouContainer mx-auto my-10">
                 <h2 className="text-bisyou-font text-2xl font-medium">

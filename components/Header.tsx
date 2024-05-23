@@ -4,6 +4,7 @@ import Image from "next/image";
 import logo from "../public/assets/img/logo-small_large.webp";
 import { Search } from "./header/Search";
 import { Cart } from "./header/Cart";
+import { InstantSearchBar } from "./InstantSearch";
 
 export function Header() {
     return (
@@ -31,6 +32,12 @@ export function Header() {
                 <div className="absolute right-0 top-[50%] -translate-y-[50%]">
                     <Search />
                     <Cart />
+                </div>
+
+                <div className="absolute w-full xl:w-[600px] max-w-[600px] px-5 right-[88px] top-1/2 -mt-5 overflow-hidden rounded-md z-20">
+                    <div className="w-full shadow-sm">
+                        <InstantSearchBar />
+                    </div>
                 </div>
             </div>
 

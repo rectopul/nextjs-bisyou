@@ -6,17 +6,21 @@ export const config = {
 };
 
 export async function authMiddleware(req: NextRequest) {
-    const userByToken = new UserByToken();
-    const cookies = req.cookies;
-    const token = String(cookies.get("auth"));
+    try {
+        const userByToken = new UserByToken();
+        const cookies = req.cookies;
+        const token = String(cookies.get("auth"));
 
-    console.log(`token`, token);
+        console.log(`token`, token);
 
-    const user = await userByToken.checkToken(token);
+        const user = await userByToken.checkToken(token);
 
-    if (!user) {
+        if (!user) {
+            return NextResponse.redirect("/login");
+        }
+
+        return NextResponse.next();
+    } catch (error) {
         return NextResponse.redirect("/login");
     }
-
-    return NextResponse.next();
 }

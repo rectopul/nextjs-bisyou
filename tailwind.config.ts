@@ -24,13 +24,22 @@ const config = {
             },
             maxWidth: {
                 bisyouContainer: "1100px",
+                bisyouContainerHome: "1270px",
             },
             colors: {
+                blue: {
+                    gray: {
+                        200: "#b0bec5",
+                        500: "#607d8b",
+                        900: "#263238",
+                    },
+                },
                 bisyou: {
                     default: "#f2d5cf",
                     secondary: "#fdf6f6",
                     gray: "#e6e6e6",
                     font: "#6e4945",
+                    fontLight: "#935f59",
                     green: "#55b100",
                     yellow: "#f3e5bb",
                     orange: "#ebe0cc",

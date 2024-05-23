@@ -16,6 +16,7 @@ export interface Product {
     priceRange: PriceRange;
     compareAtPriceRange: CompareAtPriceRange;
     title: string;
+    handle: string;
     description: string;
     descriptionHtml: string;
     seo: Seo;

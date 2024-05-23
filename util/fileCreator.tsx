@@ -1,7 +1,7 @@
 import slugify from "slugify";
 import sharp from "sharp";
 import fs from "fs";
-import crypto from "crypto";
+import CryptoJS from "crypto-js";
 import { pipeline } from "stream";
 import { promisify } from "util";
 const pump = promisify(pipeline);
@@ -20,10 +20,9 @@ interface fileCreatorObject {
 export async function fileCreator(file: File): Promise<fileCreatorObject> {
     try {
         const pathDir = path.join(process.cwd(), "public", "file");
-        const hash = crypto
-            .createHash("md5")
-            .update(file.name + Date.now().toString())
-            .digest("hex");
+        const hash = CryptoJS.SHA256(
+            file.name + Date.now().toString()
+        ).toString(CryptoJS.enc.Hex);
 
         const ext = path.extname(file.name || "");
         const newFilename = `${hash}${ext}`;

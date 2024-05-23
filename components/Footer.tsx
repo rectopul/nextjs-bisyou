@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "../public/assets/img/logo-small_large.webp";
 import { FormNews } from "./FormNews";
 import { Facebook } from "lucide-react";
-import { Instagram, Pinterest, TikTok } from "./icons/Icons";
+import { FacebookIcon, Instagram, Pinterest, TikTok } from "./icons/Icons";
 
 export default async function Footer() {
     const pages = await prisma.pages.findMany();
@@ -25,7 +25,9 @@ export default async function Footer() {
                                     <a
                                         className="text-bisyou-font hover:underline"
                                         href={`pages/${p.slug}`}
-                                        aria-label={p.description}
+                                        aria-label={
+                                            p.description ? p.description : ""
+                                        }
                                     >
                                         {p.title}
                                     </a>
@@ -64,11 +66,7 @@ export default async function Footer() {
                                 className="hover:text-bisyou-green"
                                 aria-label="Pagina do facebook da bisyou"
                             >
-                                <Facebook
-                                    size={30}
-                                    fill="#6e4945"
-                                    strokeWidth={0}
-                                />
+                                <FacebookIcon size={30} />
                             </a>
 
                             <a

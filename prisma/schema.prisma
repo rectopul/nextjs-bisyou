@@ -45,21 +45,149 @@ model ImagePages {
   src       String
   width     Int
   heigth    Int
-  page      Pages    @relation(fields: [page_id], references: [id])
+  page      Pages    @relation(fields: [page_id], references: [id], onDelete: Cascade)
   page_id   Int      @unique
 
   @@map("image_page")
 }
 
+model Category {
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  title         String
+  slug          String          @unique
+  description   String
+  CategoryPages CategoryPages[]
+
+  @@map("category")
+}
+
+model CategoryPages {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  category    Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  page        Pages    @relation(fields: [pages_id], references: [id], onDelete: Cascade)
+  category_id Int
+  pages_id    Int
+
+  @@index([category_id, pages_id])
+  @@map("category_pages")
+}
+
 model Pages {
-  id          Int         @id @default(autoincrement())
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  title       String
-  slug        String
-  category    Int
-  excerpt     String
-  description String
-  content     String
-  image       ImagePages?
+  id            Int             @id @default(autoincrement())
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  title         String
+  slug          String
+  category      Int?
+  excerpt       String?
+  description   String?
+  content       String
+  status        String
+  image         ImagePages?
+  CategoryPages CategoryPages[]
+}
+
+model Banners {
+  id        Int           @id @default(autoincrement())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  title     String?
+  url       String
+  status    String
+  image     BannersImage?
+
+  @@map("banners")
+}
+
+model BannersImage {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  src        String
+  name       String
+  alt        String
+  width      Int
+  heigth     Int
+  banner     Banners  @relation(fields: [banners_id], references: [id])
+  banners_id Int      @unique
+
+  @@map("banners_image")
+}
+
+model RullerOptions {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  slug      String
+
+  @@map("rulle_options")
+}
+
+model MiniBanners {
+  id         Int                @id @default(autoincrement())
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  url        String
+  name       String
+  slug       String
+  type       String
+  image      MiniBannersImages?
+  settingsId Int?
+
+  @@map("mini_banners")
+}
+
+model MiniBannersImages {
+  id             Int         @id @default(autoincrement())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  src            String
+  name           String
+  alt            String
+  width          Int
+  heigth         Int
+  miniBanner     MiniBanners @relation(fields: [miniBanners_id], references: [id])
+  miniBanners_id Int         @unique
+
+  @@map("mini_banners_images")
+}
+
+model Settings {
+  id                     Int      @id @default(autoincrement())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  storename              String   @unique
+  storeSlug              String   @unique
+  about                  String?
+  section_partners       String?
+  section_partners_title String?
+  video                  String?
+  description            String?
+  defaultColor           String?
+  textColor              String?
+  phone                  String?
+  email                  String?
+  logo                   String?
+
+  @@map("settings")
+}
+
+model Partners {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  slug      String   @unique
+  url       String?
+  image     String
+  width     Int
+  height    Int
+  alt       String
+
+  @@map("partners")
 }

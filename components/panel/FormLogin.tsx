@@ -7,8 +7,7 @@ import { useState } from "react";
 import { ApiErrorHandler } from "@/@types/ApiError";
 import { toast } from "sonner";
 import { ApiUserResponse } from "@/@types/ApiUsers";
-import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface FormLoginPayload {
     username: string;
@@ -17,6 +16,7 @@ interface FormLoginPayload {
 
 export function FormLogin() {
     const [showPass, setShowPass] = useState<boolean>(false);
+    const router = useRouter();
 
     const {
         register,
@@ -52,9 +52,15 @@ export function FormLogin() {
 
             const res: ApiUserResponse = await req.json();
 
-            return toast.success(
+            toast.success(
                 `Usuário ${res.user.name} logado com sucesso, redirecionando...`
             );
+
+            localStorage.setItem("authToken", res.message);
+
+            return setTimeout(() => {
+                router.push("/panel");
+            }, 2000);
         } catch (error) {
             const apiError = error as ApiErrorHandler;
             if (apiError.message) {
@@ -69,6 +75,8 @@ export function FormLogin() {
                 console.log(error);
                 toast.error("Ocorreu um erro inesperado."); // Mensagem genérica para outros tipos de erros
             }
+
+            localStorage.removeItem("authToken");
         }
         console.log(data);
     };

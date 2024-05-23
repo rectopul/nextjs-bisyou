@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
 import prisma from "@/lib/client";
+import { UserByToken } from "@/util/auth";
 
 export async function POST(request: NextRequest) {
     const { name, username, password, role } = await request.json();
+    const authUtilities = new UserByToken();
 
     try {
         //check username aready exist
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest) {
                 { status: 401 }
             );
 
-        const password_hash = await bcrypt.hashSync(password, 12);
+        const password_hash = await authUtilities.hashPassword(password);
 
         const userCreated = await prisma.user.create({
             data: { name, username, password_hash, role },
