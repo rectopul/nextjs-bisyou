@@ -1,10 +1,8 @@
-import { Pages } from "@/api/pages";
 import { CategoryList } from "@/components/panel/pages/category/List";
-
-const pages_controller = new Pages();
+import prisma from "@/lib/client";
 
 export default async function Categories() {
-    const categories = await pages_controller.categories();
+    const categories = await prisma.category.findMany();
 
     return (
         <>
