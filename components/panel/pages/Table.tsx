@@ -11,19 +11,24 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Pencil, Trash } from "lucide-react";
-import { Pages } from "@/api/pages";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Pages as PagesController } from "@/api/pagesController";
+import { Pages, ImagePages } from "prisma/prisma-client";
 
-interface PagesTableProps {
-    pages: PageResponse[];
+export interface PageWithImage extends Pages {
+    image: ImagePages | null;
 }
 
-const pageContoller = new Pages();
+interface PagesTableProps {
+    pages: PageWithImage[];
+}
+
+const pageContoller = new PagesController();
 
 export function PagesTable({ pages }: PagesTableProps) {
-    const [pageList, setPageList] = useState<PageResponse[] | null>(pages);
+    const [pageList, setPageList] = useState<PageWithImage[] | null>(pages);
     const handleDeletePage = async (id: number) => {
         await pageContoller.delete(id);
         setPageList((prev) => (prev ? prev.filter((i) => i.id !== id) : null));
@@ -49,13 +54,15 @@ export function PagesTable({ pages }: PagesTableProps) {
                     pageList.map((p) => (
                         <TableRow key={p.id}>
                             <TableCell className="font-medium">
-                                <Image
-                                    src={`/file/${p.image.src}`}
-                                    alt={p.image.alt}
-                                    width={60}
-                                    height={60}
-                                    className="rounded-sm bg-white p-1 border border-slate-200"
-                                />
+                                {p.image && (
+                                    <Image
+                                        src={`/file/${p.image.src}`}
+                                        alt={p.image.alt}
+                                        width={60}
+                                        height={60}
+                                        className="rounded-sm bg-white p-1 border border-slate-200"
+                                    />
+                                )}
                             </TableCell>
                             <TableCell className="font-medium">
                                 {p.id}

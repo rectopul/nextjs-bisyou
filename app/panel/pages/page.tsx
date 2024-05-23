@@ -1,7 +1,5 @@
-import { Pages } from "@/api/pages";
-import { NavBar } from "@/components/panel/NavBar";
-import { Aside } from "@/components/panel/Sidebar";
 import { PagesList } from "@/components/panel/pages/List";
+import prisma from "@/lib/client";
 import { UserByToken } from "@/util/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -24,11 +22,11 @@ async function isLogged() {
     }
 }
 
-const pages = new Pages();
-
 export default async function Panel() {
-    const userData = await isLogged();
-    const pages_list = await pages.getAll();
+    await isLogged();
+    const pages_list = await prisma.pages.findMany({
+        include: { image: true },
+    });
 
     return (
         <>

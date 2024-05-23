@@ -1,8 +1,8 @@
 import { PageResponse } from "@/@types/PageResponse";
-import { PagesTable } from "./Table";
+import { PageWithImage, PagesTable } from "./Table";
 
 interface PagesListProps {
-    pages: PageResponse[];
+    pages: PageWithImage[];
 }
 
 export function PagesList({ pages }: PagesListProps) {

@@ -10,7 +10,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Pages } from "@/api/pages";
 import { Category } from "@prisma/client";
 import { DropZone } from "@/components/DropZone";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ import { RichText } from "@/components/RichText";
 import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { Spinner } from "@/components/Spinner";
+import { Pages } from "@/api/pagesController";
 
 export interface CreatePagePayload {
     title: string;
