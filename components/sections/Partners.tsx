@@ -16,7 +16,7 @@ export function SectionPartners({ partners, settings }: PartnersProps) {
                             {settings.section_partners_title}
                         </h2>
 
-                        <p className="xl:w-[70%] mx-auto">
+                        <p className="xl:w-[70%] mx-auto font-normal text-xl">
                             {settings.section_partners}
                         </p>
                     </div>

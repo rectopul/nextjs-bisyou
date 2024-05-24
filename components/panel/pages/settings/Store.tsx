@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/card";
 import prisma from "@/lib/client";
 import { StoreForm } from "./store/Form";
+import { MissionForm } from "./store/MissionForm";
 
 export async function StoreSettings() {
     const settings = await prisma.settings.findFirst();
@@ -31,13 +32,14 @@ export async function StoreSettings() {
             <div>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Conteúdo da loja</CardTitle>
+                        <CardTitle>Missão da empresa</CardTitle>
                         <CardDescription>
-                            Configuração de informaçoes sobre o conteúdo da loja
+                            Informe um texto descritivo sobre qual a missão da
+                            empresa
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <StoreForm settings={settings} />
+                        <MissionForm settings={settings} />
                     </CardContent>
                 </Card>
             </div>
