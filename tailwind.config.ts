@@ -40,6 +40,7 @@ const config = {
                     gray: "#e6e6e6",
                     font: "#6e4945",
                     fontLight: "#935f59",
+                    orangeSd: "#fb861c",
                     green: "#55b100",
                     yellow: "#f3e5bb",
                     orange: "#ebe0cc",

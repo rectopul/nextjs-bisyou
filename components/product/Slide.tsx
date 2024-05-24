@@ -16,13 +16,19 @@ import {
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
+    type CarouselApi,
 } from "@/components/ui/carousel";
 import { discountCalculator } from "@/util/discountCalculator";
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 export function ProductSlide({ images, prices }: ProductSummary) {
+    const [api, setApi] = useState<CarouselApi>();
+
+    const handleThumb = (key: number) => {
+        api && api.scrollTo(key);
+    };
+
     return (
         <>
             <div className="w-full rounded-xl shadow relative">
@@ -39,14 +45,15 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                         }}
                     >
                         <CarouselContent className="h-[235px] xl:h-[400px]">
-                            {images.edges.map((i) => (
+                            {images.edges.map((i, k) => (
                                 <CarouselItem
                                     key={`thumb-${i.node.id}`}
                                     className="basis-1/3 lg:basis-1/5"
                                 >
                                     <button
                                         key={`thumb-${i.node.id}`}
-                                        className="rounded-full h-[60px] overflow-hidden shadow-sm w-full border-4 border-bisyou-yellow hover:border-bisyou-font"
+                                        onClick={() => handleThumb(k)}
+                                        className="rounded-full shadow-inner shadow-bisyou-orangeSd h-[60px] overflow-hidden w-full border-4 border-bisyou-yellow hover:border-bisyou-font"
                                     >
                                         <Image
                                             width={100}
@@ -65,7 +72,7 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                         <CarouselNext />
                     </Carousel>
                 </div>
-                <Carousel>
+                <Carousel setApi={setApi}>
                     <CarouselContent>
                         {images.edges.map((i) => (
                             <CarouselItem key={i.node.id}>
