@@ -10,8 +10,9 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useWindowSize from "@/util/useWindowSize";
+import Autoplay from "embla-carousel-autoplay";
 
 interface ImageBanner extends BannersImage {
     thumbnail: BannersThumbnail | null;
@@ -28,6 +29,7 @@ interface FullBanners {
 export function FullBanners({ banners }: FullBanners) {
     const [api, setApi] = useState<CarouselApi>();
     const [isMobile, setIsMobile] = useState<boolean>(false);
+    const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
     const handleNext = () => api && api.scrollNext();
     const handlePrev = () => api && api.scrollPrev();
 
@@ -41,7 +43,13 @@ export function FullBanners({ banners }: FullBanners) {
     return (
         <>
             <div className="w-full">
-                <Carousel setApi={setApi}>
+                <Carousel
+                    setApi={setApi}
+                    opts={{
+                        loop: true,
+                    }}
+                    plugins={[plugin.current]}
+                >
                     <CarouselContent className="max-h-[500px]">
                         {banners.map((b) => (
                             <CarouselItem key={`bn-${b.id}`}>

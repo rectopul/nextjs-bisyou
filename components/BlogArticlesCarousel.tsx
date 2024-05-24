@@ -9,13 +9,11 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { BlogObject } from "@/@types/shopify/BlogObject";
 import { Shopify } from "@/@types/shopify";
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CarouselIndicator } from "./CarouselIndicator";
-import { title } from "process";
 
 interface BlogArticlesCarouselProps {
     blogObject: Shopify.Articles;
