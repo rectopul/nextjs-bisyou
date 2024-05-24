@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
             const {
                 metadata,
                 slug: image_slug,
+                thumbnail,
                 src,
                 name,
             } = await fileCreator(file);
@@ -41,7 +42,7 @@ export async function POST(req: NextRequest) {
             };
 
             if (banner) {
-                await prisma.bannersImage.create({
+                const banner_image = await prisma.bannersImage.create({
                     data: {
                         alt: image_slug,
                         src: src,
@@ -52,10 +53,23 @@ export async function POST(req: NextRequest) {
                     },
                 });
 
+                if (banner_image && thumbnail) {
+                    await prisma.bannersThumbnail.create({
+                        data: {
+                            heigth: thumbnail.height,
+                            width: thumbnail.width,
+                            banners_id: banner_image.id,
+                            name,
+                            alt: image_slug,
+                            src: `thumbnails/${thumbnail.name}`,
+                        },
+                    });
+                }
+
                 const resp = await prisma.banners.findFirst({
                     where: { id: banner.id },
                     include: {
-                        image: true,
+                        image: { include: { thumbnail: true } },
                     },
                 });
 

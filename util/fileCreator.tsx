@@ -6,11 +6,14 @@ import { pipeline } from "stream";
 import { promisify } from "util";
 const pump = promisify(pipeline);
 import path from "path";
+import { createThumbnail } from "./generateThumbnail";
+import { Sharp } from "@/@types/Sharp";
 
 interface fileCreatorObject {
     name: string;
     slug: string;
     src: string;
+    thumbnail?: Sharp.OutputInfo;
     metadata: {
         width: number;
         heigth: number;
@@ -31,6 +34,11 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
         await pump(anyFile.stream(), fs.createWriteStream(filePath));
 
         const metadata = await sharp(filePath).metadata();
+        const thumbnail = await createThumbnail(
+            filePath,
+            `${pathDir}/thumbnails/${newFilename}`
+        );
+
         const image_slug = slugify(file.name, {
             lower: true,
             strict: true,
@@ -40,6 +48,7 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
             name: file.name,
             slug: image_slug,
             src: newFilename,
+            thumbnail,
             metadata: {
                 width: metadata.width as number,
                 heigth: metadata.height as number,

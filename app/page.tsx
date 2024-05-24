@@ -24,7 +24,7 @@ import { Suspense } from "react";
 const fetchData = async () => {
     try {
         const fullBanners = await prisma.banners.findMany({
-            include: { image: true },
+            include: { image: { include: { thumbnail: true } } },
         });
 
         const rullerOptions = await prisma.rullerOptions.findMany();

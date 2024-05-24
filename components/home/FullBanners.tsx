@@ -1,21 +1,24 @@
 "use client";
 
-import { Banners, BannersImage } from "@prisma/client";
+import { Banners, BannersImage, BannersThumbnail } from "@prisma/client";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
     type CarouselApi,
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { BrowserView, MobileView, isMobile } from "react-device-detect";
+
+interface ImageBanner extends BannersImage {
+    thumbnail: BannersThumbnail | null;
+}
 
 interface FullBanner extends Banners {
-    image: BannersImage | null;
+    image: ImageBanner | null;
 }
 
 interface FullBanners {
@@ -36,13 +39,25 @@ export function FullBanners({ banners }: FullBanners) {
                             <CarouselItem key={`bn-${b.id}`}>
                                 {b.image && (
                                     <a href={b.url} className="w-full">
-                                        <Image
-                                            src={`/file/${b.image.src}`}
-                                            alt={b.image.alt}
-                                            width={2000}
-                                            height={1000}
-                                            className="w-full"
-                                        />
+                                        {isMobile && b.image.thumbnail ? (
+                                            <Image
+                                                src={`/file/${b.image.thumbnail.src}`}
+                                                alt={b.image.thumbnail.alt}
+                                                width={b.image.thumbnail.width}
+                                                height={
+                                                    b.image.thumbnail.heigth
+                                                }
+                                                className="w-full isThumb"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={`/file/${b.image.src}`}
+                                                alt={b.image.alt}
+                                                width={2000}
+                                                height={1000}
+                                                className="w-full"
+                                            />
+                                        )}
                                     </a>
                                 )}
                             </CarouselItem>
