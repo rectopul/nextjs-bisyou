@@ -29,7 +29,7 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                 <div className="px-3 py-1 text-sm font-medium absolute top-5 left-7 bg-bisyou-yellow rounded-full z-10">
                     {discountCalculator(prices.discount, prices.price)}% OFF
                 </div>
-                <div className="w-[60px] h-[200px] xl:h-[400px] overflow-hidden absolute bottom-10 left-7 z-10">
+                <div className="w-[60px] h-[235px] xl:h-[400px] overflow-hidden absolute bottom-10 left-7 z-10">
                     <Carousel
                         orientation="vertical"
                         opts={{
@@ -38,11 +38,11 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                             axis: "y",
                         }}
                     >
-                        <CarouselContent className="h-[200px] xl:h-[400px]">
+                        <CarouselContent className="h-[235px] xl:h-[400px]">
                             {images.edges.map((i) => (
                                 <CarouselItem
                                     key={`thumb-${i.node.id}`}
-                                    className="basis-1/5"
+                                    className="basis-1/3 lg:basis-1/5"
                                 >
                                     <button
                                         key={`thumb-${i.node.id}`}
