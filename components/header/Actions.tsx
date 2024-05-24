@@ -33,7 +33,7 @@ export function HeaderActions() {
             {state && (
                 <div
                     data-visible={showSearch}
-                    className="absolute data-[visible=false]:animate-out data-[visible=false]:zoom-out-95 data-[visible=false]:fade-out-0 data-[visible=false]:-slide-out-to-top-96 animate-in data-[visible=true]:fade-in-100 data-[visible=true]:zoom-in-95  data-[visible=true]:slide-in-from-top-1/2 transition-all duration-300 data-[visible=true]:opacity-100 w-full xl:w-[600px] max-w-[600px] px-5 right-[88px] -top-96 data-[visible=true]:top-1/2 -mt-5 overflow-hidden rounded-md z-20"
+                    className="absolute max-md:px-4 max-md:fixed max-md:top-4 max-md:left-0 data-[visible=false]:animate-out data-[visible=false]:zoom-out-95 data-[visible=false]:fade-out-0 data-[visible=false]:-slide-out-to-top-96 animate-in data-[visible=true]:fade-in-100 data-[visible=true]:zoom-in-95  data-[visible=true]:slide-in-from-top-1/2 transition-all duration-300 data-[visible=true]:opacity-100 w-full xl:w-[600px] max-w-[600px] px-5 right-[88px] -top-96 data-[visible=true]:top-1/2 max-md:data-[visible=true]:top-24 -mt-5 overflow-hidden rounded-md z-20"
                     onAnimationEnd={handleChangeState}
                 >
                     <div className="w-full shadow-sm">

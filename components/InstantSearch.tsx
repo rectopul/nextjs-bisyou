@@ -32,7 +32,7 @@ function HitContainer({
 }) {
     return (
         <div className="w-full bg-white rounded-lg shadow p-4 mt-3 flex gap-4">
-            <div className="flex flex-col w-2/5 text-start border-r border-slate-200 pr-3">
+            <div className="max-md:hidden flex flex-col w-2/5 text-start border-r border-slate-200 pr-3">
                 <h2 className="text-sm font-semibold">Sugestões</h2>
 
                 <div className="mt-3 flex flex-col gap-3">
