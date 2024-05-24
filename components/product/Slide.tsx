@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/carousel";
 import { discountCalculator } from "@/util/discountCalculator";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function ProductSlide({ images, prices }: ProductSummary) {
     return (
@@ -27,21 +29,20 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                 <div className="px-3 py-1 text-sm font-medium absolute top-5 left-7 bg-bisyou-yellow rounded-full z-10">
                     {discountCalculator(prices.discount, prices.price)}% OFF
                 </div>
-                <div className="w-[60px] h-[70%] overflow-hidden absolute bottom-10 left-7 z-10">
+                <div className="w-[60px] h-[200px] xl:h-[400px] overflow-hidden absolute bottom-10 left-7 z-10">
                     <Carousel
                         orientation="vertical"
                         opts={{
                             align: "start",
-                            slidesToScroll: 2,
-                            direction: "rtl",
                             dragFree: true,
+                            axis: "y",
                         }}
                     >
-                        <CarouselContent>
+                        <CarouselContent className="h-[200px] xl:h-[400px]">
                             {images.edges.map((i) => (
                                 <CarouselItem
                                     key={`thumb-${i.node.id}`}
-                                    className="basis-1/6"
+                                    className="basis-1/5"
                                 >
                                     <button
                                         key={`thumb-${i.node.id}`}
@@ -78,8 +79,19 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious className="hidden xl:block" />
-                    <CarouselNext className="hidden xl:block" />
+                    {/* <Button
+                        className="rounded-full w-12 h-12 p-0 z-30 absolute top-1/2 -translate-y-1/2 right-3"
+                        variant="bisCarousel"
+                    >
+                        <ChevronRight size={20} strokeWidth={3} />
+                    </Button>
+
+                    <Button
+                        className="rounded-full w-12 h-12 p-0 z-30 absolute top-1/2 -translate-y-1/2 left-3"
+                        variant="bisCarousel"
+                    >
+                        <ChevronLeft size={20} strokeWidth={3} />
+                    </Button> */}
                 </Carousel>
             </div>
         </>
