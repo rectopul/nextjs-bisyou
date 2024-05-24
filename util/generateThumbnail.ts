@@ -20,22 +20,20 @@ const createThumbnail = async (
             "thumbnails"
         );
 
-        const fileNameWithExt = path.basename(inputPath);
-
         // Usar path.parse para dividir o caminho
         const { name } = path.parse(inputPath);
 
-        const sm = await sharp(inputPath)
+        await sharp(inputPath)
             .resize({ width: 600 })
             .webp({ quality: 90 }) // Define a largura da thumbnail, mantém a proporção
             .toFile(`${basePath}/sm/${name}.webp`);
 
-        const md = await sharp(inputPath)
+        await sharp(inputPath)
             .resize({ width: 800 }) // Define a largura da thumbnail, mantém a proporção
             .webp({ quality: 90 })
             .toFile(`${basePath}/md/${name}.webp`);
 
-        const lg = await sharp(inputPath)
+        await sharp(inputPath)
             .resize({ width: 1024 }) // Define a largura da thumbnail, mantém a proporção
             .webp({ quality: 90 })
             .toFile(`${basePath}/lg/${name}.webp`);

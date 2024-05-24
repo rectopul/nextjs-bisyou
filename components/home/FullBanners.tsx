@@ -49,7 +49,7 @@ export function FullBanners({ banners }: FullBanners) {
                                     <a href={b.url} className="w-full">
                                         {isMobile && b.image.thumbnail ? (
                                             <Image
-                                                src={`/file/${b.image.thumbnail.src}`}
+                                                src={`/file/${b.image.thumbnail.md}`}
                                                 alt={b.image.thumbnail.alt}
                                                 width={b.image.thumbnail.width}
                                                 height={
