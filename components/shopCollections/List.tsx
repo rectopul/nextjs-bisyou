@@ -7,21 +7,24 @@ import {
     CarouselContent,
     CarouselItem,
 } from "@/components/ui/carousel";
+import useWindowSize from "@/util/useWindowSize";
 
 interface ShopCollections {
     collections: CollectionObject;
 }
 
 export function ShopCollections({ collections }: ShopCollections) {
+    const isMobile = useWindowSize().width > 766 ? false : true;
     return (
         <>
             <div className="w-full px-4 my-[40px]">
-                <div className="w-full max-w-bisyouContainerHome flex justify-between mx-auto">
+                <div className="w-full max-w-bisyouContainerHome flex justify-between mx-auto *:w-full">
                     <Carousel opts={{ loop: true, align: "start" }}>
-                        <CarouselContent>
+                        <CarouselContent className="w-full">
                             {collections.data.collections.edges.map((c) => (
                                 <CarouselItem
-                                    className="basis-1/2 xl:basis-1/5"
+                                    data-mobile={isMobile}
+                                    className="basis-1/2 xl:basis-1/5 data-[mobile=false]:px-4"
                                     key={`cll-${c.node.id}`}
                                 >
                                     <div className="max-md:w-full flex flex-col gap-3">

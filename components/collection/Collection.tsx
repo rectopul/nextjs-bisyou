@@ -77,7 +77,7 @@ export function Collection({
                             },
                         }}
                     >
-                        <CarouselContent>
+                        <CarouselContent className="-ml-0">
                             {collection.node.products.edges.map((p) => (
                                 <CarouselItem
                                     className="xl:basis-1/6 max-sm:px-4"

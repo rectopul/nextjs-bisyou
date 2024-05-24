@@ -113,6 +113,9 @@ model BannersThumbnail {
   alt        String
   width      Int
   heigth     Int
+  md         String
+  sm         String
+  lg         String
   image      BannersImage @relation(fields: [banners_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   banners_id Int          @unique
 

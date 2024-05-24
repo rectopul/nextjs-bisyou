@@ -1,6 +1,6 @@
 import { Product, ProductObject } from "./@types/ProductObject";
-import { ProductCollectionObject, Products } from "./@types/ProductsCollection";
-import { BlogObject } from "./@types/shopify/BlogObject";
+import { ProductCollectionObject } from "./@types/ProductsCollection";
+import { Shopify } from "./@types/shopify";
 import {
     CollectionObject,
     CollectionSingleObject,
@@ -9,6 +9,7 @@ import {
     DataProductWithMedia,
     ProductWithMedia,
 } from "./@types/shopify/ProductWithMedia";
+import { BLOG_ARTICLE_FIELDS } from "./queries/typescript/blog";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
@@ -592,44 +593,27 @@ export async function getCollection(
 
 export async function getBlogArticles(
     handler: string = "news"
-): Promise<BlogObject | null> {
-    const query = `query GetBlogArticles {
-      blog(handle: "${handler}") {
-        id
-        handle
-        title
-        articles(first: 10) {
-          edges {
-            node {
-              authorV2 {
-                name
-                lastName
-                firstName
-                bio
+): Promise<Shopify.Articles | null> {
+    const query = `
+      query GetBlogArticles {
+        blog(handle: "${handler}") {
+          id
+          handle
+          title
+          articles(first: 10) {
+            edges {
+              node {
+                ...BlogArticleFields
               }
-              contentHtml
-              excerptHtml
-              handle
-              id
-              image {
-                altText
-                height
-                id
-                width
-                url
-                thumbnail: url(transform: {maxWidth: 520, maxHeight: 210, crop: CENTER})
-              }
-              title
-              tags
-              publishedAt
             }
           }
         }
       }
-    }`;
+      ${BLOG_ARTICLE_FIELDS}
+    `;
 
     try {
-        const response: BlogObject = await ShopifyData(query);
+        const response: Shopify.Articles = await ShopifyData(query);
 
         return response;
     } catch (error) {

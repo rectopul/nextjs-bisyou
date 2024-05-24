@@ -1,6 +1,11 @@
 export namespace Sharp {
     export interface OutputInfo {
         name: string;
+        src: {
+            md: string;
+            lg: string;
+            sm: string;
+        };
         format: string;
         size: number;
         width: number;

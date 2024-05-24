@@ -61,7 +61,8 @@ export async function POST(req: NextRequest) {
                             banners_id: banner_image.id,
                             name,
                             alt: image_slug,
-                            src: `thumbnails/${thumbnail.name}`,
+                            src: thumbnail.src.md,
+                            ...thumbnail.src,
                         },
                     });
                 }
