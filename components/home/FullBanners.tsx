@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useWindowSize from "@/util/useWindowSize";
 
 interface ImageBanner extends BannersImage {
@@ -27,10 +27,16 @@ interface FullBanners {
 
 export function FullBanners({ banners }: FullBanners) {
     const [api, setApi] = useState<CarouselApi>();
+    const [isMobile, setIsMobile] = useState<boolean>(false);
     const handleNext = () => api && api.scrollNext();
     const handlePrev = () => api && api.scrollPrev();
 
-    const isMobile = useWindowSize().width > 766 ? false : true;
+    const screenSize = useWindowSize().width;
+
+    useEffect(() => {
+        if (screenSize > 766) setIsMobile(false);
+        else setIsMobile(true);
+    }, [screenSize]);
 
     return (
         <>
