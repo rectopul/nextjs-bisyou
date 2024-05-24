@@ -1,4 +1,5 @@
 import { useRefinementList } from "react-instantsearch";
+import { ArrowTopRight } from "./icons/Icons";
 
 interface CustomRefinementListProps {
     attribute: string;
@@ -58,8 +59,8 @@ export function CustomRefinementList({
                         >
                             {i.value}
                         </span>
-                        <span className="ais-RefinementList-count w-5 h-5 bg-slate-200 text-[10px] text-slate-900 rounded-full flex items-center justify-center font-bold">
-                            1
+                        <span className="w-5 h-full hover:text-slate-900 text-[10px] text-slate-400 rounded-full flex items-center justify-center font-bold">
+                            <ArrowTopRight size={20} />
                         </span>
                     </label>
                 </li>

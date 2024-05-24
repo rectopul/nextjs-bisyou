@@ -5,11 +5,12 @@ import { Product } from "@/@types/ProductObject";
 import Image from "next/image";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { moneyFormat } from "@/util/moneyFormat";
-import { SimpleHit } from "./search/SimpleHit";
 import React, { useRef, useState } from "react";
-import { RefinementList, InstantSearch } from "react-instantsearch";
+import { InstantSearch } from "react-instantsearch";
 import { client } from "@/agnolia";
 import { CustomRefinementList } from "./CustomRefinementList";
+import { Button } from "./ui/button";
+import { X } from "lucide-react";
 
 interface HitResultProps {
     hit: any;
@@ -119,7 +120,11 @@ function HitResult({ hit }: HitResultProps) {
     );
 }
 
-export function InstantSearchBar() {
+interface InstantSearchBarProps {
+    onCloseBar?: (data: boolean) => void;
+}
+
+export function InstantSearchBar({ onCloseBar }: InstantSearchBarProps) {
     const [results, setResults] = useState<any | null>(null);
     const ref = useRef<HTMLInputElement>(null);
 
@@ -152,9 +157,15 @@ export function InstantSearchBar() {
                     ref={ref}
                     type="text"
                     onChange={performSearch}
-                    className="w-full h-9 px-3 rounded-md outline-none"
-                    placeholder="procurar produtos"
+                    className="w-full h-9 px-3 rounded-md outline-none text-sm"
+                    placeholder="Diite sua busca"
                 />
+                <Button
+                    className="text-slate-800 bg-transparent hover:text-red-500 hover:bg-transparent"
+                    onClick={() => onCloseBar && onCloseBar(false)}
+                >
+                    <X size={18} />
+                </Button>
             </div>
 
             {results && (

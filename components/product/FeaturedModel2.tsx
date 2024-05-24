@@ -11,13 +11,13 @@ interface FeaturedModel2Props {
 export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
     return (
         <>
-            <div className="w-full px-4 xl:my-[40px]">
+            <div className="w-full px-4 my-[40px]">
                 <div className="w-full max-w-bisyouContainerHome mx-auto relative border-2 border-bisyou-default rounded-xl">
-                    <div className="bg-white px-12 py-1 h-[60px] -top-[30px] left-1/2 -translate-x-1/2 absolute text-bisyou-font text-3xl font-medium">
+                    <div className="bg-white px-4 xl:px-12 py-1 xl:h-[60px] -top-[20px] xl:-top-[30px] left-1/2 -translate-x-1/2 absolute text-bisyou-font text-center text-xl xl:text-3xl max-md:w-[80%] font-medium">
                         {title}
                     </div>
 
-                    <div className="w-full max-w-[840px] my-16 mx-auto h-[405px] flex justify-between gap-20">
+                    <div className="w-full max-md:px-4 xl:max-w-[840px] my-16 xl:mx-auto xl:h-[405px] flex flex-col xl:flex-row justify-between gap-20">
                         <figure className="w-full max-w-[405px] relative self-start">
                             <span className="absolute top-5 left-5 bg-bisyou-yellow text-bisyou-font text-sm font-semibold rounded-full px-3 py-1">
                                 {
@@ -40,7 +40,7 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                             </span>
                         </figure>
 
-                        <div className="flex flex-col gap-4 h-full">
+                        <div className="flex flex-col gap-4 xl:h-full">
                             <div className="text-xl font-medium text-bisyou-font">
                                 {product.title}
                             </div>

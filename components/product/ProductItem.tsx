@@ -19,7 +19,7 @@ export function ProductItem({ product, variant }: ProductItemProps) {
             >
                 <div
                     data-variant={variant}
-                    className="flex flex-col gap-2   data-[variant=spacing]:max-w-[300px] rounded-md overflow-hidden"
+                    className="max-sm:w-full flex flex-col gap-2 data-[variant=spacing]:xl:max-w-[300px] rounded-md overflow-hidden"
                 >
                     <figure className="w-full relative">
                         <span className="absolute rounded-full left-3 top-3 px-4 py-1 bg-bisyou-yellow text-bisyou-font font-semibold text-sm">
@@ -47,6 +47,7 @@ export function ProductItem({ product, variant }: ProductItemProps) {
                             width={300}
                             height={300}
                             src={product.node.featuredImage.url}
+                            className="max-sm:w-full"
                             alt={
                                 product.node.featuredImage.altText ||
                                 product.node.handle

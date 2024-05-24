@@ -42,7 +42,6 @@ export function CreatePageForm({ categories }: CreatePageFormProps) {
 
     const onSubmit: SubmitHandler<CreatePagePayload> = async (data) => {
         try {
-            console.log(`meu cookie`, cookieValue);
             setIsLoading(true);
             const page = await page_controller.store(data, cookieValue);
             reset();

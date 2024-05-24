@@ -64,17 +64,30 @@ export function Collection({
                 </div>
 
                 <div className="w-full mx-auto">
-                    <Carousel setApi={setApi} opts={{ align: "start" }}>
+                    <Carousel
+                        setApi={setApi}
+                        opts={{
+                            breakpoints: {
+                                "(min-width: 1024px)": {
+                                    align: "start",
+                                },
+                                "(max-width: 560px)": {
+                                    align: "center",
+                                },
+                            },
+                        }}
+                    >
                         <CarouselContent>
                             {collection.node.products.edges.map((p) => (
                                 <CarouselItem
-                                    className="basis-1/6"
+                                    className="xl:basis-1/6 max-sm:px-4"
                                     key={`prod-collection-${p.node.id}`}
                                 >
                                     <ProductItem product={p} />
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
+
                         <Button
                             variant="bisCarousel"
                             onClick={handleNext}

@@ -39,7 +39,7 @@ export function Avaliation({ hasInsert = true }: AvaliationProps) {
                 </div>
             )}
 
-            <div className="w-full max-w-bisyouContainer mx-auto my-10">
+            <div className="w-full max-w-bisyouContainer mx-auto my-10 max-sm:px-4">
                 <h2 className="text-bisyou-font text-2xl font-medium">
                     Clientes & Fãs da Bisyou{" "}
                     <span className="ml-2 text-bisyou-default font-normal text-xl">
@@ -53,6 +53,14 @@ export function Avaliation({ hasInsert = true }: AvaliationProps) {
                     opts={{
                         loop: true,
                         align: "start",
+                        breakpoints: {
+                            "(min-width: 1024px)": {
+                                align: "start",
+                            },
+                            "(max-width: 766px)": {
+                                align: "center",
+                            },
+                        },
                     }}
                     plugins={[plugin.current]}
                 >
@@ -60,7 +68,7 @@ export function Avaliation({ hasInsert = true }: AvaliationProps) {
                         {Array.from({ length: 10 }, (_, i) => (
                             <CarouselItem
                                 key={`review-cp-${i}`}
-                                className="basis-1/4 pb-[25px]"
+                                className="xl:basis-1/4 md:basis-2/4 pb-[25px]"
                             >
                                 <div className="border-2 border-bisyou-font rounded-md p-6 flex flex-col gap-6 relative">
                                     <div className="flex justify-center items-center gap-2 text-bisyou-default">

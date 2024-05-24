@@ -2,39 +2,60 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
 import { checkToken } from "./util/checkJwt";
 
+const corsOptions = {
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+};
+
 // This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
     try {
-        if(req.nextUrl.pathname.startsWith('api/pages')) {
+        const requestHeaders = new Headers(req.headers);
+        const origin = requestHeaders.get("origin") ?? "";
+
+        // Handle preflighted requests
+        const isPreflight = req.method === "OPTIONS";
+
+        requestHeaders.set("x-pathname", req.nextUrl.pathname);
+
+        const preflightHeaders = {
+            "Access-Control-Allow-Origin": "*",
+            ...corsOptions,
+        };
+        if (req.nextUrl.pathname.startsWith("api/pages")) {
             if (req.method === "POST") {
                 const cookie = cookies();
                 const headers = req.headers;
-    
+
                 if (!cookie) {
                     return NextResponse.json(
                         {
                             name: "unauthenticated",
                             message: "Usuário não autenticado",
                         },
-                        { status: 401 }
+                        {
+                            status: 401,
+                            headers: { ...preflightHeaders, ...requestHeaders },
+                        }
                     );
                 }
-    
+
                 const authorization = headers.get("Authorization");
-    
+
                 const [, bToken] = String(authorization).split(" ");
-    
-                console.log(`Bearer token recebido`, bToken);
-    
+
                 const token = String(cookie.get("auth")?.value);
-    
+
                 if (!bToken) {
                     return NextResponse.json(
                         {
                             name: "unauthenticated",
                             message: "Usuário não autenticado",
                         },
-                        { status: 401 }
+                        {
+                            status: 401,
+                            headers: { ...preflightHeaders, ...requestHeaders },
+                        }
                     );
                 } else {
                     if (bToken !== token) {
@@ -43,37 +64,54 @@ export async function middleware(req: NextRequest) {
                                 name: "unauthenticated",
                                 message: "Usuário não autenticado",
                             },
-                            { status: 401 }
+                            {
+                                status: 401,
+                                headers: {
+                                    ...preflightHeaders,
+                                    ...requestHeaders,
+                                },
+                            }
                         );
                     }
                 }
-    
-                const user = await checkToken(token, String(headers.get("host")));
-    
+
+                const user = await checkToken(
+                    token,
+                    String(headers.get("host"))
+                );
+
                 if (!user) {
                     return NextResponse.json(
                         {
                             name: "unauthenticated",
                             message: "Usuário não autenticado",
                         },
-                        { status: 401 }
+                        {
+                            status: 401,
+                            headers: { ...preflightHeaders, ...requestHeaders },
+                        }
                     );
                 }
-    
-                return NextResponse.next();
+
+                console.log(`req headers`, requestHeaders);
+
+                return NextResponse.next({
+                    request: {
+                        headers: {
+                            ...preflightHeaders,
+                            ...requestHeaders,
+                        },
+                    },
+                });
             } else {
                 return NextResponse.next();
             }
         }
 
-        const requestHeaders = new Headers(req.headers)
-
-        requestHeaders.set('x-pathname', req.nextUrl.pathname)
-
         return NextResponse.next({
             request: {
-                headers: requestHeaders
-            }
+                headers: requestHeaders,
+            },
         });
     } catch (error) {
         return NextResponse.json(

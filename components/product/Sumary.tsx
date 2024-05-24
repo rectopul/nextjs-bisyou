@@ -17,7 +17,7 @@ export function ProductSummary({ product }: ProductSummaryProps) {
     return (
         <>
             <div className="w-full px-4 my-20">
-                <div className="w-full max-w-bisyouContainer mx-auto grid grid-cols-2 gap-2">
+                <div className="w-full max-w-bisyouContainer mx-auto grid grid-cols-1 xl:grid-cols-2 gap-2">
                     <div>
                         <ProductSlide images={product.images} prices={prices} />
                     </div>

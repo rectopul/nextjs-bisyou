@@ -7,7 +7,11 @@ export class Pages {
     private url: string;
 
     constructor() {
-        this.url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages`;
+        this.url = `${
+            process.env.NEXT_PUBLIC_MODE === "dev"
+                ? process.env.NEXT_PUBLIC_API_LOCAL_URL
+                : process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/pages`;
     }
 
     async store(data: CreatePagePayload, token: string) {

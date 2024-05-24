@@ -23,12 +23,12 @@ export function FeaturedProductWithMedia({
 
     return (
         <>
-            <div className="w-full px-4 xl:my-[40px]">
-                <div className="w-full max-w-bisyouContainerHome mx-auto flex gap-5">
+            <div className="w-full px-4 my-[40px]">
+                <div className="w-full max-w-bisyouContainerHome mx-auto flex flex-col xl:flex-row gap-5">
                     <div className="flex-1 max-h-[480px] overflow-hidden flex justify-center items-center rounded-xl">
                         {media && <ProductVideo media={media.node} />}
                     </div>
-                    <div className="w-full max-w-[310px] flex flex-col rounded-lg">
+                    <div className="w-full max-w-[310px] max-md:mx-auto flex flex-col rounded-lg">
                         <figure>
                             <Image
                                 width={product.featuredImage.width}

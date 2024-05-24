@@ -64,7 +64,6 @@
         "react-dropzone": "^14.2.3",
         "react-hook-form": "^7.51.4",
         "react-instantsearch": "^7.9.0",
-        "react-quill": "^2.0.0",
         "sharp": "^0.33.4",
         "slugify": "^1.6.6",
         "sonner": "^1.4.41",

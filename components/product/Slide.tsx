@@ -78,8 +78,8 @@ export function ProductSlide({ images, prices }: ProductSummary) {
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
+                    <CarouselPrevious className="hidden xl:block" />
+                    <CarouselNext className="hidden xl:block" />
                 </Carousel>
             </div>
         </>

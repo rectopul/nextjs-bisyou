@@ -22,7 +22,6 @@ export function CreateCategoryForm() {
 
     const onSubmit: SubmitHandler<CreateCategoryPayload> = async (data) => {
         try {
-            console.log(`meu cookie`, cookieValue);
             setIsLoading(true);
             const page = await page_controller.storeCategory(data, cookieValue);
             reset();

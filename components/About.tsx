@@ -15,9 +15,9 @@ export function About({ settings }: AboutProps) {
     return (
         <>
             <div className="w-full px-4">
-                <div className="w-full max-w-bisyouContainerHome mx-auto xl:my-[40px] flex justify-between gap-14">
+                <div className="w-full max-w-bisyouContainerHome mx-auto my-[40px] flex flex-col xl:flex-row justify-between gap-10 xl:gap-14">
                     {settings.about && (
-                        <div className="w-2/6 flex flex-col gap-1">
+                        <div className="w-full xl:w-2/6 flex flex-col gap-1">
                             <div
                                 className="text-bisyou-font w-full [&_ul]:pl-4 [&_li]:py-2 [&_p]:my-4 [&_h2]:text-xl [&_h2]:font-medium [&_h1]:text-2xl [&_h1]:font-semibold"
                                 dangerouslySetInnerHTML={{

@@ -10,7 +10,7 @@ interface ProductDetailsProps {
 export function ProductDetails({ product }: ProductDetailsProps) {
     return (
         <>
-            <div className="w-full flex flex-col gap-8 pl-10">
+            <div className="w-full flex flex-col gap-8 max-lg:mt-5 xl:pl-10">
                 <h2 className="text-xl font-medium text-bisyou-font uppercase">
                     {product.title}
                 </h2>
@@ -44,7 +44,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
                 <ProductPrice product={product} />
 
-                <div className="px-8 mt-4 py-2 bg-bisyou-yellow text-bisyou-font rounded-full font-semibold">
+                <div className="px-8 mt-4 py-2 bg-bisyou-yellow text-bisyou-font text-center xl:text-start rounded-full font-semibold">
                     frete grátis acima de R$ 129 | frete fixo de R$ 19,90
                 </div>
             </div>

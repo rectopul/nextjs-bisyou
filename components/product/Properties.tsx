@@ -42,7 +42,7 @@ export function ProductProperties({ product }: ProductPropertiesProps) {
     return (
         <>
             <div className="w-full px-4">
-                <div className="max-w-bisyouContainer mx-auto w-full grid grid-cols-2 gap-10">
+                <div className="max-w-bisyouContainer mx-auto w-full grid grid-cols-1 max-lg:mb-10 xl:grid-cols-2 gap-10">
                     {product.collections.edges.length > 0 && (
                         <div className="flex flex-col gap-3">
                             <h2 className="text-bisyou-font text-2xl font-bold mb-4">
