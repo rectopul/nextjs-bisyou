@@ -18,7 +18,7 @@ export function SearchFilter() {
         <>
             <Button
                 variant="bisCarousel"
-                className="font-bold absolute right-10 top-0 w-8 h-8 p-2"
+                className="font-bold md:hidden absolute right-10 top-0 w-8 h-8 p-2"
                 onClick={() => setShow(!show)}
             >
                 <Filter size={23} strokeWidth={6} />

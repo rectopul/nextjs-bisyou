@@ -26,6 +26,9 @@ const config = {
                 bisyouContainer: "1100px",
                 bisyouContainerHome: "1270px",
             },
+            gridAutoRows: {
+                1: "1fr",
+            },
             colors: {
                 blue: {
                     gray: {

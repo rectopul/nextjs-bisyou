@@ -72,7 +72,7 @@ export function MissionForm({ settings }: SettingsFormProps) {
 
     useEffect(() => {
         setValue("storename", settings.storename);
-    }, [settings]);
+    }, [settings, setValue]);
 
     return (
         <>

@@ -13,7 +13,7 @@ export function BuyButton({ handle, id, size }: BuyButtonProps) {
         <>
             <div
                 data-size={size}
-                className="w-full data-[size=small]:max-w-[250px] mt-auto flex items-center gap-1"
+                className="w-full data-[size=small]:max-w-[250px] data-[size=list]:max-w-[250px] md:mt-auto flex items-center gap-1"
             >
                 <a
                     href={`/product/${handle}`}

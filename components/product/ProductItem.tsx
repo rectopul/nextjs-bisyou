@@ -16,11 +16,11 @@ export function ProductItem({ product, variant }: ProductItemProps) {
         <>
             <div
                 data-variant={variant}
-                className="w-full animate-in fade-in-0 duration-500 data-[variant=list]:fade-in-100  data-[variant=spacing]:px-10 flex justify-center bg-white"
+                className="w-full h-full animate-in fade-in-0 duration-500 data-[variant=list]:fade-in-100  data-[variant=spacing]:px-10 flex justify-center bg-white"
             >
                 <div
                     data-variant={variant}
-                    className="w-full data-[variant=list]:grid md:data-[variant=list]:grid-cols-[170px_auto] flex flex-col gap-2 data-[variant=spacing]:xl:max-w-[300px] rounded-md overflow-hidden"
+                    className="w-full h-full data-[variant=list]:grid md:data-[variant=list]:grid-cols-[170px_auto] flex flex-col gap-2 data-[variant=spacing]:xl:max-w-[300px] rounded-md overflow-hidden"
                 >
                     <figure className="w-full relative">
                         <span

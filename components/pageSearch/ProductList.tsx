@@ -40,7 +40,7 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
                 layout="preserve-aspect"
                 className={`grid gap-5 transition-all duration-500 ${
                     listType === "grid"
-                        ? "grid-cols-2 md:grid-cols-3"
+                        ? "grid-cols-2 md:grid-cols-3 auto-rows-1"
                         : "grid-cols-1"
                 }`}
                 transition={{
