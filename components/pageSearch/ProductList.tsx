@@ -9,7 +9,9 @@ import Image from "next/image";
 import { ProductItem } from "../product/ProductItem";
 
 export function ProductList({ data }: Shopify.CollectionSinge) {
-    const [listType, setListType] = useState<string>("grid");
+    const [listType, setListType] = useState<
+        "default" | "grid" | "spacing" | "list" | undefined
+    >("grid");
 
     return (
         <>
@@ -37,7 +39,9 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
             <motion.div
                 layout="preserve-aspect"
                 className={`grid gap-5 transition-all duration-500 ${
-                    listType === "grid" ? "grid-cols-3" : "grid-cols-1"
+                    listType === "grid"
+                        ? "grid-cols-2 md:grid-cols-3"
+                        : "grid-cols-1"
                 }`}
                 transition={{
                     layout: {
@@ -61,9 +65,7 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
                         >
                             <ProductItem
                                 product={{ ...p }}
-                                variant={
-                                    listType !== "grid" ? "list" : "default"
-                                }
+                                variant={listType}
                             />
                         </motion.div>
                     ))}

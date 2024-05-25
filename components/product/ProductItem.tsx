@@ -20,7 +20,7 @@ export function ProductItem({ product, variant }: ProductItemProps) {
             >
                 <div
                     data-variant={variant}
-                    className="w-full data-[variant=list]:grid data-[variant=list]:grid-cols-[170px_auto] flex flex-col gap-2 data-[variant=spacing]:xl:max-w-[300px] rounded-md overflow-hidden"
+                    className="w-full data-[variant=list]:grid md:data-[variant=list]:grid-cols-[170px_auto] flex flex-col gap-2 data-[variant=spacing]:xl:max-w-[300px] rounded-md overflow-hidden"
                 >
                     <figure className="w-full relative">
                         <span

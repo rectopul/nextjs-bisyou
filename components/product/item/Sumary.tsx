@@ -50,7 +50,7 @@ export function ProductItemSumary({ product, variant }: ProductItemSumary) {
                 <BuyButton
                     handle={product.handle}
                     id={product.id}
-                    size={variant == "list" && "small"}
+                    size={variant}
                 />
             </div>
         </>
