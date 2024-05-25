@@ -10,6 +10,7 @@ export interface Data {
 }
 
 export interface Product {
+    id: string;
     availableForSale: boolean;
     tags: string[];
     variants: Variants;

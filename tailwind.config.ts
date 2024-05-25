@@ -37,6 +37,7 @@ const config = {
                 bisyou: {
                     default: "#f4c2b9",
                     secondary: "#fdf6f6",
+                    icon: "#a36157",
                     gray: "#e6e6e6",
                     font: "#6e4945",
                     fontLight: "#935f59",

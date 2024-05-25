@@ -1,24 +1,4 @@
-query SearchProductsAndPages($query: String!) {
-    products(first: 10, query: $query) {
-        edges {
-            node {
-                ...ProductFragment
-            }
-        }
-    }
-    pages(first: 10, query: $query) {
-        edges {
-            node {
-                id
-                title
-                handle
-                bodySummary
-                body
-            }
-        }
-    }
-}
-
+export const PRODUCT_FRAGMENT = `
 fragment ProductFragment on Product {
     availableForSale
     collections(first: 10) {
@@ -167,3 +147,4 @@ fragment ProductFragment on Product {
         }
     }
 }
+`;

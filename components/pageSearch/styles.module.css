@@ -1,0 +1,52 @@
+/* styles.css */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem; /* gap-5 */
+    transition: all 0.5s ease-in-out;
+}
+
+.list-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem; /* gap-5 */
+    transition: all 0.5s ease-in-out;
+}
+
+.product-item {
+    border: 1px solid #cbd5e1; /* border-slate-200 */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 1rem; /* p-4 */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.grid-layout .product-item {
+    transform: scale(1);
+}
+
+.list-layout .product-item {
+    transform: translateY(0);
+}
+
+.fade-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.fade-exit {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s, transform 0.5s;
+}

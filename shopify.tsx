@@ -10,6 +10,7 @@ import {
     ProductWithMedia,
 } from "./@types/shopify/ProductWithMedia";
 import { BLOG_ARTICLE_FIELDS } from "./queries/typescript/blog";
+import { PRODUCT_FRAGMENT } from "./queries/typescript/product";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
@@ -614,6 +615,45 @@ export async function getBlogArticles(
 
     try {
         const response: Shopify.Articles = await ShopifyData(query);
+
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function searchShop(
+    terms: string = "news"
+): Promise<Shopify.Search | null> {
+    const query = `
+      query SearchProductsAndPages($query: String!) {
+        products(first: 10, query: $query) {
+            edges {
+                node {
+                    ...ProductFragment
+                }
+            }
+        }
+        pages(first: 10, query: $query) {
+            edges {
+                node {
+                    id
+                    title
+                    handle
+                    bodySummary
+                    body
+                }
+            }
+        }
+      }
+      ${PRODUCT_FRAGMENT}
+      variables: {
+        query: ${terms},
+      },
+    `;
+
+    try {
+        const response: Shopify.Search = await ShopifyData(query);
 
         return response;
     } catch (error) {
