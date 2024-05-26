@@ -9,10 +9,23 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Filter } from "@/components/icons/Icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import useWindowSize from "@/util/useWindowSize";
 
 export function SearchFilter() {
     const [show, setShow] = useState<boolean>(false);
+    const [isMobile, setIsmobile] = useState<boolean>(false);
+    const size = useWindowSize().width;
+
+    useEffect(() => {
+        setIsmobile(size < 767 ? true : false);
+    }, []);
+
+    const variants = {
+        hidden: { x: -180 },
+        visible: { x: 0 },
+    };
 
     return (
         <>
@@ -24,9 +37,17 @@ export function SearchFilter() {
                 <Filter size={23} strokeWidth={6} />
             </Button>
 
-            <div
-                data-show={show}
-                className="flex flex-col bg-white gap-5 z-20 max-md:p-3 transition-all max-md:shadow duration-300 max-md:fade-out-0 max-md:-translate-x-52 max-md:data-[show=true]:-translate-x-0 max-md:data-[show=true]:fade-in-100 max-md:absolute "
+            <motion.div
+                className="flex flex-col bg-white gap-5 z-20 absolute md:relative top-0 -left-3 max-md:p-3 max-md:shadow"
+                variants={variants}
+                initial={isMobile ? "hidden" : "visible"}
+                animate={
+                    isMobile && show
+                        ? "visible"
+                        : isMobile
+                        ? "hidden"
+                        : "visible"
+                }
             >
                 <div className="w-full flex justify-between text-bisyou-icon items-center">
                     <h2 className="text-2xl">Filtrar por</h2>
@@ -174,7 +195,7 @@ export function SearchFilter() {
                         </Select>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }
