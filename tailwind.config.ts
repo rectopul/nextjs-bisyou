@@ -21,15 +21,51 @@ const config = {
         extend: {
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans],
+                poppins: ["var(--font-poppins)", "sans-serif"],
             },
             maxWidth: {
                 bisyouContainer: "1100px",
                 bisyouContainerHome: "1270px",
             },
+            fontSize: {
+                "hd-1": "26px",
+                "hd-2": "22px",
+                "hd-3": "20px",
+                "hd-4": "16px",
+                "hd-5": "14px",
+                "hd-sm": "12px",
+                "hd-xs": "10px",
+            },
             gridAutoRows: {
                 1: "1fr",
             },
             colors: {
+                alto: {
+                    "50": "#f7f7f7",
+                    "100": "#ededed",
+                    "200": "#dcdcdc",
+                    "300": "#c8c8c8",
+                    "400": "#adadad",
+                    "500": "#999999",
+                    "600": "#888888",
+                    "700": "#7b7b7b",
+                    "800": "#676767",
+                    "900": "#545454",
+                    "950": "#363636",
+                },
+                koromiko: {
+                    "50": "#fff9ed",
+                    "100": "#fff1d4",
+                    "200": "#ffdfa9",
+                    "300": "#ffbd5a",
+                    "400": "#fea439",
+                    "500": "#fc8713",
+                    "600": "#ed6b09",
+                    "700": "#c55109",
+                    "800": "#9c3f10",
+                    "900": "#7e3610",
+                    "950": "#441a06",
+                },
                 blue: {
                     gray: {
                         200: "#b0bec5",

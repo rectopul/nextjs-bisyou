@@ -10,14 +10,32 @@ import {
     ProductWithMedia,
 } from "./@types/shopify/ProductWithMedia";
 import { BLOG_ARTICLE_FIELDS } from "./queries/typescript/blog";
-import { PRODUCT_FRAGMENT } from "./queries/typescript/product";
+import { GET_CHECKOUT } from "./queries/typescript/getCheckout";
+import { CREATE_CHECKOUT } from "./queries/typescript/createCheckout";
+import {
+    PRODUCT_FRAGMENT,
+    PRODUCT_FRAGMENT_WHIT_COLLECTION,
+    VARIANT_FRAGMENT,
+} from "./queries/typescript/product";
+import { ADD_TO_CART } from "./queries/typescript/addToCart";
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN || "";
+const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
-    process.env.SHOPIFY_STROREFRONT_ACCESS_TOKEN || "";
+    process.env.NEXT_PUBLIC_SHOPIFY_STROREFRONT_ACCESS_TOKEN || "";
 
-async function ShopifyData(query: string): Promise<any> {
+interface GraphQlVariables {
+    [key: string]: any;
+}
+
+async function ShopifyData(
+    query: string,
+    variables?: GraphQlVariables
+): Promise<any> {
     const URL = `https://${domain}/api/2024-04/graphql.json`;
+
+    if (domain == "") {
+        throw new Error(`Não foi possivel localizar a url`);
+    }
 
     const options = {
         endpoint: URL,
@@ -27,15 +45,16 @@ async function ShopifyData(query: string): Promise<any> {
             "Content-Type": "application/json",
             "X-Shopify-Storefront-Access-Token": storeFrontAccessToken,
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, variables }),
     };
 
     try {
         const data = await fetch(URL, options);
+
         return data.json();
     } catch (error) {
-        console.log(`erro na busca de produtos`, error);
-        throw new Error(`Erro ao buscar produtos`);
+        console.log(`erro na query shopify`, query);
+        throw new Error(`Erro na query shopify`);
     }
 }
 
@@ -152,156 +171,23 @@ export async function getProductsInCollection() {
 export async function getProductShopify(
     handle: string
 ): Promise<Product | null> {
-    const query = `{
-        product(handle: "${handle}") {
-          availableForSale
-          collections(first: 10) {
-            edges {
-              node {
-                title
-                handle
-                products(first: 10) {
-                  edges {
-                    node {
-                      availableForSale
-                      title
-                      description
-                      id
-                      handle
-                      options(first: 10) {
-                        id
-                        name
-                        values
-                      }
-                      featuredImage {
-                        altText
-                        width
-                        height
-                        id
-                        thumbnail: url(transform: {maxWidth: 100})
-                        url
-                      }
-                      priceRange {
-                        maxVariantPrice {
-                          amount
-                        }
-                      }
-                      compareAtPriceRange {
-                        maxVariantPrice {
-                          amount
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-          tags
-          variants(first: 10) {
-            edges {
-              node {
-                availableForSale
-                title
-                quantityAvailable
-                selectedOptions {
-                  name
-                  value
-                }
-                compareAtPrice {
-                  amount
-                }
-                price {
-                  amount
-                }
-                image {
-                  altText
-                  height
-                  id
-                  url(transform: {maxWidth: 1000})
-                  thumbnail: url(transform: {maxWidth: 100})
-                  width
-                }
-              }
-            }
-          }
-          priceRange {
-            maxVariantPrice {
-              amount
-            }
-            minVariantPrice {
-              amount
-            }
-          }
-          compareAtPriceRange {
-            maxVariantPrice {
-              amount
-            }
-            minVariantPrice {
-              amount
-            }
-          }
-          title
-          description
-          descriptionHtml
-          seo {
-            description
-            title
-          }
-          images(first: 10) {
-            edges {
-              node {
-                altText
-                id
-                url(transform: {maxWidth: 1000})
-                thumbnail: url(transform: {maxWidth: 100})
-              }
-            }
-          }
-          featuredImage {
-            id
-            altText
-            height
-            url
-            thumbnail: url(transform: {maxWidth: 100})
-            width
-          }
-          metafield(key: "propriedades", namespace: "custom") {
-            references(first: 10) {
-              edges {
-                node {
-                  ... on Metaobject {
-                    id
-                    fields {
-                      key
-                      value
-                    }
-                    handle
-                  }
-                }
-              }
-            }
-          }
-          comparator: metafield(key: "comparator", namespace: "custom") {
-            reference {
-              ...on Metaobject {
-                fields {
-                  key
-                  value
-                  reference {
-                    ...on MediaImage {
-                      alt
-                      image {
-                        url
-                      }
-                    }
-                  }
-                }
-              }
+    const query = `
+    {
+      product(handle: "${handle}") {
+        ...ProductFragment
+        collections(first: 10) {
+          edges {
+            node {
+              ...CollectionFragMent
             }
           }
         }
-    }`;
+      }
+    }
+    ${VARIANT_FRAGMENT}
+    ${PRODUCT_FRAGMENT_WHIT_COLLECTION}
+    ${PRODUCT_FRAGMENT}
+    `;
 
     try {
         const response: ProductObject = await ShopifyData(query);
@@ -462,126 +348,15 @@ export async function getCollection(
         products(first: 15) {
           edges {
             node {
-              id
-              handle
-              description
-              featuredImage {
-                url
-                thumbnail: url(transform: {maxWidth: 300, maxHeight: 300})
-                id
-                height
-                altText
-                width
-              }
-              images(first: 10) {
-                edges {
-                  node {
-                    altText
-                    height
-                    id
-                    url
-                    thumbnail: url(transform: {maxHeight: 300, maxWidth: 300})
-                    width
-                  }
-                }
-              }
-              priceRange {
-                maxVariantPrice {
-                  amount
-                }
-                minVariantPrice {
-                  amount
-                }
-              }
-              media(first: 10) {
-                edges {
-                  node {
-                    mediaContentType
-                    ... on ExternalVideo {
-                      id
-                      embedUrl
-                      embeddedUrl
-                      originUrl
-                      previewImage {
-                        altText
-                        height
-                        src
-                        url
-                        width
-                        id
-                      }
-                      alt
-                    }
-                    alt
-                    id
-                    ... on Video {
-                      id
-                      previewImage {
-                        altText
-                        height
-                        id
-                        url
-                        width
-                      }
-                      alt
-                    }
-                    ... on MediaImage {
-                      id
-                      alt
-                      image {
-                        altText
-                        height
-                        url
-                        width
-                      }
-                    }
-                  }
-                }
-              }
-              availableForSale
-              title
-              options(first: 10) {
-                name
-                values
-                id
-              }
-              variants(first: 10) {
-                nodes {
-                  availableForSale
-                  compareAtPriceV2 {
-                    amount
-                  }
-                  compareAtPrice {
-                    amount
-                  }
-                  id
-                  price {
-                    amount
-                  }
-                  priceV2 {
-                    amount
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  sku
-                  title
-                }
-              }
-              compareAtPriceRange {
-                maxVariantPrice {
-                  amount
-                }
-                minVariantPrice {
-                  amount
-                }
-              }
+              ...ProductFragment
             }
           }
         }
       }
-    }`;
+    }
+    ${VARIANT_FRAGMENT}
+    ${PRODUCT_FRAGMENT}
+    `;
 
     try {
         const response: CollectionSingleObject = await ShopifyData(query);
@@ -657,6 +432,65 @@ export async function searchShop(
 
         return response;
     } catch (error) {
+        throw error;
+    }
+}
+
+export async function createCart(): Promise<Shopify.Cart.Data | null> {
+    const query = `
+    ${CREATE_CHECKOUT}
+    `;
+
+    try {
+        const response: Shopify.Cart.Data = await ShopifyData(query);
+
+        if (response.errors) {
+            throw new Error(response.errors.errors[0].message);
+        }
+
+        return response;
+    } catch (error) {
+        console.log(`erro ao criar carrinho`, error);
+        throw error;
+    }
+}
+
+export async function getCart(
+    checkoutId: string
+): Promise<Shopify.Cart.Checkout | null> {
+    const query = `
+    ${GET_CHECKOUT}
+    `;
+
+    try {
+        const response: Shopify.Cart.Checkout = await ShopifyData(query, {
+            checkoutId,
+        });
+
+        return response;
+    } catch (error) {
+        console.log(`erro na busca do carrinho`, error);
+        throw error;
+    }
+}
+
+export async function addToCart(
+    checkoutId: string,
+    lineItems: { variantId: string; quantity: number }[]
+): Promise<Shopify.Cart.Checkout | null> {
+    const query = `
+    ${ADD_TO_CART}
+    `;
+
+    try {
+        const response: Shopify.Cart.Checkout = await ShopifyData(query, {
+            checkoutId,
+            lineItems,
+        });
+
+        return response;
+    } catch (error) {
+        console.log(`erro na busca do carrinho`, error);
         throw error;
     }
 }

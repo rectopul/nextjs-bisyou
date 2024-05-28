@@ -50,7 +50,7 @@ export function ProductsRecomended({ collection }: ProductsRecomendedProps) {
                                     key={`prod-collection-${p.node.id}`}
                                 >
                                     <ProductItem
-                                        product={p}
+                                        product={p.node}
                                         variant="spacing"
                                     />
                                 </CarouselItem>

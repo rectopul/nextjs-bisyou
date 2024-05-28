@@ -30,7 +30,7 @@ export function ShopCollections({ collections }: ShopCollections) {
                                     <div className="max-md:w-full flex flex-col gap-3">
                                         <a
                                             href={`/collecoes/${c.node.handle}`}
-                                            className="xl:w-[200px] xl:h-[200px] relative flex justify-center items-center rounded-full overflow-hidden bg-slate-300"
+                                            className="xl:w-[200px] xl:h-[200px] mx-auto relative flex justify-center items-center rounded-full overflow-hidden bg-slate-300"
                                         >
                                             {c.node.image && (
                                                 <Image

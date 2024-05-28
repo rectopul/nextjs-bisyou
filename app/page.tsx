@@ -1,4 +1,3 @@
-import { CollectionEdge, ProductNode } from "@/@types/CollectionInProduct";
 import { About } from "@/components/About";
 import { BlogArticlesCarousel } from "@/components/BlogArticlesCarousel";
 import Footer from "@/components/Footer";
@@ -9,10 +8,12 @@ import { Collection } from "@/components/collection/Collection";
 import { FullBanners } from "@/components/home/FullBanners";
 import { Avaliation } from "@/components/product/Avaliation";
 import { FeaturedModel2 } from "@/components/product/FeaturedModel2";
+import { QuickView } from "@/components/quickview";
 import { ListRullerOptions } from "@/components/rullerOptions/List";
 import { SectionPartners } from "@/components/sections/Partners";
 import { ShopCollections } from "@/components/shopCollections/List";
 import prisma from "@/lib/client";
+import QuicViewProvider from "@/providers/QuickView";
 import {
     getBlogArticles,
     getCollection,
@@ -86,24 +87,6 @@ export default async function Home() {
         return <h1>Erro de servidor</h1>;
     }
 
-    const collectionNode: CollectionEdge = {
-        node: {
-            handle: collectionMoreSell.data.collection.handle,
-            title: collectionMoreSell.data.collection.title,
-            products: {
-                edges: collectionMoreSell.data.collection.products.edges.map(
-                    (p) => {
-                        const response: ProductNode = {
-                            node: { ...p.node },
-                        };
-
-                        return response;
-                    }
-                ),
-            },
-        },
-    };
-
     function Loading() {
         return (
             <>
@@ -121,13 +104,16 @@ export default async function Home() {
                 {collections && <ShopCollections collections={collections} />}
 
                 <Suspense fallback={<Loading />}>
-                    {collectionMoreSell && (
-                        <Collection
-                            collection={collectionNode}
-                            transparent={true}
-                            center={true}
-                        />
-                    )}
+                    <QuicViewProvider>
+                        {collectionMoreSell && (
+                            <Collection
+                                collection={collectionMoreSell.data.collection}
+                                transparent={true}
+                                center={true}
+                            />
+                        )}
+                        <QuickView />
+                    </QuicViewProvider>
                 </Suspense>
                 {productWithMedia && (
                     <FeaturedProductWithMedia product={productWithMedia} />

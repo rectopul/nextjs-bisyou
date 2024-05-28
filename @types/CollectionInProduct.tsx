@@ -1,3 +1,5 @@
+import { Shopify } from "./shopify";
+
 export interface CollectionInProduct {
     edges: CollectionEdge[];
 }
@@ -17,10 +19,10 @@ export interface Products {
 }
 
 export interface ProductNode {
-    node: Node2;
+    node: Shopify.Products;
 }
 
-export interface Node2 {
+export interface SimpleNode {
     availableForSale: boolean;
     title: string;
     description: string;

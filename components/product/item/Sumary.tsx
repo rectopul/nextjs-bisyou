@@ -48,11 +48,12 @@ export function ProductItemSumary({ product, variant }: ProductItemSumary) {
                         ou 5x de {moneyFormat(comparePrice / 5)}
                     </span>
                 </div>
-
                 <BuyButton
                     handle={product.handle}
                     id={product.id}
                     size={variant}
+                    product={product}
+                    hasQuick
                 />
             </div>
         </>

@@ -5,7 +5,9 @@ import { ImageTool } from "@/components/product/ImageTool";
 import { ProductProperties } from "@/components/product/Properties";
 import { SlideImages } from "@/components/product/SlideImages";
 import { ProductSummary } from "@/components/product/Sumary";
+import { QuickView } from "@/components/quickview";
 import prisma from "@/lib/client";
+import QuicViewProvider from "@/providers/QuickView";
 import { getProductShopify, getProductsInCollection } from "@/shopify";
 import { notFound } from "next/navigation";
 import { cache } from "react";
@@ -36,13 +38,16 @@ export default async function Product({ params }: ProductPageProps) {
         <>
             <Header />
             <ProductSummary product={product} />
-            <ProductProperties product={product} />
-            {product.comparator && (
-                <ImageTool comparator={product.comparator} />
-            )}
-            <Avaliation />
-            <SlideImages images={imageSlide} />
-            {hasCross && <Collection collection={hasCross} />}
+            <QuicViewProvider>
+                <ProductProperties product={product} />
+                {product.comparator && (
+                    <ImageTool comparator={product.comparator} />
+                )}
+                <Avaliation />
+                <SlideImages images={imageSlide} />
+                {hasCross && <Collection collection={hasCross.node} />}
+                <QuickView />
+            </QuicViewProvider>
         </>
     );
 }

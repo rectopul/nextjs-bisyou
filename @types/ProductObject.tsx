@@ -15,7 +15,7 @@ export interface Product {
     tags: string[];
     variants: Variants;
     priceRange: PriceRange;
-    compareAtPriceRange: CompareAtPriceRange;
+    compareAtPriceRange: PriceRange;
     title: string;
     handle: string;
     description: string;
@@ -73,6 +73,7 @@ export interface Edge {
 }
 
 export interface Node {
+    id: string;
     availableForSale: boolean;
     title: string;
     quantityAvailable: any;
@@ -106,20 +107,11 @@ export interface Image {
 
 export interface PriceRange {
     maxVariantPrice: MaxVariantPrice;
-    minVariantPrice: MinVariantPrice;
+    minVariantPrice: MaxVariantPrice;
 }
 
 export interface MaxVariantPrice {
     amount: string;
-}
-
-export interface MinVariantPrice {
-    amount: string;
-}
-
-export interface CompareAtPriceRange {
-    maxVariantPrice: MaxVariantPrice2;
-    minVariantPrice: MinVariantPrice2;
 }
 
 export interface MaxVariantPrice2 {

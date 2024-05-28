@@ -2,14 +2,40 @@
 
 import { Plus, ShoppingBag } from "lucide-react";
 import { motion } from "framer-motion";
+import { useCart } from "@/providers/Cart";
+import { useQuickView } from "@/providers/QuickView";
+import { Shopify } from "@/@types/shopify";
 
 interface BuyButtonProps {
     handle: string;
     id: string;
     size?: "spacing" | "default" | "list" | "grid" | false | null;
+    hasQuick?: boolean;
+    product?: Shopify.Products;
 }
 
-export function BuyButton({ handle, id, size }: BuyButtonProps) {
+export function BuyButton({
+    handle,
+    id,
+    size,
+    hasQuick = false,
+    product,
+}: BuyButtonProps) {
+    const { addToCart } = useCart();
+    const { open, state } = useQuickView();
+
+    const handleAddToCart = async () => {
+        try {
+            if (hasQuick && product) {
+                return open(product);
+            }
+
+            return await addToCart({ quantity: 1, variantId: id });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <>
             <div
@@ -25,7 +51,8 @@ export function BuyButton({ handle, id, size }: BuyButtonProps) {
                 </a>
                 <motion.button
                     data-size={size}
-                    className="w-16 h-full data-[size=grid]:max-md:h-9 overflow-hidden rounded-l-none flex justify-center items-center rounded-r-full text-white bg-bisyou-greenBlack group"
+                    className="w-16 h-[45px] max-h-full data-[size=grid]:max-md:h-9 overflow-hidden rounded-l-none flex justify-center items-center rounded-r-full text-white bg-bisyou-greenBlack group"
+                    onClick={handleAddToCart}
                     initial={{
                         width: "64px",
                         borderRadius: "0 9999px 9999px 0",

@@ -1,0 +1,55 @@
+mutation AddToCart($varId: ID!) {
+    checkoutCreate(input: { lineItems: [{ variantId: $varId, quantity: 1 }] }) {
+        checkout {
+            id
+            webUrl
+            lineItems(first: 5) {
+                edges {
+                    node {
+                        title
+                        quantity
+                        id
+                        unitPrice {
+                            amount
+                        }
+                        variant {
+                            id
+                            image {
+                                altText
+                                src
+                                id
+                                width
+                                url(transform: { maxWidth: 150 })
+                            }
+                            price {
+                                amount
+                            }
+                            title
+                            selectedOptions {
+                                name
+                                value
+                            }
+                        }
+                    }
+                }
+            }
+            subtotalPrice {
+                amount
+            }
+            totalPrice {
+                amount
+            }
+            totalTax {
+                amount
+            }
+            totalDuties {
+                amount
+            }
+        }
+        checkoutUserErrors {
+            code
+            field
+            message
+        }
+    }
+}

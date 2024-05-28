@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter as FontSans } from "next/font/google";
+import { Inter as FontSans, Poppins } from "next/font/google";
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import CartProvider from "@/providers/Cart";
 
 const fontSans = FontSans({
     subsets: ["latin"],
     variable: "--font-sans",
+});
+
+const fontPoppins = Poppins({
+    subsets: ["latin"],
+    variable: "--font-poppins",
+    style: ["normal"],
+    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -21,14 +29,16 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html
+            lang="en"
+            className={`${fontSans.variable} ${fontPoppins.variable}`}
+        >
             <body
                 className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
-                    fontSans.variable
+                    "min-h-screen bg-background font-sans antialiased"
                 )}
             >
-                {children}
+                <CartProvider>{children}</CartProvider>
                 <Toaster
                     richColors
                     toastOptions={{

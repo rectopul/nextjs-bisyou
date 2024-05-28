@@ -1,17 +1,21 @@
 "use client";
 
-import { ProductNode } from "@/@types/CollectionInProduct";
 import { discountCalculator } from "@/util/discountCalculator";
 import Image from "next/image";
 import { ProductItemSumary } from "./item/Sumary";
 import { Shopify } from "@/@types/shopify";
 
 interface ProductItemProps {
-    product: ProductNode;
+    product: Shopify.Products;
     variant?: "spacing" | "default" | "list" | "grid";
 }
 
 export function ProductItem({ product, variant }: ProductItemProps) {
+    const price = parseFloat(product.priceRange.maxVariantPrice.amount);
+    const compare = parseFloat(
+        product.compareAtPriceRange.maxVariantPrice.amount
+    );
+
     return (
         <>
             <div
@@ -27,45 +31,28 @@ export function ProductItem({ product, variant }: ProductItemProps) {
                             data-variant={variant}
                             className="absolute data-[variant=list]:text-xs rounded-full left-3 top-3 px-4 py-1 bg-bisyou-yellow text-bisyou-font font-semibold text-sm"
                         >
-                            {
-                                product.node.options[
-                                    product.node.options.length - 1
-                                ].values[0]
-                            }
+                            {product.variants?.edges?.at(-1)?.node.title}
                         </span>
 
                         <span
                             data-variant={variant}
                             className="absolute data-[variant=list]:text-xs rounded-full left-3 bottom-3 px-4 py-1 bg-bisyou-yellow text-bisyou-font font-semibold text-sm"
                         >
-                            {discountCalculator(
-                                parseFloat(
-                                    product.node.compareAtPriceRange
-                                        .maxVariantPrice.amount
-                                ),
-                                parseFloat(
-                                    product.node.priceRange.maxVariantPrice
-                                        .amount
-                                )
-                            )}
-                            % OFF
+                            {discountCalculator(price, compare)}% OFF
                         </span>
+
                         <Image
                             width={300}
                             height={300}
-                            src={product.node.featuredImage.url}
+                            src={product.featuredImage.url}
                             className="max-sm:w-full"
                             alt={
-                                product.node.featuredImage.altText ||
-                                product.node.handle
+                                product.featuredImage.altText || product.handle
                             }
                         />
                     </figure>
 
-                    <ProductItemSumary
-                        product={product.node as unknown as Shopify.Products}
-                        variant={variant}
-                    />
+                    <ProductItemSumary product={product} variant={variant} />
                 </div>
             </div>
         </>

@@ -38,9 +38,10 @@ export function SearchFilter() {
             </Button>
 
             <motion.div
-                className="flex flex-col bg-white gap-5 z-20 absolute md:relative top-0 -left-3 max-md:p-3 max-md:shadow"
+                className="flex flex-col bg-white max-md:rounded-md gap-5 z-20 max-md:-translate-x-full absolute md:relative top-0 -left-3 max-md:p-3 max-md:shadow"
                 variants={variants}
                 initial={isMobile ? "hidden" : "visible"}
+                transition={{ duration: 0.1 }}
                 animate={
                     isMobile && show
                         ? "visible"

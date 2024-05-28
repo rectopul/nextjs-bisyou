@@ -1,0 +1,65 @@
+mutation AddToCart {
+    cartCreate {
+        cart {
+            checkoutUrl
+            cost {
+                subtotalAmountEstimated
+                totalAmountEstimated
+                totalAmount {
+                    amount
+                }
+                subtotalAmount {
+                    amount
+                }
+                totalDutyAmount {
+                    amount
+                }
+                totalTaxAmount {
+                    amount
+                }
+            }
+            id
+            createdAt
+            buyerIdentity {
+                email
+                phone
+            }
+            totalQuantity
+            lines(first: 10) {
+                edges {
+                    node {
+                        ... on CartLine {
+                            id
+                            cost {
+                                amountPerQuantity {
+                                    amount
+                                }
+                                compareAtAmountPerQuantity {
+                                    amount
+                                }
+                                subtotalAmount {
+                                    amount
+                                }
+                                totalAmount {
+                                    amount
+                                }
+                            }
+                        }
+                        id
+                        quantity
+                        merchandise {
+                            ... on ProductVariant {
+                                id
+                                title
+                                price {
+                                    amount
+                                }
+                                sku
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

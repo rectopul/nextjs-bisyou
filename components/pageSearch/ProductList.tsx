@@ -63,10 +63,7 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
                             data-type={listType}
                             className="flex flex-col data-[type=list]:h-auto rounded-xl min-h-10"
                         >
-                            <ProductItem
-                                product={{ ...p }}
-                                variant={listType}
-                            />
+                            <ProductItem product={p.node} variant={listType} />
                         </motion.div>
                     ))}
             </motion.div>

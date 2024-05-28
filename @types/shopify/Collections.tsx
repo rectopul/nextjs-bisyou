@@ -1,4 +1,5 @@
 import { ProductOptions } from "../CollectionInProduct";
+import { Shopify } from "../shopify";
 
 export interface CollectionObject {
     data: {
@@ -70,38 +71,7 @@ export interface ProductVariant {
 }
 
 export interface CollectionProduct {
-    node: {
-        id: string;
-        handle: string;
-        featuredImage: ProductImage;
-        description: string;
-        images: {
-            edges: { node: ProductImage }[];
-        };
-        options: ProductOptions[];
-        priceRange: {
-            maxVariantPrice: {
-                amount: string;
-            };
-            minVariantPrice: {
-                amount: string;
-            };
-        };
-        media: {
-            edges: { node: ProductMedia }[];
-        };
-        availableForSale: boolean;
-        title: string;
-        variants: { nodes: ProductVariant }[];
-        compareAtPriceRange: {
-            maxVariantPrice: {
-                amount: string;
-            };
-            minVariantPrice: {
-                amount: string;
-            };
-        };
-    };
+    node: Shopify.Products;
 }
 
 export interface CollectionSingleObject {
