@@ -12,15 +12,50 @@ import { Filter } from "@/components/icons/Icons";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useWindowSize from "@/util/useWindowSize";
+import { Shopify } from "@/@types/shopify";
 
-export function SearchFilter() {
+interface SearchFilterProps {
+    props: Shopify.MetaObjects.MetaObjectEdge[][];
+    categories: Shopify.ProductCategory[];
+}
+
+function convertString(input?: string) {
+    if (!input) return;
+    // Dividir a string pelo caractere de sublinhado "_"
+    const words = input.split("_");
+
+    // Capitalizar a primeira letra de cada palavra
+    const capitalizedWords = words.map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+
+    // Juntar as palavras com espaço
+    const result = capitalizedWords.join(" ");
+
+    return result;
+}
+
+export function SearchFilter({ categories, props }: SearchFilterProps) {
     const [show, setShow] = useState<boolean>(false);
     const [isMobile, setIsmobile] = useState<boolean>(false);
     const size = useWindowSize().width;
 
+    const filters: string[][] = props
+        .map(
+            (pr) =>
+                pr
+                    .map((nm) => {
+                        // Supondo que `sk` esteja definido e acessível aqui
+                        const value = nm.node.fields[0].value;
+                        return value;
+                    })
+                    .at(-1) || "{}"
+        )
+        .map((item) => JSON.parse(item));
+
     useEffect(() => {
         setIsmobile(size < 767 ? true : false);
-    }, []);
+    }, [size]);
 
     const variants = {
         hidden: { x: -180 },
@@ -57,145 +92,48 @@ export function SearchFilter() {
                         <Filter size={23} strokeWidth={6} />
                     </span>
                 </div>
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="etapa" />
-                            </SelectTrigger>
+                {filters.map((ft, k) => (
+                    <div className="w-full flex flex-col" key={`filter-${k}`}>
+                        <div className="w-full">
+                            <Select>
+                                <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
+                                    <SelectValue
+                                        placeholder={convertString(
+                                            props[k].at(-1)?.node.type
+                                        )}
+                                    />
+                                </SelectTrigger>
 
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
+                                <SelectContent>
+                                    {ft.map((sk, k) => (
+                                        <SelectItem
+                                            value={sk}
+                                            key={`${sk}-${k}`}
+                                        >
+                                            {sk}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
-                </div>
+                ))}
 
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="tipo de pele" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <ul className="w-full flex flex-col gap-2 pl-6 font-medium">
-                    <li>
-                        <a
-                            href="#"
-                            className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-                        >
-                            Madura
-                        </a>
+                <ul className="w-full text-sm flex flex-col gap-2 pl-6 font-medium">
+                    <li className="text-bisyou-icon text-lg data-[active=true]:font-bold hover:underline">
+                        Categorias:
                     </li>
-                    <li>
-                        <a
-                            href="#"
-                            data-active={true}
-                            className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-                        >
-                            Oleosa
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-                        >
-                            Mista
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-                        >
-                            Seca
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-                        >
-                            Sensivel
-                        </a>
-                    </li>
+                    {categories.map((c, k) => (
+                        <li key={c.category.id}>
+                            <a
+                                href={`/busca?category=${c.category.name}`}
+                                className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
+                            >
+                                {c.category.name}
+                            </a>
+                        </li>
+                    ))}
                 </ul>
-
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="necessidade" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="ingredientes" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="textura" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-
-                <div className="w-full flex flex-col">
-                    <div className="w-full">
-                        <Select>
-                            <SelectTrigger className="w-full h-9 bg-bisyou-yellow text-[16px] focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                <SelectValue placeholder="qualidade" />
-                            </SelectTrigger>
-
-                            <SelectContent>
-                                <SelectItem value="light">Light</SelectItem>
-                                <SelectItem value="dark">Dark</SelectItem>
-                                <SelectItem value="system">System</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
             </motion.div>
         </>
     );
