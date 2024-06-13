@@ -31,7 +31,9 @@ export function HeaderActions() {
                 </Button>
                 <div className="relative w-10 h-10 bg-transparent text-bisyou-font hover:text-bisyou-green hover:bg-transparent">
                     <span className="absolute -top-2 -right-2 text-xs/5 font-bold w-5 h-5 bg-koromiko-500 text-koromiko-900 rounded-full">
-                        {cart ? cart.data.node.lineItems.edges.length : 0}
+                        {cart && cart.data && cart.data.node
+                            ? cart.data.node.lineItems.edges.length
+                            : 0}
                     </span>
                     <Cart />
                 </div>

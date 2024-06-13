@@ -2,6 +2,6 @@ import { Checkout } from "./CartObject";
 
 export interface CheckoutData {
     data: {
-        node: Checkout;
-    };
+        node: Checkout | null;
+    } | null;
 }

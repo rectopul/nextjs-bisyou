@@ -43,32 +43,6 @@ export async function StoreSettings() {
                     </CardContent>
                 </Card>
             </div>
-            <div>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Páginas da loja</CardTitle>
-                        <CardDescription>
-                            Configuração de informaçoes sobre as páginas da loja
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <StoreForm settings={settings} />
-                    </CardContent>
-                </Card>
-            </div>
-            <div>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Banners da loja</CardTitle>
-                        <CardDescription>
-                            Configuração de informaçoes sobre os banners da loja
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <StoreForm settings={settings} />
-                    </CardContent>
-                </Card>
-            </div>
         </div>
     );
 }

@@ -28,7 +28,7 @@ export default async function Product({ params }: ProductPageProps) {
     const imageSlide = await prisma.imagesSlideDefault.findMany();
     const hasCross = product
         ? product.collections.edges.filter(
-              (c) => c.node.handle === "compre-tambem"
+              (c) => c.node.handle === "bisyou-momentobisyou"
           )[0]
         : null;
 

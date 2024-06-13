@@ -134,14 +134,15 @@ async function ShopifyData(
         body: JSON.stringify({ query, variables }),
     };
 
-    try {
-        const data = await fetch(URL, options);
+    const data = await fetch(URL, options);
 
-        return data.json();
-    } catch (error) {
-        console.log(`erro na query shopify`, query);
-        throw new Error(`Erro na query shopify`);
+    if (!data.ok) {
+        const res = await data.json();
+
+        throw new Error(`Erro shopify ${JSON.stringify(res)}`);
     }
+
+    return data.json();
 }
 
 interface getCollectionsByMetafieldsProps {
@@ -277,7 +278,7 @@ export async function getMetaObject(type: string) {
 export async function getProductsInCollection() {
     const query = `
     {
-        collection(handle: "frontpage") {
+        collection(handle: "live-shop") {
           id
           title
           products(first: 25) {

@@ -120,6 +120,18 @@ export function StoreForm({ settings }: SettingsFormProps) {
                         />
                     </div>
 
+                    <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="email">Produto Destaque </Label>
+                        <Input
+                            id="product_video"
+                            placeholder="Slug do produto com video para destaque na home page"
+                            className="outline-none h-9 focus:outline-none active:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:!shadow-none"
+                            type="email"
+                            defaultValue={settings.product_video || ""}
+                            {...register("product_video")}
+                        />
+                    </div>
+
                     <div className="items-center py-6 pt-0 flex justify-between">
                         <Button variant="default" type="submit">
                             Atualizar

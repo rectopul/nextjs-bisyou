@@ -16,19 +16,36 @@ export function MiniCart() {
         hidden: { x: 395 },
     };
 
+    console.log(`cart object: `, cart);
+
     const subtotal =
-        (cart && parseFloat(cart.data.node.subtotalPrice.amount)) || 0;
+        (cart &&
+            cart.data &&
+            cart.data.node &&
+            parseFloat(cart.data.node.subtotalPrice.amount)) ||
+        0;
 
     const duties =
         (cart &&
+            cart.data &&
+            cart.data.node &&
             cart.data.node.totalDuties &&
             parseFloat(cart.data.node.totalDuties.amount)) ||
         0;
 
-    const total = (cart && parseFloat(cart.data.node.totalPrice.amount)) || 0;
+    const total =
+        (cart &&
+            cart.data &&
+            cart.data.node &&
+            parseFloat(cart.data.node.totalPrice.amount)) ||
+        0;
 
     const tax =
-        (cart && parseFloat(cart.data.node.totalTax.amount) + duties) || 0;
+        (cart &&
+            cart.data &&
+            cart.data.node &&
+            parseFloat(cart.data.node.totalTax.amount) + duties) ||
+        0;
 
     return (
         <>
@@ -49,7 +66,10 @@ export function MiniCart() {
                 </section>
 
                 <section className="flex flex-col gap-3 px-6 w-full">
-                    {cart && cart.data.node.lineItems.edges.length > 0 ? (
+                    {cart &&
+                    cart.data &&
+                    cart.data.node &&
+                    cart.data.node.lineItems.edges.length > 0 ? (
                         cart &&
                         cart.data.node.lineItems.edges.map((i) => (
                             <CartItem

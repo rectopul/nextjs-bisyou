@@ -32,15 +32,9 @@ const fetchData = async () => {
 
         const collections = await getCollections(5);
 
-        const collectionMoreSell = await getCollection("compre-tambem");
+        console.log(`colecoes`, collections);
 
-        const productWithMedia = await getProductWithMediaShopify(
-            "clareador-de-tons-irregulares"
-        );
-
-        const featuredKit = await getProductWithMediaShopify(
-            "kit-bio-estimulador-de-firmeza-hidratante-acqua-360-vitamina-c-preenchedor"
-        );
+        const collectionMoreSell = await getCollection("bisyou-momentobisyou");
 
         const miniBanner = await prisma.miniBanners.findFirst({
             include: { image: true },
@@ -51,6 +45,18 @@ const fetchData = async () => {
         const partners = await prisma.partners.findMany();
 
         const blogArticles = await getBlogArticles();
+
+        let productWithMedia = null;
+        let featuredKit = null;
+
+        if (settings && settings.product_video) {
+            productWithMedia = await getProductWithMediaShopify(
+                settings.product_video
+            );
+            featuredKit = await getProductWithMediaShopify(
+                settings.product_video
+            );
+        }
 
         return {
             fullBanners,

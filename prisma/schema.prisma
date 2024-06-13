@@ -213,6 +213,7 @@ model Settings {
   phone                  String?
   email                  String?
   logo                   String?
+  product_video          String?
 
   @@map("settings")
 }

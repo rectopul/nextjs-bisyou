@@ -47,7 +47,7 @@ export function ShopCollections({ collections }: ShopCollections) {
                                             )}
                                         </a>
 
-                                        <span className="mx-auto font-medium text-bisyou-font text-xl">
+                                        <span className="mx-auto text-center font-medium text-bisyou-font text-[16px]">
                                             {c.node.title}
                                         </span>
                                     </div>
