@@ -1,4 +1,5 @@
 import { SearchFilter } from "@/components/pageSearch/Filter";
+import { PageSearchFilter } from "@/components/pageSearch/PageSearchFilter";
 import { ProductList } from "@/components/pageSearch/ProductList";
 import { getCollection, getMetaObject, listCategories } from "@/shopify";
 import { cache } from "react";
@@ -20,16 +21,13 @@ export default async function SearchPage() {
     return (
         <>
             <div className="w-full px-4 my-16">
-                <div className="relative  w-ful mx-auto max-w-bisyouContainerHome grid grid-cols-1 md:grid-cols-[300px_auto] gap-5 md:gap-14">
-                    <SearchFilter
-                        categories={categories}
+                {products && (
+                    <PageSearchFilter
                         props={[skinType, need, product_type]}
+                        categories={categories}
+                        data={products.data}
                     />
-
-                    <div className="flex flex-col">
-                        {products && <ProductList data={products.data} />}
-                    </div>
-                </div>
+                )}
             </div>
         </>
     );

@@ -124,3 +124,146 @@ export const PRODUCT_FRAGMENT = `fragment ProductFragment on Product {
       }
     }
   }`;
+
+export const PRODUCT_FRAGMENT_ADMIN = `fragment ProductFragment on Product {
+  collections(first: 10) {
+    edges {
+      node {
+        title
+        handle
+        products(first: 10) {
+          edges {
+            node {
+              title
+              description
+              id
+              handle
+              options(first: 10) {
+                id
+                name
+                values
+              }
+              featuredImage {
+                altText
+                width
+                height
+                id
+                thumbnail: url(transform: {maxWidth: 100})
+                url
+              }
+              priceRangeV2 {
+                maxVariantPrice {
+                  amount
+                }
+              }
+              compareAtPriceRange {
+                maxVariantCompareAtPrice {
+                  amount
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  tags
+  variants(first: 10) {
+    edges {
+      node {
+        id
+        availableForSale
+        title
+        selectedOptions {
+          name
+          value
+        }
+        price
+        compareAtPrice
+        image {
+          altText
+          height
+          id
+          url(transform: {maxWidth: 1000})
+          thumbnail: url(transform: {maxWidth: 100})
+          width
+        }
+      }
+    }
+  }
+  priceRangeV2 {
+    maxVariantPrice {
+      amount
+    }
+    minVariantPrice {
+      amount
+    }
+  }
+  compareAtPriceRange {
+    maxVariantCompareAtPrice {
+      amount
+    }
+    minVariantCompareAtPrice {
+      amount
+    }
+  }
+  title
+  description
+  descriptionHtml
+  seo {
+    description
+    title
+  }
+  images(first: 10) {
+    edges {
+      node {
+        altText
+        id
+        url(transform: {maxWidth: 1000})
+        thumbnail: url(transform: {maxWidth: 100})
+      }
+    }
+  }
+  featuredImage {
+    id
+    altText
+    height
+    url
+    thumbnail: url(transform: {maxWidth: 100})
+    width
+  }
+  metafield(key: "propriedades", namespace: "custom") {
+    references(first: 10) {
+      edges {
+        node {
+          ... on Metaobject {
+            id
+            fields {
+              key
+              value
+            }
+            handle
+          }
+        }
+      }
+    }
+  }
+  comparator: metafield(key: "comparator", namespace: "custom") {
+    reference {
+      ... on Metaobject {
+        fields {
+          key
+          value
+          reference {
+            ... on MediaImage {
+              alt
+              image {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;

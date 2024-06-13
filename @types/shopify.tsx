@@ -4,8 +4,10 @@ import { BlogObject } from "./shopify/BlogObject";
 import { CartData, CartItem } from "./shopify/CartObject";
 import { CheckoutData } from "./shopify/Checkout";
 import { CollectionSingleObject } from "./shopify/Collections";
+import { CollectionsByMetafieldsObject } from "./shopify/CollectionsByMetafield";
 import { Errors } from "./shopify/Erros";
 import { MetaObjectFetch, MetaobjectsEdges } from "./shopify/MetaObjects";
+import { ProductByTerm } from "./shopify/ProductByTerm";
 import {
     AllProductCategory,
     ProductCategoryEdge,
@@ -49,9 +51,13 @@ export namespace Shopify {
         export interface Checkout extends CheckoutData {}
     }
 
+    export interface ProductsByTerm extends ProductByTerm {}
+
     export interface Error extends Errors {}
 
     export interface CollectionSinge extends CollectionSingleObject {}
+    export interface CollectionsMetafield
+        extends CollectionsByMetafieldsObject {}
 
     export interface ProductCategoryData extends ProductCategoryEdge {}
     export interface ProductCategory extends AllProductCategory {}

@@ -5,13 +5,22 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { LayoutGrid, LayoutList } from "lucide-react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { ProductItem } from "../product/ProductItem";
 
-export function ProductList({ data }: Shopify.CollectionSinge) {
+interface ProductListSearchProps extends Shopify.CollectionSinge {
+    filtred: Shopify.Products[] | null;
+}
+
+export function ProductList({ data, filtred }: ProductListSearchProps) {
+    const listProducts = data.collection.products.edges.map((p) => p.node);
+    const [products, setProducts] = useState<Shopify.Products[]>(listProducts);
     const [listType, setListType] = useState<
         "default" | "grid" | "spacing" | "list" | undefined
     >("grid");
+
+    useEffect(() => {
+        filtred && setProducts(filtred);
+    }, [filtred]);
 
     return (
         <>
@@ -49,9 +58,8 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
                     },
                 }}
             >
-                {data &&
-                    data.collection &&
-                    data.collection.products.edges.map((p) => (
+                {products &&
+                    products.map((p) => (
                         <motion.div
                             layout="preserve-aspect"
                             transition={{
@@ -59,11 +67,11 @@ export function ProductList({ data }: Shopify.CollectionSinge) {
                                     duration: 0.3,
                                 },
                             }}
-                            key={p.node.id}
+                            key={p.id}
                             data-type={listType}
                             className="flex flex-col data-[type=list]:h-auto rounded-xl min-h-10"
                         >
-                            <ProductItem product={p.node} variant={listType} />
+                            <ProductItem product={p} variant={listType} />
                         </motion.div>
                     ))}
             </motion.div>

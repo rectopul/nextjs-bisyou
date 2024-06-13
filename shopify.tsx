@@ -14,11 +14,14 @@ import { GET_CHECKOUT } from "./queries/typescript/getCheckout";
 import { CREATE_CHECKOUT } from "./queries/typescript/createCheckout";
 import {
     PRODUCT_FRAGMENT,
+    PRODUCT_FRAGMENT_ADMIN,
     PRODUCT_FRAGMENT_WHIT_COLLECTION,
     VARIANT_FRAGMENT,
 } from "./queries/typescript/product";
 import { ADD_TO_CART } from "./queries/typescript/addToCart";
 import { ProductCategoryEdge } from "./@types/shopify/ProductCategory";
+import { FilterChangeProps } from "./components/pageSearch/Filter";
+import { generateFilter } from "./util/generateFilters";
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
@@ -56,6 +59,31 @@ async function ShopifyAdminData(
     } catch (error) {
         console.log(`erro na query shopify`, query);
         throw new Error(`Erro na query shopify`);
+    }
+}
+
+export async function productsByTermAdmin(
+    term: string
+): Promise<Shopify.ProductsByTerm> {
+    const query = `query ProductsByQueries {
+      products(query: "taxonomyCategory:${term}", first: 10) {
+        edges {
+          node {
+            ...ProductFragment
+          }
+        }
+      }
+    }  
+    ${PRODUCT_FRAGMENT_ADMIN}`;
+
+    try {
+        const productsByTerm: Shopify.ProductsByTerm = await ShopifyAdminData(
+            query
+        );
+
+        return productsByTerm;
+    } catch (error) {
+        throw error;
     }
 }
 
@@ -113,6 +141,105 @@ async function ShopifyData(
     } catch (error) {
         console.log(`erro na query shopify`, query);
         throw new Error(`Erro na query shopify`);
+    }
+}
+
+interface getCollectionsByMetafieldsProps {
+    filters: FilterChangeProps[];
+}
+
+function verificarValorNaString(array: FilterChangeProps[], string: string) {
+    return array.some((objeto) => string.includes(objeto.value));
+}
+
+export async function getCollectionsByMetafields({
+    filters,
+}: getCollectionsByMetafieldsProps) {
+    const generate = generateFilter({ filters });
+
+    const query = `query CollectionsByMetafield {
+      collections(first: 10) {
+        edges {
+          node {
+            products(
+              filters: ${generate.metafield}
+              first: 10
+            ) {
+              edges {
+                node {
+                  ${generate.compares}
+                  ...ProductFragment
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    ${PRODUCT_FRAGMENT}  
+    ${VARIANT_FRAGMENT}  
+    `;
+
+    try {
+        const response: Shopify.CollectionsMetafield = await ShopifyData(query);
+
+        const products: Shopify.Products[] = [];
+
+        await response.data.collections.edges.map((cl) => {
+            cl.node.products.edges.map((p) => {
+                if (
+                    p.node.field_nescessidades_do_produto &&
+                    p.node.field_nescessidades_do_produto.reference.field
+                ) {
+                    if (
+                        verificarValorNaString(
+                            filters,
+                            p.node.field_nescessidades_do_produto.reference
+                                .field.value
+                        ) &&
+                        !products.find((el) => el.id === p.node.id)
+                    ) {
+                        products.push(p.node);
+                    }
+                }
+
+                if (
+                    p.node.field_tipo_de_pele &&
+                    p.node.field_tipo_de_pele.reference.field
+                ) {
+                    if (
+                        verificarValorNaString(
+                            filters,
+                            p.node.field_tipo_de_pele.reference.field.value
+                        ) &&
+                        !products.find((el) => el.id === p.node.id)
+                    ) {
+                        products.push(p.node);
+                    }
+                }
+
+                if (
+                    p.node.field_tipo_de_produto &&
+                    p.node.field_tipo_de_produto.reference.field
+                ) {
+                    if (
+                        verificarValorNaString(
+                            filters,
+                            p.node.field_tipo_de_produto.reference.field.value
+                        ) &&
+                        !products.find((el) => el.id === p.node.id)
+                    ) {
+                        products.push(p.node);
+                    }
+                }
+            });
+        });
+
+        console.log(`query shopify`, query);
+
+        return products;
+    } catch (error) {
+        throw error;
     }
 }
 
