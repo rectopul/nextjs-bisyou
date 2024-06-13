@@ -21,13 +21,16 @@ export default async function SearchPage() {
     return (
         <>
             <div className="w-full px-4 my-16">
-                {products && (
-                    <PageSearchFilter
-                        props={[skinType, need, product_type]}
-                        categories={categories}
-                        data={products.data}
-                    />
-                )}
+                {products &&
+                    skinType.length > 0 &&
+                    need.length > 0 &&
+                    product_type.length > 0 && (
+                        <PageSearchFilter
+                            props={[skinType, need, product_type]}
+                            categories={categories}
+                            data={products.data}
+                        />
+                    )}
             </div>
         </>
     );

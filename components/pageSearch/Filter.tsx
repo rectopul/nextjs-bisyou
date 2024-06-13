@@ -61,18 +61,22 @@ export function SearchFilter({
     const [filtersTerm, setFiltersTerm] = useState<FilterChangeProps[]>([]);
     const size = useWindowSize().width;
 
-    const filters: string[][] = props
-        .map(
-            (pr) =>
-                pr
-                    .map((nm) => {
-                        // Supondo que `sk` esteja definido e acessível aqui
-                        const value = nm.node.fields[0].value;
-                        return value;
-                    })
-                    .at(-1) || "{}"
-        )
-        .map((item) => JSON.parse(item));
+    const filters: string[][] | null = props
+        ? props
+              .map(
+                  (pr) =>
+                      pr
+                          .map((nm) => {
+                              // Supondo que `sk` esteja definido e acessível aqui
+                              const value = nm.node.fields[0].value;
+                              return value;
+                          })
+                          .at(-1) || "{}"
+              )
+              .map((item) => JSON.parse(item))
+        : null;
+
+    console.log(`filtros: `, filters);
 
     useEffect(() => {
         setIsmobile(size < 767 ? true : false);
@@ -95,7 +99,7 @@ export function SearchFilter({
             const filtredQuery = filtersTerm.filter(
                 (e) => e.type !== filterKeys[typeIndex]
             );
-            setFiltersTerm((prev) => [
+            setFiltersTerm(() => [
                 { type: filterKeys[typeIndex], key, value },
                 ...filtredQuery,
             ]);
@@ -132,43 +136,48 @@ export function SearchFilter({
                         <Filter size={23} strokeWidth={6} />
                     </span>
                 </div>
-                {filters.map((ft, k) => (
-                    <div className="w-full flex flex-col" key={`filter-${k}`}>
-                        <div className="w-full">
-                            <Select
-                                onValueChange={(value) => {
-                                    const lastElement = props[k]?.at(-1);
-                                    const node = lastElement?.node;
-                                    const type = node?.type;
-                                    const key = node?.fields?.[0]?.key;
+                {filters &&
+                    filters.map((ft, k) => (
+                        <div
+                            className="w-full flex flex-col"
+                            key={`filter-${k}`}
+                        >
+                            <div className="w-full">
+                                <Select
+                                    onValueChange={(value) => {
+                                        const lastElement = props[k]?.at(-1);
+                                        const node = lastElement?.node;
+                                        const type = node?.type;
+                                        const key = node?.fields?.[0]?.key;
 
-                                    if (type && key) {
-                                        handleSelect(type, key, value);
-                                    }
-                                }}
-                            >
-                                <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
-                                    <SelectValue
-                                        placeholder={convertString(
-                                            props[k].at(-1)?.node.type
-                                        )}
-                                    />
-                                </SelectTrigger>
+                                        if (type && key) {
+                                            handleSelect(type, key, value);
+                                        }
+                                    }}
+                                >
+                                    <SelectTrigger className="focus:ring-0 focus:ring-offset-2 ring-offset-bisyou-icon w-full h-9 bg-bisyou-yellow text-[16px] text-bisyou-icon border-0 font-medium rounded-full px-5">
+                                        <SelectValue
+                                            placeholder={convertString(
+                                                props[k].at(-1)?.node.type
+                                            )}
+                                        />
+                                    </SelectTrigger>
 
-                                <SelectContent>
-                                    {ft.map((sk, k) => (
-                                        <SelectItem
-                                            value={sk}
-                                            key={`${sk}-${k}`}
-                                        >
-                                            {sk}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                                    <SelectContent>
+                                        {ft &&
+                                            ft.map((sk, k) => (
+                                                <SelectItem
+                                                    value={sk}
+                                                    key={`${sk}-${k}`}
+                                                >
+                                                    {sk}
+                                                </SelectItem>
+                                            ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
 
                 <ul className="w-full text-sm flex flex-col gap-2 pl-6 font-medium">
                     <li className="text-bisyou-icon text-lg data-[active=true]:font-bold hover:underline">
