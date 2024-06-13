@@ -53,6 +53,18 @@ export default async function Footer() {
                         <h2 className="text-2xl font-normal text-bisyou-font">
                             Atendimento
                         </h2>
+
+                        <ul className="flex flex-col gap-5 font-medium text-md">
+                            <li>
+                                <a
+                                    className="text-bisyou-font hover:underline"
+                                    href="/onde-encontrar"
+                                    aria-label="onde encontrar"
+                                >
+                                    Onde encontrar
+                                </a>
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="flex flex-col gap-10 text-bisyou-font">

@@ -15,7 +15,7 @@ export function Header() {
                 <MiniCart />
 
                 <div className="w-full max-w-bisyouContainer mx-auto py-6 text-center flex justify-center relative">
-                    <Link href="/" replace>
+                    <a href="/">
                         <Image
                             alt="bisyou"
                             src={logo}
@@ -23,7 +23,7 @@ export function Header() {
                             width={150}
                             height={100}
                         />
-                    </Link>
+                    </a>
 
                     <HeaderActions />
                 </div>
