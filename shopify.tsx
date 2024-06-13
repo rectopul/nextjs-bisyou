@@ -184,6 +184,8 @@ export async function getCollectionsByMetafields({
     try {
         const response: Shopify.CollectionsMetafield = await ShopifyData(query);
 
+        console.log(`produtos buscados`, response);
+
         const products: Shopify.Products[] = [];
 
         await response.data.collections.edges.map((cl) => {
@@ -235,8 +237,6 @@ export async function getCollectionsByMetafields({
                 }
             });
         });
-
-        console.log(`query shopify`, query);
 
         return products;
     } catch (error) {

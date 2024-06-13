@@ -12,6 +12,8 @@ interface ProductListSearchProps extends Shopify.CollectionSinge {
 }
 
 export function ProductList({ data, filtred }: ProductListSearchProps) {
+    if (!data.collection) return;
+
     const listProducts = data.collection.products.edges.map((p) => p.node);
     const [products, setProducts] = useState<Shopify.Products[]>(listProducts);
     const [listType, setListType] = useState<

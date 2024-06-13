@@ -111,13 +111,16 @@ export default async function Home() {
 
                 <Suspense fallback={<Loading />}>
                     <QuicViewProvider>
-                        {collectionMoreSell && (
-                            <Collection
-                                collection={collectionMoreSell.data.collection}
-                                transparent={true}
-                                center={true}
-                            />
-                        )}
+                        {collectionMoreSell &&
+                            collectionMoreSell.data.collection && (
+                                <Collection
+                                    collection={
+                                        collectionMoreSell.data.collection
+                                    }
+                                    transparent={true}
+                                    center={true}
+                                />
+                            )}
                         <QuickView />
                     </QuicViewProvider>
                 </Suspense>

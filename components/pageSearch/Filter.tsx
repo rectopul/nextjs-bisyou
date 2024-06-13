@@ -76,8 +76,6 @@ export function SearchFilter({
               .map((item) => JSON.parse(item))
         : null;
 
-    console.log(`filtros: `, filters);
-
     useEffect(() => {
         setIsmobile(size < 767 ? true : false);
     }, [size]);
@@ -164,15 +162,14 @@ export function SearchFilter({
                                     </SelectTrigger>
 
                                     <SelectContent>
-                                        {ft &&
-                                            ft.map((sk, k) => (
-                                                <SelectItem
-                                                    value={sk}
-                                                    key={`${sk}-${k}`}
-                                                >
-                                                    {sk}
-                                                </SelectItem>
-                                            ))}
+                                        {ft.map((sk, k) => (
+                                            <SelectItem
+                                                value={sk}
+                                                key={`${sk}-${k}`}
+                                            >
+                                                {sk}
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </div>

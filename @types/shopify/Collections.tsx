@@ -83,6 +83,6 @@ export interface CollectionSingleObject {
             products: {
                 edges: CollectionProduct[];
             };
-        };
+        } | null;
     };
 }
