@@ -65,7 +65,7 @@ export function FindFilters({ cities, states, onSelect }: FindFiltersProps) {
                             className="text-bisyou-font"
                         />
                     </SelectTrigger>
-                    <SelectContent className="bg-transparent text-bisyou-font border-none shadow-none">
+                    <SelectContent className="text-bisyou-font border-none shadow-none">
                         {iniqueStates &&
                             iniqueStates.map((s, k) => (
                                 <SelectItem
