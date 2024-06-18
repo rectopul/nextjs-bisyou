@@ -11,13 +11,6 @@ const fontSans = FontSans({
     variable: "--font-sans",
 });
 
-const fontPoppins = Poppins({
-    subsets: ["latin"],
-    variable: "--font-poppins",
-    style: ["normal"],
-    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
 export const metadata: Metadata = {
     title: "Bis You",
     description: "Loja da bis you",
@@ -29,13 +22,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html
-            lang="en"
-            className={`${fontSans.variable} ${fontPoppins.variable}`}
-        >
+        <html lang="en" className={`${fontSans.variable}`}>
             <body
                 className={cn(
-                    "min-h-screen bg-background font-sans antialiased"
+                    "min-h-screen bg-background font-fabriga antialiased"
                 )}
             >
                 <CartProvider>{children}</CartProvider>

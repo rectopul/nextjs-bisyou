@@ -19,12 +19,14 @@ export async function POST(req: NextRequest) {
             const title = String(formData.get("title"));
             const url = String(formData.get("url"));
             const status = String(formData.get("status")) || "active";
+            const position = String(formData.get("position"));
 
             const banner = await prisma.banners.create({
                 data: {
                     title,
                     url,
                     status,
+                    position,
                 },
             });
 

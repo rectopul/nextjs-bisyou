@@ -117,6 +117,7 @@ model Banners {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   title     String?
+  position  String?
   url       String
   status    String
   image     BannersImage?

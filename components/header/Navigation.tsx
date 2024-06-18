@@ -1,7 +1,7 @@
 export function NavigationMenu() {
     return (
         <>
-            <ul className="hidden xl:flex justify-between gap-10 font-normal text-[14px]">
+            <ul className="hidden xl:flex justify-between gap-10 font-normal font-fabriga text-[14px]">
                 <li>
                     <a
                         href="/busca"

@@ -1,5 +1,4 @@
 import { Button } from "../ui/button";
-import { SearchIcon } from "../icons/Icons";
 import { ShoppingBag } from "lucide-react";
 import { useCart } from "@/providers/Cart";
 

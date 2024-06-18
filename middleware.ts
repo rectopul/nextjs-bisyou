@@ -93,8 +93,6 @@ export async function middleware(req: NextRequest) {
                     );
                 }
 
-                console.log(`req headers`, requestHeaders);
-
                 return NextResponse.next({
                     request: {
                         headers: {

@@ -53,9 +53,9 @@ export function Collection({
             <div className="max-w-bisyouContainer w-full mx-auto">
                 <h2
                     data-center={center}
-                    className="text-3xl data-[center=true]:mx-auto data-[center=true]:text-center font-medium text-bisyou-font"
+                    className="text-cltitle font-fabriga data-[center=true]:mx-auto data-[center=true]:text-center font-medium text-bisyou-font"
                 >
-                    {collection.title}
+                    os mais vendidos
                 </h2>
             </div>
 

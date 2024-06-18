@@ -24,13 +24,13 @@ export function HeaderActions() {
         <>
             <div className="absolute right-0 top-[50%] -translate-y-[50%] flex">
                 <Button
-                    className="bg-transparent text-bisyou-font hover:text-bisyou-green hover:bg-transparent"
+                    className="bg-transparent text-bisyou-font hover:text-rose-fog-300 hover:bg-transparent"
                     onClick={handleShow}
                 >
                     <SearchIcon size={25} />
                 </Button>
-                <div className="relative w-10 h-10 bg-transparent text-bisyou-font hover:text-bisyou-green hover:bg-transparent">
-                    <span className="absolute -top-2 -right-2 text-xs/5 font-bold w-5 h-5 bg-koromiko-500 text-koromiko-900 rounded-full">
+                <div className="relative w-10 group h-10 bg-transparent text-bisyou-font hover:text-rose-fog-300">
+                    <span className="absolute -top-2 group-hover:bg-rose-fog-300 -right-2 text-xs/5 font-bold w-5 h-5 bg-mantis-400 text-mantis-100 rounded-full">
                         {cart && cart.data && cart.data.node
                             ? cart.data.node.lineItems.edges.length
                             : 0}

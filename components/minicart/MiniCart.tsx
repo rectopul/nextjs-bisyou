@@ -62,7 +62,7 @@ export function MiniCart() {
                 <section className="flex px-6 relative justify-centern items-center font-medium text-black">
                     <ButtonClose size={25} strokeWidth={3} />
 
-                    <span className="text-hd-2 mx-auto">Meu carrinho</span>
+                    <span className="text-[18px] mx-auto">Meu carrinho</span>
                 </section>
 
                 <section className="flex flex-col gap-3 px-6 w-full">
@@ -108,7 +108,7 @@ export function MiniCart() {
                         </span>
                     </div>
 
-                    <Button className="text-black bg-koromiko-400 hover:bg-koromiko-600">
+                    <Button className="text-white bg-contessa-500 hover:bg-spring-green-500">
                         Finalizar
                     </Button>
                 </section>

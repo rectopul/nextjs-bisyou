@@ -32,8 +32,6 @@ const fetchData = async () => {
 
         const collections = await getCollections(5);
 
-        console.log(`colecoes`, collections);
-
         const collectionMoreSell = await getCollection("bisyou-momentobisyou");
 
         const miniBanner = await prisma.miniBanners.findFirst({
