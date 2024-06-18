@@ -126,7 +126,7 @@ export function StoreForm({ settings }: SettingsFormProps) {
                             id="product_video"
                             placeholder="Slug do produto com video para destaque na home page"
                             className="outline-none h-9 focus:outline-none active:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:!shadow-none"
-                            type="email"
+                            type="text"
                             defaultValue={settings.product_video || ""}
                             {...register("product_video")}
                         />
