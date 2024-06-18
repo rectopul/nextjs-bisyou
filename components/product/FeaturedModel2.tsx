@@ -17,7 +17,7 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                         {title}
                     </div>
 
-                    <div className="w-full max-md:px-4 xl:max-w-[840px] my-16 xl:mx-auto xl:h-[405px] flex flex-col xl:flex-row justify-between gap-20">
+                    <div className="w-full max-md:px-4 xl:max-w-[900px] my-16 xl:mx-auto xl:h-[405px] flex md:grid xl:grid-cols-[400px_auto] max-md:flex-col justify-between gap-16">
                         <figure className="w-full max-w-[405px] relative self-start">
                             <span className="absolute top-5 left-5 bg-bisyou-yellow text-bisyou-font text-sm font-semibold rounded-full px-3 py-1">
                                 {
@@ -33,7 +33,7 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                                 width={product.featuredImage.width}
                                 height={product.featuredImage.height}
                                 src={product.featuredImage.url}
-                                className="rounded-xl h-auto w-full"
+                                className="rounded-xl h-auto !w-full"
                             />
                             <span className="absolute bottom-5 left-5 bg-bisyou-yellow text-bisyou-font text-sm font-semibold rounded-full px-3 py-1">
                                 frete grátis
@@ -75,7 +75,10 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                             <div className="text-slate-400 text-sm mb-3">
                                 <span
                                     dangerouslySetInnerHTML={{
-                                        __html: product.descriptionHtml,
+                                        __html: product.descriptionHtml.substring(
+                                            0,
+                                            250
+                                        ),
                                     }}
                                 ></span>
 

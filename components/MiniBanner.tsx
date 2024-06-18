@@ -22,6 +22,7 @@ export function MiniBanner({ miniBanner }: MiniBannerProps) {
                             width={1200}
                             height={100}
                             src={"/file/" + miniBanner.image.src}
+                            className="w-full"
                         />
                     </a>
                 </div>

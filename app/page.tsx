@@ -51,6 +51,7 @@ const fetchData = async () => {
             productWithMedia = await getProductWithMediaShopify(
                 settings.product_video
             );
+
             featuredKit = await getProductWithMediaShopify(
                 settings.product_video
             );
