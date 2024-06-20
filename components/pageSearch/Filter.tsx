@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Filter } from "@/components/icons/Icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useWindowSize from "@/util/useWindowSize";
 import { Shopify } from "@/@types/shopify";
@@ -80,11 +80,15 @@ export function SearchFilter({
         setIsmobile(size < 767 ? true : false);
     }, [size]);
 
+    const memoizedOnFilterChange = useCallback(onFilterChange, [
+        onFilterChange,
+    ]);
+
     useEffect(() => {
         if (filtersTerm.length > 0) {
-            onFilterChange(filtersTerm);
+            memoizedOnFilterChange(filtersTerm);
         }
-    }, [filtersTerm]);
+    }, [filtersTerm, memoizedOnFilterChange]);
 
     const variants = {
         hidden: { x: -180 },

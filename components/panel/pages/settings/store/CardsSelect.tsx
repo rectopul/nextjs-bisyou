@@ -19,12 +19,13 @@ interface StoreCardsSettingsProps {
 }
 
 export function StoreCardsSettings({ settings }: StoreCardsSettingsProps) {
-    if (!settings) return;
     const defaultValues =
         settings && settings.shopping_cards
             ? settings.shopping_cards.split(";")
             : [];
     const [payments, setPayments] = useState<string[]>(defaultValues);
+
+    if (!settings) return;
 
     const onChange = (value: string, state: boolean) => {
         if (state === true) {
@@ -51,13 +52,12 @@ export function StoreCardsSettings({ settings }: StoreCardsSettingsProps) {
             const req = await fetch(`/api/settings/${settings.id}`, options);
 
             if (!req.ok) {
-                toast.error(`erro ao salvar configurações`);
+                return toast.error(`erro ao salvar configurações`);
             }
 
-            toast.success(`Consigurações salvas com sucesso`);
+            return toast.success(`Consigurações salvas com sucesso`);
         } catch (error) {
             toast.error(`erro ao salvar configurações`);
-            console.log(error);
         }
     };
 

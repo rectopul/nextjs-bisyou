@@ -51,6 +51,7 @@ export async function CollectionsTable() {
 
                     return (
                         <CollectionItem
+                            key={`cll-t-${c.node.id}`}
                             collection={c}
                             prismaCollection={lastMatchingCollection}
                         />

@@ -2,7 +2,7 @@
 
 import { ShopLocations } from "@prisma/client";
 import { FiltersAddressType } from "./Filters";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface AddressesListProps {
     addresses: ShopLocations[];
@@ -14,27 +14,30 @@ export function AddressesList({ addresses, filter }: AddressesListProps) {
         ShopLocations[] | null
     >(null);
 
-    const filterAddresses = (values: FiltersAddressType) => {
-        if (addresses) {
-            const filtred = addresses.map((add) => {
-                if (values.type == "state" && add.state === values.value) {
+    const filterAddresses = useCallback(
+        (values: FiltersAddressType) => {
+            if (addresses) {
+                const filtred = addresses.map((add) => {
+                    if (values.type == "state" && add.state === values.value) {
+                        return add;
+                    }
+
+                    if (values.type == "city" && add.city === values.value) {
+                        return add;
+                    }
+
                     return add;
-                }
+                });
 
-                if (values.type == "city" && add.city === values.value) {
-                    return add;
-                }
-
-                return add;
-            });
-
-            filtred && setAddressesFilter(filtred);
-        }
-    };
+                filtred && setAddressesFilter(filtred);
+            }
+        },
+        [addresses]
+    );
 
     useEffect(() => {
         filter && filterAddresses(filter);
-    }, [filter]);
+    }, [filter, filterAddresses]);
 
     return (
         <div className="flex flex-col gap-5 grid-cols-4 grid-rows-[auto]">

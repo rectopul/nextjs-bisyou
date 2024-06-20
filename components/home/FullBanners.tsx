@@ -54,14 +54,14 @@ export function FullBanners({ banners }: FullBanners) {
         setCount(api.scrollSnapList().length);
         setCurrent(api.selectedScrollSnap() + 1);
 
-        api.on("slidesInView", (api, evt) => {
-            console.log(
-                `current: `,
-                api.selectedScrollSnap() + 1,
-                "count: ",
-                count
-            );
-        });
+        // api.on("slidesInView", (api, evt) => {
+        //     console.log(
+        //         `current: `,
+        //         api.selectedScrollSnap() + 1,
+        //         "count: ",
+        //         count
+        //     );
+        // });
 
         api.on("select", () => {
             setCurrent(api.selectedScrollSnap() + 1);
