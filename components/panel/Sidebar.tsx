@@ -126,8 +126,8 @@ export async function Aside({ name }: AsideProps) {
                     </SideItem>
 
                     <SideItem
-                        link="/panel/settings"
-                        slug="settings"
+                        link="/panel/config"
+                        slug="config"
                         name="Configurações"
                     >
                         <Settings size={20} />

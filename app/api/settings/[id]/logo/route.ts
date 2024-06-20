@@ -8,7 +8,7 @@ import { fileCreator } from "@/util/fileCreator";
  * @returns
  *
  */
-
+export const dynamic = "force-dynamic";
 export async function PUT(
     req: NextRequest,
     { params }: { params: { id: string } }

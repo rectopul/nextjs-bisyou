@@ -1,9 +1,9 @@
 import { ApiErrorHandler } from "@/@types/ApiError";
 import prisma from "@/lib/client";
 import { fileCreator } from "@/util/fileCreator";
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
 export async function PUT(
     req: NextRequest,
     { params }: { params: { id: string } }

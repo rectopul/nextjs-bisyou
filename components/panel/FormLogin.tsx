@@ -59,7 +59,7 @@ export function FormLogin() {
             localStorage.setItem("authToken", res.message);
 
             return setTimeout(() => {
-                router.push("/panel/settings");
+                window.location.href = `/panel/settings`;
             }, 2000);
         } catch (error) {
             const apiError = error as ApiErrorHandler;
