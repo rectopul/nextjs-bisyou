@@ -42,7 +42,7 @@ export function CollectionItem({
         };
 
         const req = await fetch(
-            `/api/collections/${collection.node.handle}`,
+            `/api/collections/update?slug=${collection.node.handle}`,
             options
         );
 
@@ -76,7 +76,7 @@ export function CollectionItem({
         };
 
         const req = await fetch(
-            `/api/collections/${collection.node.handle}`,
+            `/api/collections/update?slug=${collection.node.handle}`,
             options
         );
 
