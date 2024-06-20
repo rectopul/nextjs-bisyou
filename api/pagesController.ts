@@ -87,7 +87,10 @@ export class Pages {
                     "Content-Type": "application/json",
                 },
             };
-            const pages = await fetch(`${this.url}/${id}`, options);
+            const pages = await fetch(
+                `${this.url}/update?page_id=${id}`,
+                options
+            );
 
             if (!pages.ok) {
                 const resp = await pages.json();
@@ -121,7 +124,7 @@ export class Pages {
                 method: "DELETE",
             };
 
-            const req = await fetch(`${this.url}/category/${id}`, options);
+            const req = await fetch(`${this.url}/category/update?id=${id}`, options);
 
             if (!req.ok) {
                 const resp = await req.json();
