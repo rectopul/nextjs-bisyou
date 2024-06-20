@@ -42,7 +42,10 @@ export function AddressesList({ addresses, filter }: AddressesListProps) {
                 <>
                     {addressesListFilter &&
                         addressesListFilter.map((ad) => (
-                            <div className="flex items-center" key={ad.id}>
+                            <div
+                                className="flex items-center"
+                                key={`add-${ad.id}`}
+                            >
                                 <div className="flex flex-col gap-2 text-sm text-bisyou-font">
                                     {ad.name && (
                                         <h2 className="font-bold">{ad.name}</h2>
