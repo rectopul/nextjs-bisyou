@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import slugify from "slugify";
 
 export const dynamic = "force-dynamic";
-export async function POST(
+export async function PUT(
     req: NextRequest,
     { params }: { params: { id: string } }
 ) {
