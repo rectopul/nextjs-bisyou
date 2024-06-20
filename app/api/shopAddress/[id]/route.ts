@@ -4,6 +4,7 @@ import { PrismaErrorHandler } from "@/@types/PrismaErrorHandler";
 import prisma from "@/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
 export async function DELETE(
     req: NextRequest,
     res: NextResponse,

@@ -5,6 +5,7 @@ import path from "path";
 import { fileCreator } from "@/util/fileCreator";
 import { validImageMimeTypes } from "@/util/imageMimeTypes";
 
+export const dynamic = "force-dynamic";
 export async function PUT(
     req: NextRequest,
     { params }: { params: { id: string } }

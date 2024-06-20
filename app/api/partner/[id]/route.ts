@@ -3,6 +3,7 @@ import prisma from "@/lib/client";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
 export async function PUT(
     req: NextRequest,
     { params }: { params: { id: string } }
