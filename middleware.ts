@@ -5,6 +5,7 @@ import { checkToken } from "./util/checkJwt";
 const corsOptions = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Access-Control-Allow-Origin": "*",
 };
 
 // This function can be marked `async` if using `await` inside

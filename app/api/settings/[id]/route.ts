@@ -46,16 +46,15 @@ export async function PUT(
                 data: { ...data, storeSlug },
             });
 
-            return Response.json(response);
+            return NextResponse.json(response);
         }
 
-        return Response.json(
+        return NextResponse.json(
             { name: "image not found", message: "por favor envie a imagem" },
             { status: 400 }
         );
     } catch (error) {
-        console.log(`erro no banner`, error);
-        return Response.json(error, { status: 400 });
+        return NextResponse.json(error, { status: 400 });
     } finally {
         await prisma.$disconnect();
     }
