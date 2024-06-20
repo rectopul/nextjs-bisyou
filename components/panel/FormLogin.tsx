@@ -59,7 +59,7 @@ export function FormLogin() {
             localStorage.setItem("authToken", res.message);
 
             return setTimeout(() => {
-                window.location.href = `/panel/settings`;
+                window.location.href = `/panel/config`;
             }, 2000);
         } catch (error) {
             const apiError = error as ApiErrorHandler;
