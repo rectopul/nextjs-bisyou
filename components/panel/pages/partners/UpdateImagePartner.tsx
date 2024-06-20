@@ -14,7 +14,7 @@ export async function UpdateImagePartner(
             body: formData,
         };
 
-        const req = await fetch(`/api/partner/image/${id}`, options);
+        const req = await fetch(`/api/partner/update?id=${id}`, options);
 
         if (!req.ok) {
             const error: ApiErrorHandler = await req.json();

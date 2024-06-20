@@ -12,7 +12,7 @@ export async function UpdatePartner(
             body: JSON.stringify({ text }),
         };
 
-        const req = await fetch(`/api/partner/${id}`, options);
+        const req = await fetch(`/api/partner/update?id=${id}`, options);
 
         if (!req.ok) {
             const error: ApiErrorHandler = await req.json();
