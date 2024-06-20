@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/client";
 import slugify from "slugify";
-import { Settings } from "@prisma/client";
+import { Prisma, Settings } from "@prisma/client";
 
 /**
  *
@@ -11,7 +11,7 @@ import { Settings } from "@prisma/client";
  */
 
 export async function POST(req: NextRequest) {
-    const data = (await req.json()) as Settings;
+    const data = (await req.json()) as Prisma.SettingsCreateInput;
 
     try {
         if (data) {
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
                 data: { ...data, storeSlug },
             });
 
-            return Response.json(settings);
+            return NextResponse.json(settings);
         }
 
         return Response.json(

@@ -1,4 +1,5 @@
 import {
+    Handshake,
     Home,
     Images,
     MessagesSquare,
@@ -69,32 +70,17 @@ export async function Aside({ name }: AsideProps) {
 
                     <ItemPageSidebar />
 
-                    <li>
-                        <a className="" href="/panel/shops">
-                            <button
-                                className="align-middle select-none font-sans font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 relative overflow-hidden active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
-                                type="button"
-                            >
-                                <Store size={20} />
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                    Lojas
-                                </p>
-                            </button>
-                        </a>
-                    </li>
-                    <li>
-                        <a className="" href="#/dashboard/tables">
-                            <button
-                                className="align-middle select-none font-sans font-bold text-center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-blue-gray-500 hover:bg-blue-gray-500/10 relative overflow-hidden active:bg-blue-gray-500/30 w-full flex items-center gap-4 px-4 capitalize"
-                                type="button"
-                            >
-                                <Package size={20} />
-                                <p className="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">
-                                    Produtos
-                                </p>
-                            </button>
-                        </a>
-                    </li>
+                    <SideItem link="/panel/shops" slug="shops" name="Lojas">
+                        <Store size={20} />
+                    </SideItem>
+
+                    <SideItem
+                        link="/panel/partners"
+                        slug="partners"
+                        name="Parceiros"
+                    >
+                        <Handshake size={20} />
+                    </SideItem>
                     <SideItem
                         link="/panel/notifications"
                         slug="notifications"

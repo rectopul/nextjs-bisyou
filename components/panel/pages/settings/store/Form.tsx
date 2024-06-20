@@ -132,6 +132,18 @@ export function StoreForm({ settings }: SettingsFormProps) {
                         />
                     </div>
 
+                    <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="email">CNPJ </Label>
+                        <Input
+                            id="product_video"
+                            placeholder="CNPJ da empresa"
+                            className="outline-none h-9 focus:outline-none active:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:!shadow-none"
+                            type="text"
+                            defaultValue={settings.cnpj || ""}
+                            {...register("cnpj")}
+                        />
+                    </div>
+
                     <div className="items-center py-6 pt-0 flex justify-between">
                         <Button variant="default" type="submit">
                             Atualizar

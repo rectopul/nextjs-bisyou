@@ -8,6 +8,7 @@ import {
 import prisma from "@/lib/client";
 import { StoreForm } from "./store/Form";
 import { MissionForm } from "./store/MissionForm";
+import { StoreCardsSettings } from "./store/CardsSelect";
 
 export async function StoreSettings() {
     const settings = await prisma.settings.findFirst();
@@ -42,6 +43,9 @@ export async function StoreSettings() {
                         <MissionForm settings={settings} />
                     </CardContent>
                 </Card>
+            </div>
+            <div>
+                <StoreCardsSettings settings={settings} />
             </div>
         </div>
     );

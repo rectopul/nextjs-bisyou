@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
             //Criação da página
             const title = String(formData.get("title"));
             const url = String(formData.get("url"));
+            const text = String(formData.get("text"));
 
             const slug = slugify(title, { strict: true, lower: true });
 
@@ -34,6 +35,7 @@ export async function POST(req: NextRequest) {
                     slug,
                     title,
                     url,
+                    text,
                     image: src,
                     alt: slug,
                     height: dimensions.height,

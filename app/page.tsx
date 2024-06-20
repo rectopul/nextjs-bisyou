@@ -24,6 +24,13 @@ import { Suspense } from "react";
 
 const fetchData = async () => {
     try {
+        const collectionHome = await prisma.colletions.findFirst({
+            where: { position: "homepage" },
+            orderBy: { updatedAt: "desc" },
+        });
+
+        if (!collectionHome) return;
+
         const fullBanners = await prisma.banners.findMany({
             include: { image: { include: { thumbnail: true } } },
         });
@@ -32,30 +39,34 @@ const fetchData = async () => {
 
         const collections = await getCollections(5);
 
-        const collectionMoreSell = await getCollection("bisyou-momentobisyou");
+        const collectionMoreSell = await getCollection(
+            collectionHome.slug,
+            collectionHome.products_quantity
+        );
 
         const miniBanner = await prisma.miniBanners.findFirst({
             include: { image: true },
         });
 
-        const settings = await prisma.settings.findFirst();
+        const settings = await prisma.settings.findFirst({
+            orderBy: { id: "desc" },
+        });
 
-        const partners = await prisma.partners.findMany();
+        const partners = await prisma.partners.findMany({
+            orderBy: { id: "desc" },
+        });
 
         const blogArticles = await getBlogArticles();
 
-        let productWithMedia = null;
-        let featuredKit = null;
+        if (!settings || settings.product_video === null) return;
 
-        if (settings && settings.product_video) {
-            productWithMedia = await getProductWithMediaShopify(
-                settings.product_video
-            );
+        const productWithMedia = await getProductWithMediaShopify(
+            settings.product_video
+        );
 
-            featuredKit = await getProductWithMediaShopify(
-                settings.product_video
-            );
-        }
+        const featuredKit = await getProductWithMediaShopify(
+            settings.product_video
+        );
 
         return {
             fullBanners,
@@ -75,6 +86,17 @@ const fetchData = async () => {
 };
 
 export default async function Home() {
+    const shopParameters = await fetchData();
+
+    if (!shopParameters)
+        return (
+            <>
+                <div className="w-full text-center py-10 font-bold text-3xl">
+                    Complete a configuração da loja
+                </div>
+            </>
+        );
+
     const {
         fullBanners,
         rullerOptions,
@@ -86,7 +108,7 @@ export default async function Home() {
         settings,
         blogArticles,
         partners,
-    } = await fetchData();
+    } = shopParameters;
 
     if (!collectionMoreSell) {
         return <h1>Erro de servidor</h1>;

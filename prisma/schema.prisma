@@ -27,21 +27,21 @@ model User {
 }
 
 model ShopLocations {
-  id              Int      @id @default(autoincrement())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  name            String?
-  phone           String?
-  street_address  String
-  street_number   Int
-  suite_number    String?
-  city            String
-  state           String
-  postal_code     String
-  country         String?
-  address_line1   String
-  address_line2   String
-  maps_url        String
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  name           String?
+  phone          String?
+  street_address String
+  street_number  Int
+  suite_number   String?
+  city           String
+  state          String
+  postal_code    String
+  country        String?
+  address_line1  String
+  address_line2  String
+  maps_url       String
 
   @@map("shop_locations")
 }
@@ -205,6 +205,7 @@ model Settings {
   storename              String   @unique
   storeSlug              String   @unique
   about                  String?
+  cnpj                   String?
   section_partners       String?
   section_partners_title String?
   video                  String?
@@ -215,8 +216,20 @@ model Settings {
   email                  String?
   logo                   String?
   product_video          String?
+  shopping_cards         String?
 
   @@map("settings")
+}
+
+model Colletions {
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  slug              String   @unique
+  position          String
+  products_quantity Int
+
+  @@map("collections")
 }
 
 model Partners {
@@ -226,6 +239,7 @@ model Partners {
   title     String
   slug      String   @unique
   url       String?
+  text      String?
   image     String
   width     Int
   height    Int

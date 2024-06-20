@@ -1,0 +1,60 @@
+import { ApiErrorHandler } from "@/@types/ApiError";
+import prisma from "@/lib/client";
+import { Prisma } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function PUT(
+    req: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    const body = await req.json();
+    const { id } = params;
+
+    const partner = await prisma.partners.findFirst({
+        where: { id: +id },
+    });
+
+    if (!partner) {
+        const error: ApiErrorHandler = {
+            message: `Parceiro não existe`,
+            name: "not found",
+        };
+
+        return NextResponse.json(error, { status: 401 });
+    }
+
+    const data: Prisma.PartnersUpdateInput = body;
+
+    const updated = await prisma.partners.update({
+        where: { id: +id },
+        data,
+    });
+
+    return NextResponse.json(updated);
+}
+
+export async function DELETE(
+    req: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    const { id } = params;
+
+    const partner = await prisma.partners.findFirst({
+        where: { id: +id },
+    });
+
+    if (!partner) {
+        const error: ApiErrorHandler = {
+            message: `Parceiro não existe`,
+            name: "not found",
+        };
+
+        return NextResponse.json(error, { status: 401 });
+    }
+
+    const deleted = await prisma.partners.delete({
+        where: { id: +id },
+    });
+
+    return NextResponse.json(deleted);
+}

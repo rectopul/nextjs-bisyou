@@ -22,6 +22,7 @@ import { ADD_TO_CART } from "./queries/typescript/addToCart";
 import { ProductCategoryEdge } from "./@types/shopify/ProductCategory";
 import { FilterChangeProps } from "./components/pageSearch/Filter";
 import { generateFilter } from "./util/generateFilters";
+import { CollectionData } from "./@types/shopify/SimpleCollections";
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
 const storeFrontAccessToken =
@@ -417,6 +418,36 @@ export async function getProductShopify(
     }
 }
 
+export async function listCollections(): Promise<Shopify.Collection[] | null> {
+    const query = `query ListCollections {
+      collections(first: 10) {
+        edges {
+          node {
+            description
+            handle
+            title
+            id
+            image {
+              altText
+              url
+              thumbnail: url(transform: {maxWidth: 300})
+            }
+          }
+        }
+      }
+    }`;
+
+    try {
+        const response: CollectionData = await ShopifyData(query);
+
+        const product = response.data.collections.edges;
+
+        return product;
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function getProductWithMediaShopify(
     handle: string
 ): Promise<ProductWithMedia | null> {
@@ -555,14 +586,15 @@ export async function getCollections(
 }
 
 export async function getCollection(
-    handler: string
+    handler: string,
+    quantity: number = 10
 ): Promise<CollectionSingleObject | null> {
     const query = `{
       collection(handle: "${handler}") {
         handle
         id
         title
-        products(first: 15) {
+        products(first: ${quantity}) {
           edges {
             node {
               ...ProductFragment

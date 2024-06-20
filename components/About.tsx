@@ -19,7 +19,7 @@ export function About({ settings }: AboutProps) {
                     {settings.about && (
                         <div className="w-full xl:w-2/6 flex flex-col gap-1">
                             <div
-                                className="text-bisyou-font w-full [&_ul]:pl-4 [&_li]:py-2 [&_p]:my-4 [&_h2]:text-xl [&_h2]:font-medium [&_h1]:text-2xl [&_h1]:font-semibold"
+                                className="text-bisyou-font text-hd-5 w-full [&_ul]:pl-4 [&_li]:py-2 [&_p]:my-4 [&_h2]:text-xl [&_h2]:font-medium [&_h1]:text-2xl [&_h1]:font-semibold"
                                 dangerouslySetInnerHTML={{
                                     __html: settings.about,
                                 }}

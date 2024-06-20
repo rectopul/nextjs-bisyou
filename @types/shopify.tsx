@@ -1,9 +1,13 @@
-import { SimpleNode } from "./CollectionInProduct";
+import { CollectionEdge, SimpleNode } from "./CollectionInProduct";
 import { Product } from "./ProductObject";
 import { BlogObject } from "./shopify/BlogObject";
 import { CartData, CartItem } from "./shopify/CartObject";
+import { CollectionEdge as SimpleCollectionEdge } from "./shopify/SimpleCollections";
 import { CheckoutData } from "./shopify/Checkout";
-import { CollectionSingleObject } from "./shopify/Collections";
+import {
+    CollectionObjectEdge,
+    CollectionSingleObject,
+} from "./shopify/Collections";
 import { CollectionsByMetafieldsObject } from "./shopify/CollectionsByMetafield";
 import { Errors } from "./shopify/Erros";
 import { MetaObjectFetch, MetaobjectsEdges } from "./shopify/MetaObjects";
@@ -12,6 +16,7 @@ import {
     AllProductCategory,
     ProductCategoryEdge,
 } from "./shopify/ProductCategory";
+import { CollectionNode } from "./shopify/SimpleCollections";
 
 export namespace Shopify {
     export namespace MetaObjects {
@@ -61,6 +66,8 @@ export namespace Shopify {
 
     export interface ProductCategoryData extends ProductCategoryEdge {}
     export interface ProductCategory extends AllProductCategory {}
+
+    export interface Collection extends SimpleCollectionEdge {}
 
     export interface QueryProducts {}
 }
