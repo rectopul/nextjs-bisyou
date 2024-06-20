@@ -20,9 +20,9 @@ export async function middleware(req: NextRequest) {
         requestHeaders.set("x-pathname", req.nextUrl.pathname);
 
         const preflightHeaders = {
-            "Access-Control-Allow-Origin": "*",
             ...corsOptions,
         };
+        
         if (req.nextUrl.pathname.startsWith("api/pages")) {
             if (req.method === "POST") {
                 const cookie = cookies();
