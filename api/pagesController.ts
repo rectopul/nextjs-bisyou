@@ -66,7 +66,7 @@ export class Pages {
                 },
                 body: JSON.stringify(data),
             };
-            const category = await fetch(`${this.url}/category`, options);
+            const category = await fetch(`/api/pages/category`, options);
 
             if (!category.ok) {
                 const resp = await category.json();
@@ -124,7 +124,10 @@ export class Pages {
                 method: "DELETE",
             };
 
-            const req = await fetch(`${this.url}/category/update?id=${id}`, options);
+            const req = await fetch(
+                `/api/pages/category/update?id=${id}`,
+                options
+            );
 
             if (!req.ok) {
                 const resp = await req.json();
