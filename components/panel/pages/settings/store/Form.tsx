@@ -22,10 +22,10 @@ export function StoreForm({ settings }: SettingsFormProps) {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({ ...data, id: settings.id }),
             };
 
-            const req = await fetch(`/api/settings/${settings.id}`, options);
+            const req = await fetch(`/api/updateSettings`, options);
 
             if (req.status > 300) {
                 const res: ApiErrorHandler = await req.json();

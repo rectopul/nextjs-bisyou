@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
-import { Settings } from "@prisma/client";
+import { Prisma, Settings } from "@prisma/client";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -49,7 +49,7 @@ export function StoreCardsSettings({ settings }: StoreCardsSettingsProps) {
                 }),
             };
 
-            const req = await fetch(`/api/settings/${settings.id}`, options);
+            const req = await fetch(`/api/updateSettings`, options);
 
             if (!req.ok) {
                 return toast.error(`erro ao salvar configurações`);
