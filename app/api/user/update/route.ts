@@ -47,8 +47,6 @@ export async function PUT(req: NextRequest) {
         password_hash: user.password_hash,
     });
 
-    console.log(`check`, check);
-
     if (!check) {
         const error: ApiErrorHandler = {
             message: `não autorizado a realizar a ação.`,

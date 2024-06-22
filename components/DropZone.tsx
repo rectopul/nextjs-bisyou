@@ -6,9 +6,10 @@ import { useDropzone } from "react-dropzone";
 
 interface DropZoneProps {
     onDragFile: (file: File) => void;
+    showMessage: boolean;
 }
 
-export function DropZone({ onDragFile }: DropZoneProps) {
+export function DropZone({ onDragFile, showMessage = true }: DropZoneProps) {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const onDrop = useCallback(
         (acceptedFiles: File[]) => {
@@ -93,11 +94,12 @@ export function DropZone({ onDragFile }: DropZoneProps) {
                         />
                     </label>
                 </div>
-
-                <p className="mt-5">
-                    Selecione ou arraste a imagem da página neste field, a
-                    imagem da página não é obrigatória .
-                </p>
+                {showMessage && (
+                    <p className="mt-5">
+                        Selecione ou arraste a imagem da página neste field, a
+                        imagem da página não é obrigatória .
+                    </p>
+                )}
 
                 {fileRejections &&
                     fileRejections.length > 0 &&
