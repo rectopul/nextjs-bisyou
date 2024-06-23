@@ -20,7 +20,7 @@ export function ProductItem({ product, variant }: ProductItemProps) {
         <>
             <div
                 data-variant={variant}
-                className="w-full h-full animate-in fade-in-0 duration-500 data-[variant=list]:fade-in-100  data-[variant=spacing]:px-10 flex justify-center bg-white"
+                className="w-full h-full animate-in fade-in-0 duration-500 data-[variant=list]:fade-in-100  data-[variant=spacing]:px-10 flex justify-center bg-white pb-2 rounded-b-lg"
             >
                 <div
                     data-variant={variant}
@@ -38,14 +38,14 @@ export function ProductItem({ product, variant }: ProductItemProps) {
                             data-variant={variant}
                             className="absolute data-[variant=list]:text-xs rounded-full left-3 bottom-3 px-4 py-1 bg-bisyou-yellow text-bisyou-font font-semibold text-sm"
                         >
-                            {discountCalculator(price, compare)}% OFF
+                            {discountCalculator(compare, price)}% OFF
                         </span>
 
                         <Image
                             width={300}
                             height={300}
                             src={product.featuredImage.url}
-                            className="max-sm:w-full"
+                            className="max-sm:w-full w-full"
                             alt={
                                 product.featuredImage.altText || product.handle
                             }

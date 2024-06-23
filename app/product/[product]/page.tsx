@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { Collection } from "@/components/collection/Collection";
+import { Selos } from "@/components/home/Selos";
 import { Avaliation } from "@/components/product/Avaliation";
 import { ImageTool } from "@/components/product/ImageTool";
 import { ProductProperties } from "@/components/product/Properties";
@@ -19,12 +20,15 @@ interface ProductPageProps {
 const getData = cache(async (handle: string) => {
     const products = await getProductsInCollection();
     const product = await getProductShopify(handle);
+    const banners = await prisma.banners.findMany({
+        include: { image: { include: { thumbnail: true } } },
+    });
 
-    return { product, products };
+    return { product, products, banners };
 });
 
 export default async function Product({ params }: ProductPageProps) {
-    const { product } = await getData(params.product);
+    const { product, banners } = await getData(params.product);
     const imageSlide = await prisma.imagesSlideDefault.findMany();
     const hasCross = product
         ? product.collections.edges.filter(
@@ -44,6 +48,9 @@ export default async function Product({ params }: ProductPageProps) {
                     <ImageTool comparator={product.comparator} />
                 )}
                 <Avaliation />
+
+                <Selos banners={banners} />
+
                 <SlideImages images={imageSlide} />
                 {hasCross && <Collection collection={hasCross.node} />}
                 <QuickView />

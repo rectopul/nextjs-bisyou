@@ -2,6 +2,7 @@
 
 import { DropZone } from "@/components/DropZone";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
     Dialog,
     DialogContent,
@@ -10,6 +11,13 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Prisma } from "@prisma/client";
 import { Plus } from "lucide-react";
@@ -23,8 +31,35 @@ export function BannerForm() {
     const { register, setValue, reset, handleSubmit } =
         useForm<BannerFormPayload>();
 
-    const onSubmit: SubmitHandler<BannerFormPayload> = (data) =>
-        console.log(data);
+    const onSubmit: SubmitHandler<BannerFormPayload> = async (data) => {
+        try {
+            const formData = new FormData();
+
+            formData.append("title", data.title);
+            formData.append("url", data.url);
+            formData.append("position", data.position);
+            formData.append("file", data.file);
+
+            const options = {
+                method: "POST",
+                body: formData,
+            };
+
+            const req = await fetch(`/api/banners`, options);
+
+            if (!req.ok) {
+                toast.error(`Erro ao cadastrar banner`);
+            }
+
+            const res = await req.json(req);
+
+            toast.success(`Banner cadastrado com sucesso`);
+
+            reset();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <>
@@ -60,13 +95,43 @@ export function BannerForm() {
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0"
                             />
                         </div>
-                        
+
+                        <div className="w-full">
+                            <Select
+                                onValueChange={(value) =>
+                                    setValue("position", value)
+                                }
+                            >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Posição" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="medium">
+                                        Mini Banners
+                                    </SelectItem>
+                                    <SelectItem value="full">
+                                        Full Banners
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="w-full">
+                            <Input
+                                {...register("url", { required: true })}
+                                placeholder="Url do banner"
+                                className="focus-visible:ring-offset-0 focus-visible:ring-0"
+                            />
+                        </div>
+
                         <div>
                             <DropZone
-                                onDragFile={(file) => {}}
+                                onDragFile={(file) => setValue("file", file)}
                                 showMessage={false}
                             />
                         </div>
+
+                        <Button>Cadastrar</Button>
                     </form>
                 </DialogContent>
             </Dialog>

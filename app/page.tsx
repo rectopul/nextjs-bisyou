@@ -6,6 +6,7 @@ import { MiniBanner } from "@/components/MiniBanner";
 import { FeaturedProductWithMedia } from "@/components/ProductWithMedia";
 import { Collection } from "@/components/collection/Collection";
 import { FullBanners } from "@/components/home/FullBanners";
+import { Selos } from "@/components/home/Selos";
 import { Avaliation } from "@/components/product/Avaliation";
 import { FeaturedModel2 } from "@/components/product/FeaturedModel2";
 import { QuickView } from "@/components/quickview";
@@ -128,6 +129,7 @@ export default async function Home() {
             <main className="flex min-h-screen w-full flex-col items-center">
                 {fullBanners && <FullBanners banners={fullBanners} />}
                 <ListRullerOptions ruller_options={rullerOptions} />
+                {fullBanners && <Selos banners={fullBanners} />}
                 {collections && <ShopCollections collections={collections} />}
 
                 <Suspense fallback={<Loading />}>

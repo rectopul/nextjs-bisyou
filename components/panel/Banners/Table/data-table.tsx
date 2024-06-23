@@ -17,13 +17,15 @@ import {
 } from "@/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
+    columns: ColumnDef<TData, TValue>[]; // Corrigido para ColumnDef
     data: TData[];
+    onDelete: (id: number) => void;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    onDelete,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -37,19 +39,15 @@ export function DataTable<TData, TValue>({
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <TableHead key={header.id}>
-                                        {header.isPlaceholder
-                                            ? null
-                                            : flexRender(
-                                                  header.column.columnDef
-                                                      .header,
-                                                  header.getContext()
-                                              )}
-                                    </TableHead>
-                                );
-                            })}
+                            {headerGroup.headers.map((header) => (
+                                <TableHead key={header.id}>
+                                    {!header.isPlaceholder &&
+                                        flexRender(
+                                            header.column.columnDef.header,
+                                            header.getContext()
+                                        )}
+                                </TableHead>
+                            ))}
                         </TableRow>
                     ))}
                 </TableHeader>
@@ -58,7 +56,9 @@ export function DataTable<TData, TValue>({
                         table.getRowModel().rows.map((row) => (
                             <TableRow
                                 key={row.id}
-                                data-state={row.getIsSelected() && "selected"}
+                                data-state={
+                                    row.getIsSelected() ? "selected" : undefined
+                                }
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>

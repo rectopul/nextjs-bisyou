@@ -37,6 +37,7 @@ export function DropZone({ onDragFile, showMessage = true }: DropZoneProps) {
                 "image/jpg": [".jpg"],
                 "image/jpeg": [".jpeg"],
                 "image/gif": [".gif"],
+                "image/svg+xml": [".svg"],
             },
             maxFiles: 1,
             maxSize: 2000000, // 2 MB
@@ -83,7 +84,7 @@ export function DropZone({ onDragFile, showMessage = true }: DropZoneProps) {
                                 </p>
                             )}
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                WEBP, PNG, JPG or GIF (MAX. 1000x1000px)
+                                WEBP, PNG, JPG, SVG or GIF (MAX. 1000x1000px)
                             </p>
                         </div>
                         <input

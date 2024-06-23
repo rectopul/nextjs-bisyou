@@ -9,12 +9,16 @@ import { motion } from "framer-motion";
 import { ButtonClose } from "./ButtonClose";
 
 export function MiniCart() {
-    const { cart, closeCart, state } = useCart();
+    const { cart, closeCart, state, startCart } = useCart();
 
     const variants = {
         visible: { x: 0 },
         hidden: { x: 395 },
     };
+
+    if (!cart) {
+        startCart();
+    }
 
     console.log(`cart object: `, cart);
 

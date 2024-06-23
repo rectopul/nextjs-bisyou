@@ -4,9 +4,15 @@ import logo from "../public/assets/img/logo-small_large.webp";
 import { FormNews } from "./FormNews";
 import { Facebook } from "lucide-react";
 import { FacebookIcon, Instagram, Pinterest, TikTok } from "./icons/Icons";
+import { CardSelect } from "./CardSelect";
 
 export default async function Footer() {
     const pages = await prisma.pages.findMany();
+    const settings = await prisma.settings.findFirst();
+
+    if (!settings || !settings.shopping_cards) return;
+
+    const cards = settings.shopping_cards.split(";");
 
     return (
         <>
@@ -105,6 +111,16 @@ export default async function Footer() {
                                 <TikTok size={30} />
                             </a>
                         </div>
+                    </div>
+                </div>
+
+                <div className="w-full mx-auto max-w-bisyouContainer max-sm:gap-5 mt-4 pt-4 border-t text-bisyou-font border-bisyou-font flex flex-col md:flex-row justify-between xl:items-center">
+                    <div>© 2024 Bisyou. Todos os direitos reservados</div>
+
+                    <div className="flex justify-end gap-4">
+                        {cards.map((c, k) => (
+                            <CardSelect brand={c} key={`card-sttngs-${k}`} />
+                        ))}
                     </div>
                 </div>
             </div>

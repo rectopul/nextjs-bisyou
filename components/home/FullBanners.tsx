@@ -18,7 +18,7 @@ interface ImageBanner extends BannersImage {
     thumbnail: BannersThumbnail | null;
 }
 
-interface FullBanner extends Banners {
+export interface FullBanner extends Banners {
     image: ImageBanner | null;
 }
 

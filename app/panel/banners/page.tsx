@@ -1,3 +1,4 @@
+import { BannersTable } from "@/components/panel/Banners/Table/BannersTable";
 import { columns } from "@/components/panel/Banners/Table/columns";
 import { DataTable } from "@/components/panel/Banners/Table/data-table";
 import { BannerForm } from "@/components/panel/Banners/form/BannerForm";
@@ -6,9 +7,7 @@ import prisma from "@/lib/client";
 import { Prisma } from "@prisma/client";
 import { Plus } from "lucide-react";
 
-
 export default async function Banners() {
-
     const banners = await prisma.banners.findMany({
         include: { image: { include: { thumbnail: true } } },
     });
@@ -26,7 +25,7 @@ export default async function Banners() {
                     <h3>Lista</h3>
 
                     <div>
-                        <DataTable columns={columns} data={banners} />
+                        <BannersTable banners={banners} />
                     </div>
                 </div>
             </div>

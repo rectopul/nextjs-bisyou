@@ -1,4 +1,3 @@
-import { ProductNode } from "@/@types/ProductsCollection";
 import { ProductSlide } from "./Slide";
 import { Product } from "@/@types/ProductObject";
 import { ProductDetails } from "./Details";

@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
             //Criação da página
             const title = String(formData.get("title"));
             const url = String(formData.get("url"));
-            const status = String(formData.get("status")) || "active";
+            const status = "active";
             const position = String(formData.get("position"));
 
             const banner = await prisma.banners.create({

@@ -22,6 +22,7 @@ interface ContextData {
     state: boolean;
     openCart: () => void;
     closeCart: () => void;
+    startCart: () => void;
 }
 
 const defaultContextData: ContextData = {
@@ -31,6 +32,7 @@ const defaultContextData: ContextData = {
     state: false,
     openCart: () => {},
     closeCart: () => {},
+    startCart: () => {},
 };
 
 type AsanaProviderProps = {
@@ -44,15 +46,51 @@ export default function CartProvider({ children }: AsanaProviderProps) {
     const [checkoutId, setCartId] = useState<string | null>(null);
     const [state, setState] = useState<boolean>(false);
 
+    const startCart = async () => {
+        const checkout = await createCart();
+        if (checkout) {
+            setCartId(checkout.data.checkoutCreate.checkout.id);
+            const cartData = await getCart(
+                checkout.data.checkoutCreate.checkout.id
+            );
+            cartData && setcart(cartData);
+            if (typeof window !== "undefined") {
+                localStorage.setItem(
+                    "checkoutId",
+                    checkout.data.checkoutCreate.checkout.id
+                );
+            }
+        }
+    };
+
     const handleGetCheckoutId = async () => {
-        const storedCheckoutId = localStorage.getItem("checkoutId");
+        const storedCheckoutId =
+            typeof window !== "undefined"
+                ? localStorage.getItem("checkoutId")
+                : null;
 
         if (storedCheckoutId && storedCheckoutId !== "") {
             setCartId(storedCheckoutId);
 
             const cartData = await getCart(storedCheckoutId);
-
-            cartData && setcart(cartData);
+            if (!cartData || !cartData.data) {
+                const checkout = await createCart();
+                if (checkout) {
+                    setCartId(checkout.data.checkoutCreate.checkout.id);
+                    const cartData = await getCart(
+                        checkout.data.checkoutCreate.checkout.id
+                    );
+                    cartData && setcart(cartData);
+                    if (typeof window !== "undefined") {
+                        localStorage.setItem(
+                            "checkoutId",
+                            checkout.data.checkoutCreate.checkout.id
+                        );
+                    }
+                }
+            } else {
+                cartData && setcart(cartData);
+            }
         } else {
             const checkout = await createCart();
 
@@ -62,10 +100,12 @@ export default function CartProvider({ children }: AsanaProviderProps) {
                     checkout.data.checkoutCreate.checkout.id
                 );
                 cartData && setcart(cartData);
-                localStorage.setItem(
-                    "checkoutId",
-                    checkout.data.checkoutCreate.checkout.id
-                );
+                if (typeof window !== "undefined") {
+                    localStorage.setItem(
+                        "checkoutId",
+                        checkout.data.checkoutCreate.checkout.id
+                    );
+                }
             }
         }
     };
@@ -95,7 +135,8 @@ export default function CartProvider({ children }: AsanaProviderProps) {
         addToCart: insertToCart,
         openCart,
         state,
-        closeCart
+        closeCart,
+        startCart,
     };
 
     return (

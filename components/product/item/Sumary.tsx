@@ -32,20 +32,21 @@ export function ProductItemSumary({ product, variant }: ProductItemSumary) {
 
                 <div
                     data-variant={variant || "default"}
-                    className="flex items-center max-md:flex max-md:flex-col data-[variant=list]:justify-start justify-center w-full text-center text-[15px] text-slate-400 font-medium"
+                    className="flex items-center max-md:flex max-md:flex-col data-[variant=list]:justify-start justify-center w-full text-center text-[15px] text-slate-400 font-light"
                 >
                     <span>
-                        De <del className="ml-2">{moneyFormat(price)}</del>
+                        De{" "}
+                        <del className="ml-2">{moneyFormat(comparePrice)}</del>
                     </span>
-                    <span className="bg-red-600 ml-2 text-white px-3 text-xs font-semibold py-[5px] rounded-full">
+                    <span className="bg-red-600 ml-2 font-light text-white px-3 text-xs py-[5px] rounded-full">
                         -{discountCalculator(comparePrice, price)}% OFF
                     </span>
                 </div>
 
-                <div className="text-bisyou-green font-medium text-[18px]">
+                <div className="text-bisyou-green font-light text-[18px]">
                     Por {moneyFormat(price)}
-                    <span className="ml-2 text-[15px] text-slate-400 font-normal">
-                        ou 5x de {moneyFormat(comparePrice / 5)}
+                    <span className="ml-2 text-[15px] text-slate-400 font-light">
+                        ou 5x de {moneyFormat(price / 5)}
                     </span>
                 </div>
                 <BuyButton

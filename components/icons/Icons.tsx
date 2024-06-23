@@ -328,7 +328,7 @@ const Visa = ({ fill, size, className, strokeWidth }: IconsProps) => {
             viewBox="0 0 780 500"
             fill="none"
         >
-            <g clip-path="url(#clip0_6278_125851)">
+            <g clipPath="url(#clip0_6278_125851)">
                 <path
                     d="M40 0H740C762.092 0 780 17.909 780 40V460C780 482.092 762.092 500 740 500H40C17.909 500 0 482.092 0 460V40C0 17.909 17.909 0 40 0Z"
                     fill="#1434CB"
@@ -355,7 +355,7 @@ const MasterCard = ({ fill, size, className, strokeWidth }: IconsProps) => {
             viewBox="0 0 780 500"
             fill="none"
         >
-            <g clip-path="url(#clip0_6278_125843)">
+            <g clipPath="url(#clip0_6278_125843)">
                 <path
                     d="M40 0H740C762.092 0 780 17.909 780 40V460C780 482.092 762.092 500 740 500H40C17.909 500 0 482.092 0 460V40C0 17.909 17.909 0 40 0Z"
                     fill="#253747"
@@ -392,7 +392,7 @@ const Elo = ({ fill, size, className, strokeWidth }: IconsProps) => {
             xmlns="http://www.w3.org/2000/svg"
             width={size || 30}
             height={size || 30}
-            enable-background="new 0 0 780 500"
+            enableBackground="new 0 0 780 500"
             version="1.1"
             viewBox="0 0 780 500"
             xmlSpace="preserve"
@@ -423,7 +423,7 @@ const Dinners = ({ fill, size, className, strokeWidth }: IconsProps) => {
             xmlns="http://www.w3.org/2000/svg"
             width={size || 30}
             height={size || 30}
-            enable-background="new 0 0 780 500"
+            enableBackground="new 0 0 780 500"
             version="1.1"
             viewBox="0 0 780 500"
             xmlSpace="preserve"
@@ -454,7 +454,7 @@ const Amex = ({ fill, size, className, strokeWidth }: IconsProps) => {
             xmlns="http://www.w3.org/2000/svg"
             width={size || 30}
             height={size || 30}
-            enable-background="new 0 0 780 500"
+            enableBackground="new 0 0 780 500"
             version="1.1"
             viewBox="0 0 780 500"
             xmlSpace="preserve"
