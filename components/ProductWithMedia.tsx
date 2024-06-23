@@ -1,12 +1,13 @@
-import { ProductWithMedia } from "@/@types/shopify/ProductWithMedia";
 import { discountCalculator } from "@/util/discountCalculator";
 import { moneyFormat } from "@/util/moneyFormat";
 import Image from "next/image";
 import { BuyButton } from "./product/BuyButton";
 import { ProductVideo } from "./product/ProductVideo";
+import { Shopify } from "@/@types/shopify";
+import { ProductWidthMedia } from "@/shopify";
 
 export interface FeaturedProductWithMediaProps {
-    product: ProductWithMedia;
+    product: ProductWidthMedia;
 }
 
 export function FeaturedProductWithMedia({
@@ -70,8 +71,10 @@ export function FeaturedProductWithMedia({
                             </div>
 
                             <BuyButton
+                                product={{ ...product }}
                                 handle={product.handle}
                                 id={product.id}
+                                hasQuick
                             />
                         </div>
                     </div>

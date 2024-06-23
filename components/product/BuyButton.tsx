@@ -29,7 +29,7 @@ export function BuyButton({
 
     const handleAddToCart = async () => {
         try {
-            console.log(`quickciew?`, hasQuick);
+            console.log(`cliquei para abrir  quickview`, hasQuick);
             if (hasQuick && product) {
                 return open(product);
             }

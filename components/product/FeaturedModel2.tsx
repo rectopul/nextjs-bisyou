@@ -1,10 +1,10 @@
-import { ProductWithMedia } from "@/@types/shopify/ProductWithMedia";
 import { moneyFormat } from "@/util/moneyFormat";
 import Image from "next/image";
 import { BuyButton } from "./BuyButton";
+import { ProductWidthMedia } from "@/shopify";
 
 interface FeaturedModel2Props {
-    product: ProductWithMedia;
+    product: ProductWidthMedia;
     title: string;
 }
 
@@ -91,6 +91,8 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
                             </div>
 
                             <BuyButton
+                                product={{ ...product }}
+                                hasQuick
                                 handle={product.handle}
                                 id={product.id}
                             />

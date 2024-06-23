@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/Header";
+import CartProvider from "@/providers/Cart";
+import QuicViewProvider from "@/providers/QuickView";
+import { QuickView } from "@/components/quickview";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -29,10 +32,15 @@ export default function RootLayout({
                     fontSans.variable
                 )}
             >
-                <Header />
-                {children}
-                <Footer />
-                <Toaster />
+                <CartProvider>
+                    <QuicViewProvider>
+                        <Header />
+                        {children}
+                        <Footer />
+                        <Toaster />
+                        <QuickView />
+                    </QuicViewProvider>
+                </CartProvider>
             </body>
         </html>
     );

@@ -1,3 +1,5 @@
+import { Seo, Variants } from "../ProductObject";
+
 export interface DataProductWithMedia {
     data: Data;
 }
@@ -7,26 +9,20 @@ export interface Data {
 }
 
 export interface ProductWithMedia {
+    id: string;
     title: string;
-    handle: string;
+    availableForSale: boolean;
+    tags: string[];
+    variants: Variants;
+    priceRange: CompareAtPriceRange;
     compareAtPriceRange: CompareAtPriceRange;
-    priceRange: {
-        maxVariantPrice: {
-            amount: string;
-        };
-    };
+    handle: string;
     description: string;
     descriptionHtml: string;
-    createdAt: string;
-    featuredImage: FeaturedImage;
-    id: string;
+    seo: Seo;
     images: Images;
+    featuredImage: FeaturedImage;
     media: Media;
-    variants: {
-        edges: {
-            node: ProductWithMediaVariant;
-        }[];
-    };
 }
 
 export interface ProductWithMediaVariant {

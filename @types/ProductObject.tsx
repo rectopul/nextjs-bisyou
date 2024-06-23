@@ -24,7 +24,7 @@ export interface Product {
     images: Images;
     featuredImage: FeaturedImage;
     metafield: MetaFieldObject | null;
-    collections: CollectionInProduct;
+    collections: CollectionInProduct | null;
     comparator: ComparatorObject | null;
 }
 

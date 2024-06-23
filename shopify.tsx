@@ -7,6 +7,7 @@ import {
 } from "./@types/shopify/Collections";
 import {
     DataProductWithMedia,
+    Media,
     ProductWithMedia,
 } from "./@types/shopify/ProductWithMedia";
 import { BLOG_ARTICLE_FIELDS } from "./queries/typescript/blog";
@@ -448,9 +449,13 @@ export async function listCollections(): Promise<Shopify.Collection[] | null> {
     }
 }
 
+export interface ProductWidthMedia extends Shopify.Products {
+    media: Media;
+}
+
 export async function getProductWithMediaShopify(
     handle: string
-): Promise<ProductWithMedia | null> {
+): Promise<ProductWidthMedia | null> {
     const query = `query GetProductWithMedia {
       product(handle: "${handle}") {
         title
