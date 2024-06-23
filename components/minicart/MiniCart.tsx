@@ -12,10 +12,6 @@ import { useEffect } from "react";
 export function MiniCart() {
     const { cart, state } = useCart();
 
-    useEffect(() => {
-        console.log(`carrinho mudou`, cart);
-    }, [cart]);
-
     const variants = {
         visible: { x: 0 },
         hidden: { x: 395 },

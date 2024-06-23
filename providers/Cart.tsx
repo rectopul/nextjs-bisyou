@@ -104,10 +104,6 @@ export default function CartProvider({ children }: CartProviderProps) {
             const cartData = await getCart(updatedCartId);
 
             if (cartData && cartData.node) {
-                console.log(
-                    "Item adicionado com sucesso ao carrinho:",
-                    cartData
-                );
                 setCart(cartData);
                 openCart();
             } else {
