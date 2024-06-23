@@ -38,13 +38,12 @@ export function FullBanners({ banners }: FullBanners) {
     const filtred = banners.filter(
         (b) => b.position && b.position !== "medium"
     );
-
-    const screenSize = useWindowSize().width;
-
     useEffect(() => {
-        if (screenSize > 766) setIsMobile(false);
+        const { innerWidth: width, innerHeight: height } = window;
+
+        if (width > 766) setIsMobile(false);
         else setIsMobile(true);
-    }, [screenSize]);
+    }, []);
 
     useEffect(() => {
         if (!api) {
