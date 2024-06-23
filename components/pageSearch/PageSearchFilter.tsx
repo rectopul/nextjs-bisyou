@@ -5,7 +5,6 @@ import { SearchFilter } from "./Filter";
 import { ProductList } from "./ProductList";
 import { useState } from "react";
 import { getCollectionsByMetafields } from "@/shopify";
-import QuicViewProvider from "@/providers/QuickView";
 
 interface PageSearchFilterProps extends Shopify.CollectionSinge {
     props: Shopify.MetaObjects.MetaObjectEdge[][];
@@ -42,9 +41,7 @@ export function PageSearchFilter({
             />
 
             <div className="flex flex-col">
-                <QuicViewProvider>
-                    <ProductList data={data} filtred={productsFilter} />
-                </QuicViewProvider>
+                <ProductList data={data} filtred={productsFilter} />
             </div>
         </div>
     );

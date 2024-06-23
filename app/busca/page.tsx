@@ -1,4 +1,6 @@
 import { PageSearchFilter } from "@/components/pageSearch/PageSearchFilter";
+import CartProvider from "@/providers/Cart";
+import QuicViewProvider from "@/providers/QuickView";
 import { getCollection, getMetaObject, listCategories } from "@/shopify";
 import { cache } from "react";
 
@@ -17,20 +19,22 @@ export default async function SearchPage() {
         await fetchData();
 
     return (
-        <>
-            <div className="w-full px-4 my-16">
-                {products &&
-                    products.data.collection &&
-                    skinType.length > 0 &&
-                    need.length > 0 &&
-                    product_type.length > 0 && (
-                        <PageSearchFilter
-                            props={[skinType, need, product_type]}
-                            categories={categories}
-                            data={products.data}
-                        />
-                    )}
-            </div>
-        </>
+        <CartProvider>
+            <QuicViewProvider>
+                <div className="w-full px-4 my-16">
+                    {products &&
+                        products.data.collection &&
+                        skinType.length > 0 &&
+                        need.length > 0 &&
+                        product_type.length > 0 && (
+                            <PageSearchFilter
+                                props={[skinType, need, product_type]}
+                                categories={categories}
+                                data={products.data}
+                            />
+                        )}
+                </div>
+            </QuicViewProvider>
+        </CartProvider>
     );
 }

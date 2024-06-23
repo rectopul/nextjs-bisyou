@@ -8,9 +8,14 @@ import { BuyButton } from "../BuyButton";
 interface ProductItemSumary {
     product: Shopify.Products;
     variant?: "spacing" | "default" | "list" | "grid" | false | null;
+    hasQuick?: boolean;
 }
 
-export function ProductItemSumary({ product, variant }: ProductItemSumary) {
+export function ProductItemSumary({
+    product,
+    variant,
+    hasQuick = false,
+}: ProductItemSumary) {
     const price = parseFloat(product.priceRange.maxVariantPrice.amount);
     const comparePrice = parseFloat(
         product.compareAtPriceRange.maxVariantPrice.amount
@@ -54,7 +59,7 @@ export function ProductItemSumary({ product, variant }: ProductItemSumary) {
                     id={product.id}
                     size={variant}
                     product={product}
-                    hasQuick
+                    hasQuick={hasQuick}
                 />
             </div>
         </>

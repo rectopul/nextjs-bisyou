@@ -40,24 +40,22 @@ export default async function Product({ params }: ProductPageProps) {
     if (!product) return notFound();
 
     return (
-        <>
+        <QuicViewProvider>
             <CartProvider>
                 <Header />
                 <ProductSummary product={product} />
-                <QuicViewProvider>
-                    <ProductProperties product={product} />
-                    {product.comparator && (
-                        <ImageTool comparator={product.comparator} />
-                    )}
-                    <Avaliation />
+                <ProductProperties product={product} />
+                {product.comparator && (
+                    <ImageTool comparator={product.comparator} />
+                )}
+                <Avaliation />
 
-                    <Selos banners={banners} />
+                <Selos banners={banners} />
 
-                    <SlideImages images={imageSlide} />
-                    {hasCross && <Collection collection={hasCross.node} />}
-                    <QuickView />
-                </QuicViewProvider>
+                <SlideImages images={imageSlide} />
+                {hasCross && <Collection collection={hasCross.node} />}
+                <QuickView />
             </CartProvider>
-        </>
+        </QuicViewProvider>
     );
 }

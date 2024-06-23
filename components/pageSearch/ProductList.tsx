@@ -77,7 +77,11 @@ export function ProductList({ data, filtred }: ProductListSearchProps) {
                             data-type={listType}
                             className="flex flex-col data-[type=list]:h-auto rounded-xl min-h-10"
                         >
-                            <ProductItem product={p} variant={listType} />
+                            <ProductItem
+                                product={p}
+                                variant={listType}
+                                hasQuick
+                            />
                         </motion.div>
                     ))}
             </motion.div>

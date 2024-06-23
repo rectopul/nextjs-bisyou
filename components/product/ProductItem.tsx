@@ -8,9 +8,14 @@ import { Shopify } from "@/@types/shopify";
 interface ProductItemProps {
     product: Shopify.Products;
     variant?: "spacing" | "default" | "list" | "grid";
+    hasQuick?: boolean;
 }
 
-export function ProductItem({ product, variant }: ProductItemProps) {
+export function ProductItem({
+    product,
+    variant,
+    hasQuick = false,
+}: ProductItemProps) {
     const price = parseFloat(product.priceRange.maxVariantPrice.amount);
     const compare = parseFloat(
         product.compareAtPriceRange.maxVariantPrice.amount
@@ -52,7 +57,11 @@ export function ProductItem({ product, variant }: ProductItemProps) {
                         />
                     </figure>
 
-                    <ProductItemSumary product={product} variant={variant} />
+                    <ProductItemSumary
+                        product={product}
+                        variant={variant}
+                        hasQuick={hasQuick}
+                    />
                 </div>
             </div>
         </>

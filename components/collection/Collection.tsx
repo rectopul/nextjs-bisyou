@@ -84,7 +84,7 @@ export function Collection({
                                     className="xl:basis-1/5 max-sm:px-4"
                                     key={`prod-collection-${p.node.id}`}
                                 >
-                                    <ProductItem product={p.node} />
+                                    <ProductItem product={p.node} hasQuick />
                                 </CarouselItem>
                             ))}
                         </CarouselContent>

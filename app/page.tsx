@@ -14,6 +14,7 @@ import { ListRullerOptions } from "@/components/rullerOptions/List";
 import { SectionPartners } from "@/components/sections/Partners";
 import { ShopCollections } from "@/components/shopCollections/List";
 import prisma from "@/lib/client";
+import CartProvider from "@/providers/Cart";
 import QuicViewProvider from "@/providers/QuickView";
 import {
     getBlogArticles,
@@ -124,54 +125,61 @@ export default async function Home() {
     }
 
     return (
-        <>
+        <CartProvider>
             <Header />
-            <main className="flex min-h-screen w-full flex-col items-center">
-                {fullBanners && <FullBanners banners={fullBanners} />}
-                <ListRullerOptions ruller_options={rullerOptions} />
-                {fullBanners && <Selos banners={fullBanners} />}
-                {collections && <ShopCollections collections={collections} />}
+            <QuicViewProvider>
+                <main className="flex min-h-screen w-full flex-col items-center">
+                    {fullBanners && <FullBanners banners={fullBanners} />}
+                    <ListRullerOptions ruller_options={rullerOptions} />
+                    {fullBanners && <Selos banners={fullBanners} />}
+                    {collections && (
+                        <ShopCollections collections={collections} />
+                    )}
 
-                <Suspense fallback={<Loading />}>
-                    <QuicViewProvider>
-                        {collectionMoreSell &&
-                            collectionMoreSell.data.collection && (
-                                <Collection
-                                    collection={
-                                        collectionMoreSell.data.collection
-                                    }
-                                    transparent={true}
-                                    center={true}
-                                />
-                            )}
-                        <QuickView />
-                    </QuicViewProvider>
-                </Suspense>
-                {productWithMedia && (
-                    <FeaturedProductWithMedia product={productWithMedia} />
-                )}
+                    <Suspense fallback={<Loading />}>
+                        <QuicViewProvider>
+                            {collectionMoreSell &&
+                                collectionMoreSell.data.collection && (
+                                    <Collection
+                                        collection={
+                                            collectionMoreSell.data.collection
+                                        }
+                                        transparent={true}
+                                        center={true}
+                                    />
+                                )}
+                            <QuickView />
+                        </QuicViewProvider>
+                    </Suspense>
+                    {productWithMedia && (
+                        <FeaturedProductWithMedia product={productWithMedia} />
+                    )}
 
-                {featuredKit && (
-                    <FeaturedModel2
-                        product={featuredKit}
-                        title="Seu skin care reinventado"
-                    />
-                )}
+                    {featuredKit && (
+                        <FeaturedModel2
+                            product={featuredKit}
+                            title="Seu skin care reinventado"
+                        />
+                    )}
 
-                {miniBanner && <MiniBanner miniBanner={miniBanner} />}
+                    {miniBanner && <MiniBanner miniBanner={miniBanner} />}
 
-                <Avaliation hasInsert={false} />
+                    <Avaliation hasInsert={false} />
 
-                {settings && <About settings={settings} />}
-                {blogArticles && (
-                    <BlogArticlesCarousel blogObject={blogArticles} />
-                )}
+                    {settings && <About settings={settings} />}
+                    {blogArticles && (
+                        <BlogArticlesCarousel blogObject={blogArticles} />
+                    )}
 
-                {settings && partners && (
-                    <SectionPartners partners={partners} settings={settings} />
-                )}
-            </main>
+                    {settings && partners && (
+                        <SectionPartners
+                            partners={partners}
+                            settings={settings}
+                        />
+                    )}
+                </main>
+            </QuicViewProvider>
             <Footer />
-        </>
+        </CartProvider>
     );
 }

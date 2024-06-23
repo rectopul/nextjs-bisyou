@@ -24,15 +24,16 @@ export function BuyButton({
     product,
 }: BuyButtonProps) {
     const { addToCart } = useCart();
-    const { open, state } = useQuickView();
+    const { open } = useQuickView();
     const [isLoad, setIsLod] = useState<boolean>(false);
 
     const handleAddToCart = async () => {
         try {
-            setIsLod(true);
+            console.log(`quickciew?`, hasQuick);
             if (hasQuick && product) {
                 return open(product);
             }
+            setIsLod(true);
 
             await addToCart({ quantity: 1, variantId: id });
             return setIsLod(false);
