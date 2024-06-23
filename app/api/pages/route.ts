@@ -11,50 +11,6 @@ import { fileCreator } from "@/util/fileCreator";
  */
 
 export async function POST(req: NextRequest) {
-    //const form = new formidable.IncomingForm();
-    // form.parse(req, async (err, fields, files) => {
-    //     if (err) {
-    //         console.error("Error parsing form:", err);
-    //         return res.status(500).json({ error: "Error parsing form" });
-    //     }
-
-    //     let file = files.file as
-    //         | formidable.File
-    //         | formidable.File[]
-    //         | undefined;
-
-    //     // Verificar se é um array de arquivos
-    //     if (Array.isArray(file)) {
-    //         file = file[0]; // Usar o primeiro arquivo
-    //     }
-
-    //     if (!file || file.size === 0) {
-    //         return res.status(400).json({ error: "Arquivo não enviado" });
-    //     }
-
-    //     try {
-    //         const metadata = await sharp(
-    //             file.originalFilename || ""
-    //         ).metadata();
-    //         const dimensions = {
-    //             width: metadata.width,
-    //             height: metadata.height,
-    //         };
-    //         const slug = slugify(file.originalFilename || "", {
-    //             lower: true,
-    //             strict: true,
-    //         });
-
-    //         console.log({ dimensions, slug });
-
-    //         return res.status(200).json({ dimensions, slug });
-    //     } catch (error) {
-    //         console.error("Error processing image:", error);
-    //         return res
-    //             .status(500)
-    //             .json({ error: "Could not process the image" });
-    //     }
-    // });
     const formData = await req.formData();
     const files: any = formData.getAll("file");
 
