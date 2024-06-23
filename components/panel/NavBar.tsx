@@ -75,7 +75,6 @@ export function NavBar({ children, name }: NavBarProps) {
                             </button>
 
                             <a href="#/auth/sign-in">
-                                <AccountItem name={name} />
                                 <button
                                     className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
                                     type="button"

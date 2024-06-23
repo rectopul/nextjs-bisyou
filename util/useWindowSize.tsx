@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface WindowSize {
     width: number;
@@ -8,17 +8,12 @@ interface WindowSize {
 }
 
 function useWindowSize(): WindowSize {
-    const isClient = typeof window === "object";
     const [windowSize, setWindowSize] = useState<WindowSize>({
-        width: isClient ? window.innerWidth : 0,
-        height: isClient ? window.innerWidth : 0,
+        width: 0,
+        height: 0,
     });
 
     useEffect(() => {
-        if (!isClient) {
-            return; // Se não estiver no navegador, não faz nada
-        }
-
         const handleResize = () => {
             setWindowSize({
                 width: window.innerWidth,
@@ -31,7 +26,7 @@ function useWindowSize(): WindowSize {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, [isClient]);
+    }, []);
 
     return windowSize;
 }

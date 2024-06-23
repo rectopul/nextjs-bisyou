@@ -20,7 +20,24 @@ export function ShopCollections({ collections }: ShopCollections) {
     const [current, setCurrent] = useState(0);
     const [offset, setOffset] = useState<number>(0);
     const [count, setCount] = useState(0);
-    const isMobile = useWindowSize().width > 766 ? false : true;
+    const [isMobile, setIsMobile] = useState<boolean>(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768); // ajuste o valor conforme necessário
+        };
+
+        // Verifica o tamanho da tela no momento da montagem
+        handleResize();
+
+        // Adiciona o event listener
+        window.addEventListener("resize", handleResize);
+
+        // Limpa o event listener ao desmontar
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         if (!api) {

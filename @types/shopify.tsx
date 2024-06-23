@@ -3,7 +3,7 @@ import { Product } from "./ProductObject";
 import { BlogObject } from "./shopify/BlogObject";
 import { CartData, CartItem } from "./shopify/CartObject";
 import { CollectionEdge as SimpleCollectionEdge } from "./shopify/SimpleCollections";
-import { CheckoutData } from "./shopify/Checkout";
+import { CheckoutData, LineItemNode } from "./shopify/Checkout";
 import {
     CollectionObjectEdge,
     CollectionSingleObject,
@@ -17,6 +17,8 @@ import {
     ProductCategoryEdge,
 } from "./shopify/ProductCategory";
 import { CollectionNode } from "./shopify/SimpleCollections";
+import { CartGet } from "./shopify/cart/get";
+import { CheckoutCreateData } from "./shopify/cart/create";
 
 export namespace Shopify {
     export namespace MetaObjects {
@@ -51,8 +53,11 @@ export namespace Shopify {
     }
 
     export namespace Cart {
-        export interface Data extends CartData {}
-        export interface Item extends CartItem {}
+        export interface Data extends CartGet {}
+        export interface Create {
+            data: CheckoutCreateData;
+        }
+        export interface Item extends LineItemNode {}
         export interface Checkout extends CheckoutData {}
     }
 

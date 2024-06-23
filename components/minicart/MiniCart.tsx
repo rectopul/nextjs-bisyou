@@ -7,48 +7,35 @@ import { Button } from "../ui/button";
 import { CartItem } from "./CartItem";
 import { motion } from "framer-motion";
 import { ButtonClose } from "./ButtonClose";
+import { useEffect } from "react";
 
 export function MiniCart() {
-    const { cart, closeCart, state, startCart } = useCart();
+    const { cart, state } = useCart();
+
+    useEffect(() => {
+        console.log(`carrinho mudou`, cart);
+    }, [cart]);
 
     const variants = {
         visible: { x: 0 },
         hidden: { x: 395 },
     };
 
-    if (!cart) {
-        startCart();
-    }
-
-    console.log(`cart object: `, cart);
-
     const subtotal =
         (cart &&
-            cart.data &&
-            cart.data.node &&
-            parseFloat(cart.data.node.subtotalPrice.amount)) ||
+            cart &&
+            cart.node &&
+            parseFloat(cart.node.subtotalPrice.amount)) ||
         0;
 
     const duties =
-        (cart &&
-            cart.data &&
-            cart.data.node &&
-            cart.data.node.totalDuties &&
-            parseFloat(cart.data.node.totalDuties.amount)) ||
-        0;
+        (cart && cart && cart.node && parseFloat(cart.node.totalDuties)) || 0;
 
     const total =
-        (cart &&
-            cart.data &&
-            cart.data.node &&
-            parseFloat(cart.data.node.totalPrice.amount)) ||
-        0;
+        (cart && cart.node && parseFloat(cart.node.totalPrice.amount)) || 0;
 
     const tax =
-        (cart &&
-            cart.data &&
-            cart.data.node &&
-            parseFloat(cart.data.node.totalTax.amount) + duties) ||
+        (cart && cart.node && parseFloat(cart.node.totalTax.amount) + duties) ||
         0;
 
     return (
@@ -63,7 +50,7 @@ export function MiniCart() {
                 initial="hidden"
                 className="w-full font-poppins z-30 py-3 max-w-[385px] bg-gradient-to-b from-alto-200 to-white fixed right-0 top-0 h-full flex flex-col gap-5"
             >
-                <section className="flex px-6 relative justify-centern items-center font-medium text-black">
+                <section className="flex px-6 relative justify-center items-center font-medium text-black">
                     <ButtonClose size={25} strokeWidth={3} />
 
                     <span className="text-[18px] mx-auto">Meu carrinho</span>
@@ -71,11 +58,10 @@ export function MiniCart() {
 
                 <section className="flex flex-col gap-3 px-6 w-full">
                     {cart &&
-                    cart.data &&
-                    cart.data.node &&
-                    cart.data.node.lineItems.edges.length > 0 ? (
+                    cart.node &&
+                    cart.node.lineItems.edges.length > 0 ? (
                         cart &&
-                        cart.data.node.lineItems.edges.map((i) => (
+                        cart.node.lineItems.edges.map((i) => (
                             <CartItem
                                 product={i.node}
                                 key={`mn-i-${i.node.id}`}
@@ -112,9 +98,15 @@ export function MiniCart() {
                         </span>
                     </div>
 
-                    <Button className="text-white bg-contessa-500 hover:bg-spring-green-500">
-                        Finalizar
-                    </Button>
+                    {cart && cart.node && (
+                        <a
+                            href={cart.node.webUrl}
+                            target="_blank"
+                            className="text-white flex justify-center px-5 py-2 rounded-md bg-contessa-500 hover:bg-spring-green-500"
+                        >
+                            Finalizar
+                        </a>
+                    )}
                 </section>
             </motion.div>
         </>

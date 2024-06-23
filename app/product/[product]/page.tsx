@@ -8,6 +8,7 @@ import { SlideImages } from "@/components/product/SlideImages";
 import { ProductSummary } from "@/components/product/Sumary";
 import { QuickView } from "@/components/quickview";
 import prisma from "@/lib/client";
+import CartProvider from "@/providers/Cart";
 import QuicViewProvider from "@/providers/QuickView";
 import { getProductShopify, getProductsInCollection } from "@/shopify";
 import { notFound } from "next/navigation";
@@ -40,21 +41,23 @@ export default async function Product({ params }: ProductPageProps) {
 
     return (
         <>
-            <Header />
-            <ProductSummary product={product} />
-            <QuicViewProvider>
-                <ProductProperties product={product} />
-                {product.comparator && (
-                    <ImageTool comparator={product.comparator} />
-                )}
-                <Avaliation />
+            <CartProvider>
+                <Header />
+                <ProductSummary product={product} />
+                <QuicViewProvider>
+                    <ProductProperties product={product} />
+                    {product.comparator && (
+                        <ImageTool comparator={product.comparator} />
+                    )}
+                    <Avaliation />
 
-                <Selos banners={banners} />
+                    <Selos banners={banners} />
 
-                <SlideImages images={imageSlide} />
-                {hasCross && <Collection collection={hasCross.node} />}
-                <QuickView />
-            </QuicViewProvider>
+                    <SlideImages images={imageSlide} />
+                    {hasCross && <Collection collection={hasCross.node} />}
+                    <QuickView />
+                </QuicViewProvider>
+            </CartProvider>
         </>
     );
 }

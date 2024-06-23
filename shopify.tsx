@@ -685,7 +685,7 @@ export async function searchShop(
     }
 }
 
-export async function createCart(): Promise<Shopify.Cart.Data | null> {
+export async function createCart(): Promise<Shopify.Cart.Create | null> {
     const query = `
     ${CREATE_CHECKOUT}
     `;
@@ -706,17 +706,17 @@ export async function createCart(): Promise<Shopify.Cart.Data | null> {
 
 export async function getCart(
     checkoutId: string
-): Promise<Shopify.Cart.Checkout | null> {
+): Promise<Shopify.Cart.Data | null> {
     const query = `
     ${GET_CHECKOUT}
     `;
 
     try {
-        const response: Shopify.Cart.Checkout = await ShopifyData(query, {
+        const response: { data: Shopify.Cart.Data } = await ShopifyData(query, {
             checkoutId,
         });
 
-        return response;
+        return response.data;
     } catch (error) {
         console.log(`erro na busca do carrinho`, error);
         throw error;

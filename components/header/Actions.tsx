@@ -31,8 +31,8 @@ export function HeaderActions() {
                 </Button>
                 <div className="relative w-10 group h-10 bg-transparent text-bisyou-font hover:text-rose-fog-300">
                     <span className="absolute -top-2 group-hover:bg-rose-fog-300 -right-2 text-xs/5 font-bold w-5 h-5 bg-mantis-400 text-mantis-100 rounded-full">
-                        {cart && cart.data && cart.data.node
-                            ? cart.data.node.lineItems.edges.length
+                        {cart && cart.node
+                            ? cart.node.lineItems.edges.length
                             : 0}
                     </span>
                     <Cart />

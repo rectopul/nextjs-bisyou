@@ -4,6 +4,7 @@ import { MotionProps, motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { useCart } from "@/providers/Cart";
+import { X } from "lucide-react";
 
 const Path = (props: MotionProps) => <motion.path {...props} />;
 
@@ -31,38 +32,7 @@ export function ButtonClose({
                 onMouseLeave={handleHover}
                 onClick={closeCart}
             >
-                <svg
-                    viewBox="0 0 24 24"
-                    width={size}
-                    height={size}
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    fill="none"
-                    strokeWidth={strokeWidth}
-                >
-                    <Path
-                        variants={{
-                            in: { d: "M18 6L6 18" },
-                            hov: { d: "M15 18L9 12L15 6" },
-                        }}
-                        initial={false}
-                        animate={onHov ? "in" : "hov"}
-                        transition={{
-                            duration: 0.5,
-                        }}
-                    />
-                    <Path
-                        variants={{
-                            in: { d: "M6 6L18 18" },
-                            hov: { opacity: 0 },
-                        }}
-                        animate={onHov ? "in" : "hov"}
-                        transition={{
-                            duration: 0.5,
-                        }}
-                    />
-                </svg>
+                <X />
             </Button>
         </>
     );

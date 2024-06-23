@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useCart } from "@/providers/Cart";
 import { useQuickView } from "@/providers/QuickView";
 import { Shopify } from "@/@types/shopify";
+import { useState } from "react";
+import { Spinner } from "../Spinner";
 
 interface BuyButtonProps {
     handle: string;
@@ -23,16 +25,20 @@ export function BuyButton({
 }: BuyButtonProps) {
     const { addToCart } = useCart();
     const { open, state } = useQuickView();
+    const [isLoad, setIsLod] = useState<boolean>(false);
 
     const handleAddToCart = async () => {
         try {
+            setIsLod(true);
             if (hasQuick && product) {
                 return open(product);
             }
 
-            return await addToCart({ quantity: 1, variantId: id });
+            await addToCart({ quantity: 1, variantId: id });
+            return setIsLod(false);
         } catch (error) {
             console.log(error);
+            return setIsLod(false);
         }
     };
 
@@ -62,21 +68,18 @@ export function BuyButton({
                         width: ["64px", "45px"],
                     }}
                 >
-                    <Plus size={15} className="mr-1 group-hover:mr-0" />
-                    <ShoppingBag size={16} className="group-hover:hidden" />
+                    {isLoad ? (
+                        <Spinner size="sm" />
+                    ) : (
+                        <>
+                            <Plus size={15} className="mr-1 group-hover:mr-0" />
+                            <ShoppingBag
+                                size={16}
+                                className="group-hover:hidden"
+                            />
+                        </>
+                    )}
                 </motion.button>
-                {/* <div
-                    data-size={size}
-                    className="w-16 h-[45px] max-md:data-[size=grid]:w-14 max-md:data-[size=grid]:h-9 hover:w-[45px] overflow-hidden transition-all duration-300 hover:rounded-l-full flex hover:bg-opacity-80 justify-center items-center rounded-r-full text-white"
-                >
-                    <button className="w-full h-full group flex hover:bg-opacity-80 justify-center items-center bg-bisyou-greenBlack text-white">
-                        <Plus
-                            size={15}
-                            className="mr-1 group-hover:mr-0 group-hover:hidden"
-                        />
-                        <ShoppingBag size={16} className="" />
-                    </button>
-                </div> */}
             </div>
         </>
     );
