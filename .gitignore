@@ -11,6 +11,8 @@
 
 /public/file
 /public/file/*
+public/file
+public/file/*
 
 # next.js
 /.next/
