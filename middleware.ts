@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { checkToken } from "./util/checkJwt";
 
 const corsOptions = {
@@ -12,17 +12,13 @@ const corsOptions = {
 export async function middleware(req: NextRequest) {
     try {
         const requestHeaders = new Headers(req.headers);
-        const origin = requestHeaders.get("origin") ?? "";
-
-        // Handle preflighted requests
-        const isPreflight = req.method === "OPTIONS";
 
         requestHeaders.set("x-pathname", req.nextUrl.pathname);
 
         const preflightHeaders = {
             ...corsOptions,
         };
-        
+
         if (req.nextUrl.pathname.startsWith("api/pages")) {
             if (req.method === "POST") {
                 const cookie = cookies();
@@ -119,8 +115,3 @@ export async function middleware(req: NextRequest) {
         );
     }
 }
-
-// See "Matching Paths" below to learn more
-// export const config = {
-//     matcher: ["/api/pages/category/:path*", "/api/pages"],
-// };

@@ -24,18 +24,19 @@ const getData = cache(async (handle: string) => {
     const banners = await prisma.banners.findMany({
         include: { image: { include: { thumbnail: true } } },
     });
+    const slides = await prisma.imagesSlideDefault.findMany();
 
-    return { product, products, banners };
+    return { product, products, banners, slides };
 });
 
 export default async function Product({ params }: ProductPageProps) {
-    const { product, banners } = await getData(params.product);
-    const imageSlide = await prisma.imagesSlideDefault.findMany();
-    const hasCross = product
-        ? product.collections.edges.filter(
-              (c) => c.node.handle === "bisyou-momentobisyou"
-          )[0]
-        : null;
+    const { product, banners, slides } = await getData(params.product);
+    const hasCross =
+        product && product.collections
+            ? product.collections.edges.filter(
+                  (c) => c.node.handle === "bisyou-momentobisyou"
+              )[0]
+            : null;
 
     if (!product) return notFound();
 
@@ -52,7 +53,7 @@ export default async function Product({ params }: ProductPageProps) {
 
                 <Selos banners={banners} />
 
-                <SlideImages images={imageSlide} />
+                <SlideImages images={slides} />
                 {hasCross && <Collection collection={hasCross.node} />}
                 <QuickView />
             </CartProvider>

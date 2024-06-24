@@ -1,24 +1,13 @@
-import { Button } from "@/components/ui/button";
 import {
     Table,
     TableBody,
     TableCaption,
-    TableCell,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+
 import { listCollections } from "@/shopify";
-import { Trash, Trash2 } from "lucide-react";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
 import prisma from "@/lib/client";
 import { CollectionItem } from "./CollectionItem";
 

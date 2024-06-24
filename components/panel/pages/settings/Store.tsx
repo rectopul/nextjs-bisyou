@@ -9,10 +9,13 @@ import prisma from "@/lib/client";
 import { StoreForm } from "./store/Form";
 import { MissionForm } from "./store/MissionForm";
 import { StoreCardsSettings } from "./store/CardsSelect";
+import { Settings } from "@prisma/client";
 
-export async function StoreSettings() {
-    const settings = await prisma.settings.findFirst();
+interface StoreSettingsProps {
+    settings: Settings | null;
+}
 
+export async function StoreSettings({ settings }: StoreSettingsProps) {
     if (!settings) return null;
 
     return (

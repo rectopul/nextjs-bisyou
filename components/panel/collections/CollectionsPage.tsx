@@ -1,6 +1,4 @@
-import prisma from "@/lib/client";
 import { CollectionsTable } from "./CollectionsTable";
-import { listCollections } from "@/shopify";
 
 export async function CollectionsPage() {
     return (

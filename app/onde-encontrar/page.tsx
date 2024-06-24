@@ -16,8 +16,6 @@ const getData = async () => {
             },
         });
 
-        console.log(`cities: `, cities);
-
         const states = await prisma.shopLocations.findMany({
             select: {
                 state: true,
