@@ -6,6 +6,8 @@ import { Facebook } from "lucide-react";
 import { FacebookIcon, Instagram, Pinterest, TikTok } from "./icons/Icons";
 import { CardSelect } from "./CardSelect";
 
+//Footer Site
+
 export default async function Footer() {
     const pages = await prisma.pages.findMany();
     const settings = await prisma.settings.findFirst();

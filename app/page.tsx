@@ -169,12 +169,12 @@ export default async function Home() {
                         <BlogArticlesCarousel blogObject={blogArticles} />
                     )}
 
-                    {settings && partners && (
+                    {/* {settings && partners && (
                         <SectionPartners
                             partners={partners}
                             settings={settings}
                         />
-                    )}
+                    )} */}
                 </main>
             </QuicViewProvider>
             <Footer />
