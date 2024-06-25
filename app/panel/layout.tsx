@@ -1,6 +1,5 @@
 import { AccountItem } from "@/components/AccountItem";
 import { Aside } from "@/components/panel/Sidebar";
-import { UserComponent } from "@/components/panel/UserComponnent";
 import { UserByToken } from "@/util/auth";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -41,8 +40,6 @@ export default async function RootLayout({
     const isOnLoginPage = keys && keys.includes("panel/login");
 
     let userData = null;
-
-    console.log(keys);
 
     if (!isOnLoginPage) {
         userData = await isLogged();
@@ -97,6 +94,7 @@ export default async function RootLayout({
                                         </div>
                                     </div>
 
+                                    <AccountItem user={userData} />
                                     <button
                                         className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 grid xl:hidden"
                                         type="button"
@@ -119,7 +117,6 @@ export default async function RootLayout({
                                         </span>
                                     </button>
 
-                                    <UserComponent user={userData} />
                                     <button
                                         aria-expanded="false"
                                         aria-haspopup="menu"

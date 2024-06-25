@@ -1,78 +1,79 @@
-import { CollectionEdge, SimpleNode } from "./CollectionInProduct";
-import { Product } from "./ProductObject";
-import { BlogObject } from "./shopify/BlogObject";
-import { CartData, CartItem } from "./shopify/CartObject";
-import { CollectionEdge as SimpleCollectionEdge } from "./shopify/SimpleCollections";
-import { CheckoutData, LineItemNode } from "./shopify/Checkout";
+import { CollectionEdge, SimpleNode } from "./CollectionInProduct"
+import { Product } from "./ProductObject"
+import { BlogObject } from "./shopify/BlogObject"
+import { CartData, CartItem } from "./shopify/CartObject"
+import { CollectionEdge as SimpleCollectionEdge } from "./shopify/SimpleCollections"
+import { CheckoutData, LineItemNode } from "./shopify/Checkout"
 import {
-    CollectionObjectEdge,
-    CollectionSingleObject,
-} from "./shopify/Collections";
-import { CollectionsByMetafieldsObject } from "./shopify/CollectionsByMetafield";
-import { Errors } from "./shopify/Erros";
-import { MetaObjectFetch, MetaobjectsEdges } from "./shopify/MetaObjects";
-import { ProductByTerm } from "./shopify/ProductByTerm";
+  CollectionObjectEdge,
+  CollectionSingleObject,
+} from "./shopify/Collections"
+import { CollectionsByMetafieldsObject } from "./shopify/CollectionsByMetafield"
+import { Errors } from "./shopify/Erros"
+import { MetaObjectFetch, MetaobjectsEdges } from "./shopify/MetaObjects"
+import { ProductByTerm } from "./shopify/ProductByTerm"
 import {
-    AllProductCategory,
-    ProductCategoryEdge,
-} from "./shopify/ProductCategory";
-import { CollectionNode } from "./shopify/SimpleCollections";
-import { CartGet } from "./shopify/cart/get";
-import { CheckoutCreateData } from "./shopify/cart/create";
+  AllProductCategory,
+  ProductCategoryEdge,
+} from "./shopify/ProductCategory"
+import { CollectionNode } from "./shopify/SimpleCollections"
+import { CartGet } from "./shopify/cart/get"
+import { CheckoutCreateData } from "./shopify/cart/create"
 
 export namespace Shopify {
-    export namespace MetaObjects {
-        export interface MetaObjectData extends MetaObjectFetch {}
-        export interface MetaObjectEdge extends MetaobjectsEdges {}
-    }
+  export namespace MetaObjects {
+    export interface MetaObjectData extends MetaObjectFetch {}
+    export interface MetaObjectEdge extends MetaobjectsEdges {}
+  }
 
-    export interface Articles extends BlogObject {}
+  export interface Articles extends BlogObject {}
 
-    export interface Products extends Product {}
-    export interface SimpleProduct extends SimpleNode {}
+  export interface Products extends Product {}
+  export interface SimpleProduct extends SimpleNode {}
 
-    export interface Search {
-        data: {
-            products: {
-                edges: {
-                    node: Product;
-                }[];
-            };
-            pages: {
-                edges: {
-                    node: {
-                        id: string;
-                        title: string;
-                        handle: string;
-                        bodySummary: string;
-                        body: string;
-                    }[];
-                };
-            };
-        };
-    }
-
-    export namespace Cart {
-        export interface Data extends CartGet {}
-        export interface Create {
-            data: CheckoutCreateData;
+  export interface Search {
+    data: {
+      products: {
+        edges: {
+          node: Product
+        }[]
+      }
+      pages: {
+        edges: {
+          node: {
+            id: string
+            title: string
+            handle: string
+            bodySummary: string
+            body: string
+          }[]
         }
-        export interface Item extends LineItemNode {}
-        export interface Checkout extends CheckoutData {}
+      }
     }
+  }
 
-    export interface ProductsByTerm extends ProductByTerm {}
+  export namespace Cart {
+    export interface Data extends CartGet {
+      errors?: any
+    }
+    export interface Create {
+      data: CheckoutCreateData
+    }
+    export interface Item extends LineItemNode {}
+    export interface Checkout extends CheckoutData {}
+  }
 
-    export interface Error extends Errors {}
+  export interface ProductsByTerm extends ProductByTerm {}
 
-    export interface CollectionSinge extends CollectionSingleObject {}
-    export interface CollectionsMetafield
-        extends CollectionsByMetafieldsObject {}
+  export interface Error extends Errors {}
 
-    export interface ProductCategoryData extends ProductCategoryEdge {}
-    export interface ProductCategory extends AllProductCategory {}
+  export interface CollectionSinge extends CollectionSingleObject {}
+  export interface CollectionsMetafield extends CollectionsByMetafieldsObject {}
 
-    export interface Collection extends SimpleCollectionEdge {}
+  export interface ProductCategoryData extends ProductCategoryEdge {}
+  export interface ProductCategory extends AllProductCategory {}
 
-    export interface QueryProducts {}
+  export interface Collection extends SimpleCollectionEdge {}
+
+  export interface QueryProducts {}
 }
