@@ -26,24 +26,17 @@ import {
 import { DropZone } from "@/components/DropZone"
 import { useCallback, useRef, useState } from "react"
 import { toast } from "sonner"
-
-interface BannerData extends Prisma.BannersCreateInput {
-  file: File
-  mobile: File
-}
-
-interface FilesUpload {
-  file?: File
-  mobile?: File
-}
+import { BannersWithImages } from "@/app/page"
+import { Spinner } from "@/components/Spinner"
 
 interface CreateBannerProps {
-  onCreate: (data: Banners) => void
+  onCreate: (data: BannersWithImages) => void
 }
 
 export function CreateBanner({ onCreate }: CreateBannerProps) {
   const [desktopFile, setDesktopFile] = useState<File | null>(null)
   const [mobileFile, setMobileFile] = useState<File | null>(null)
+  const [isLoad, setIsLoad] = useState<boolean>(false)
 
   const handleDesktopFile = useCallback((file: File) => {
     setDesktopFile(file)
@@ -58,7 +51,54 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
   const triggerSubmit = async () => {
     if (!formRef.current) return
 
+    setIsLoad(true)
+
     const formData = new FormData(formRef.current)
+
+    const position = formData.get("position")
+    const title = formData.get("title")
+
+    if (!title || title === "") {
+      return toast.info(`Atenção`, {
+        description: "Informe o titulo do banner",
+        action: {
+          label: "fechar",
+          onClick: () => console.log,
+        },
+      })
+    }
+
+    if (!position || position === "") {
+      return toast.info(`Atenção`, {
+        description: "Selecione a posição do banner",
+        action: {
+          label: "fechar",
+          onClick: () => console.log,
+        },
+      })
+    }
+
+    if (!desktopFile)
+      return toast.info(`Atenção`, {
+        description: "Selecione o arquivo de imagem",
+        action: {
+          label: "fechar",
+          onClick: () => console.log,
+        },
+      })
+
+    if (position) {
+      if (position !== "medium" && !mobileFile) {
+        if (!desktopFile)
+          return toast.info(`Atenção`, {
+            description: "Selecione a versão desktop da imagem",
+            action: {
+              label: "fechar",
+              onClick: () => console.log,
+            },
+          })
+      }
+    }
 
     try {
       const options: RequestInit = {
@@ -72,12 +112,14 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
         return toast.error(`Erro ao cadastrar banner`)
       }
 
-      const res: Banners = await req.json()
+      const res: BannersWithImages = await req.json()
 
-      return toast.success(`Banner Cadastrado ${JSON.stringify(res)}`)
       onCreate(res)
+      setIsLoad(false)
+      return toast.success(`Banner ${res.title} cadastrado com sucesso!`)
     } catch (error) {
       console.log(`erro ao cadastrar banner`, error)
+      setIsLoad(false)
       return toast.error(`Erro ao cadastrar banner`)
     }
   }
@@ -133,6 +175,7 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
                 <SelectContent>
                   <SelectGroup>
                     <SelectItem value="full">Full Banner</SelectItem>
+                    <SelectItem value="medium">Icones</SelectItem>
                     <SelectItem value="mini">Mini Banner</SelectItem>
                   </SelectGroup>
                 </SelectContent>
@@ -158,6 +201,7 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
                   onDragFile={handleMobileFile}
                   showMessage={false}
                   size="small"
+                  id="mobile"
                 />
               </div>
             </div>
@@ -171,7 +215,7 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
           </DialogClose>
 
           <Button type="submit" className="ml-2" onClick={triggerSubmit}>
-            Cadastrar
+            {isLoad ? <Spinner size="md" /> : "Cadastrar"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -180,6 +180,8 @@ model BannersImage {
   updatedAt  DateTime          @updatedAt
   src        String
   name       String
+  mobile     String?
+  mobile_key String?
   alt        String
   width      Int
   heigth     Int

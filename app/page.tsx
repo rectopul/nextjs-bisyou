@@ -1,183 +1,182 @@
-import { About } from "@/components/About";
-import { BlogArticlesCarousel } from "@/components/BlogArticlesCarousel";
-import Footer from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { MiniBanner } from "@/components/MiniBanner";
-import { FeaturedProductWithMedia } from "@/components/ProductWithMedia";
-import { Collection } from "@/components/collection/Collection";
-import { FullBanners } from "@/components/home/FullBanners";
-import { Selos } from "@/components/home/Selos";
-import { Avaliation } from "@/components/product/Avaliation";
-import { FeaturedModel2 } from "@/components/product/FeaturedModel2";
-import { QuickView } from "@/components/quickview";
-import { ListRullerOptions } from "@/components/rullerOptions/List";
-import { SectionPartners } from "@/components/sections/Partners";
-import { ShopCollections } from "@/components/shopCollections/List";
-import prisma from "@/lib/client";
-import CartProvider from "@/providers/Cart";
-import QuicViewProvider from "@/providers/QuickView";
+import { About } from "@/components/About"
+import { BlogArticlesCarousel } from "@/components/BlogArticlesCarousel"
+import Footer from "@/components/Footer"
+import { Header } from "@/components/Header"
+import { MiniBanner } from "@/components/MiniBanner"
+import { FeaturedProductWithMedia } from "@/components/ProductWithMedia"
+import { Collection } from "@/components/collection/Collection"
+import { FullBanners } from "@/components/home/FullBanners"
+import { Selos } from "@/components/home/Selos"
+import { Avaliation } from "@/components/product/Avaliation"
+import { FeaturedModel2 } from "@/components/product/FeaturedModel2"
+import { QuickView } from "@/components/quickview"
+import { ListRullerOptions } from "@/components/rullerOptions/List"
+import { ShopCollections } from "@/components/shopCollections/List"
+import prisma from "@/lib/client"
+import CartProvider from "@/providers/Cart"
+import QuicViewProvider from "@/providers/QuickView"
 import {
-    getBlogArticles,
-    getCollection,
-    getCollections,
-    getProductWithMediaShopify,
-} from "@/shopify";
-import { Suspense } from "react";
+  getBlogArticles,
+  getCollection,
+  getCollections,
+  getProductWithMediaShopify,
+} from "@/shopify"
+import { Prisma } from "@prisma/client"
+import { Suspense } from "react"
+
+export type BannersWithImages = Prisma.BannersGetPayload<{
+  include: { image: { include: { thumbnail: true } } }
+}>
 
 const fetchData = async () => {
-    try {
-        const collectionHome = await prisma.colletions.findFirst({
-            where: { position: "homepage" },
-            orderBy: { updatedAt: "desc" },
-        });
+  try {
+    const collectionHome = await prisma.colletions.findFirst({
+      where: { position: "homepage" },
+      orderBy: { updatedAt: "desc" },
+    })
 
-        if (!collectionHome) return;
+    if (!collectionHome) return
 
-        const fullBanners = await prisma.banners.findMany({
-            include: { image: { include: { thumbnail: true } } },
-        });
+    const banners = await prisma.banners.findMany({
+      include: { image: { include: { thumbnail: true } } },
+    })
 
-        const rullerOptions = await prisma.rullerOptions.findMany();
+    const fullBanners = banners.filter((b) => b.position !== "mini")
 
-        const collections = await getCollections(5);
+    const rullerOptions = await prisma.rullerOptions.findMany()
 
-        const collectionMoreSell = await getCollection(
-            collectionHome.slug,
-            collectionHome.products_quantity
-        );
+    const collections = await getCollections(5)
 
-        const miniBanner = await prisma.miniBanners.findFirst({
-            include: { image: true },
-        });
+    const collectionMoreSell = await getCollection(
+      collectionHome.slug,
+      collectionHome.products_quantity,
+    )
 
-        const settings = await prisma.settings.findFirst({
-            orderBy: { id: "desc" },
-        });
+    const miniBanner: BannersWithImages = banners.filter(
+      (b) => b.position === "mini",
+    )[0]
 
-        const partners = await prisma.partners.findMany({
-            orderBy: { id: "desc" },
-        });
+    console.log(`minibanner get`, fullBanners)
 
-        const blogArticles = await getBlogArticles();
+    const settings = await prisma.settings.findFirst({
+      orderBy: { id: "desc" },
+    })
 
-        if (!settings || settings.product_video === null) return;
+    const partners = await prisma.partners.findMany({
+      orderBy: { id: "desc" },
+    })
 
-        const productWithMedia = await getProductWithMediaShopify(
-            settings.product_video
-        );
+    const blogArticles = await getBlogArticles()
 
-        const featuredKit = await getProductWithMediaShopify(
-            settings.product_video
-        );
+    if (!settings || settings.product_video === null) return
 
-        return {
-            fullBanners,
-            rullerOptions,
-            collections,
-            collectionMoreSell,
-            productWithMedia,
-            featuredKit,
-            miniBanner,
-            settings,
-            blogArticles,
-            partners,
-        };
-    } catch (error) {
-        throw error;
+    const productWithMedia = await getProductWithMediaShopify(
+      settings.product_video,
+    )
+
+    const featuredKit = await getProductWithMediaShopify(settings.product_video)
+
+    return {
+      fullBanners,
+      rullerOptions,
+      collections,
+      collectionMoreSell,
+      productWithMedia,
+      featuredKit,
+      miniBanner,
+      settings,
+      blogArticles,
+      partners,
     }
-};
+  } catch (error) {
+    throw error
+  }
+}
 
 export default async function Home() {
-    const shopParameters = await fetchData();
+  const shopParameters = await fetchData()
 
-    if (!shopParameters)
-        return (
-            <>
-                <div className="w-full text-center py-10 font-bold text-3xl">
-                    Complete a configuração da loja
-                </div>
-            </>
-        );
-
-    const {
-        fullBanners,
-        rullerOptions,
-        collections,
-        collectionMoreSell,
-        productWithMedia,
-        featuredKit,
-        miniBanner,
-        settings,
-        blogArticles,
-        partners,
-    } = shopParameters;
-
-    if (!collectionMoreSell) {
-        return <h1>Erro de servidor</h1>;
-    }
-
-    function Loading() {
-        return (
-            <>
-                <div>Loading...</div>
-            </>
-        );
-    }
-
+  if (!shopParameters)
     return (
-        <CartProvider>
-            <Header />
-            <QuicViewProvider>
-                <main className="flex min-h-screen w-full flex-col items-center">
-                    {fullBanners && <FullBanners banners={fullBanners} />}
-                    <ListRullerOptions ruller_options={rullerOptions} />
-                    {fullBanners && <Selos banners={fullBanners} />}
-                    {collections && (
-                        <ShopCollections collections={collections} />
-                    )}
+      <>
+        <div className="w-full text-center py-10 font-bold text-3xl">
+          Complete a configuração da loja
+        </div>
+      </>
+    )
 
-                    <Suspense fallback={<Loading />}>
-                        {collectionMoreSell &&
-                            collectionMoreSell.data.collection && (
-                                <Collection
-                                    collection={
-                                        collectionMoreSell.data.collection
-                                    }
-                                    transparent={true}
-                                    center={true}
-                                />
-                            )}
-                        <QuickView />
-                    </Suspense>
-                    {productWithMedia && (
-                        <FeaturedProductWithMedia product={productWithMedia} />
-                    )}
+  const {
+    fullBanners,
+    rullerOptions,
+    collections,
+    collectionMoreSell,
+    productWithMedia,
+    featuredKit,
+    miniBanner,
+    settings,
+    blogArticles,
+    partners,
+  } = shopParameters
 
-                    {featuredKit && (
-                        <FeaturedModel2
-                            product={featuredKit}
-                            title="Seu skin care reinventado"
-                        />
-                    )}
+  if (!collectionMoreSell) {
+    return <h1>Erro de servidor</h1>
+  }
 
-                    {miniBanner && <MiniBanner miniBanner={miniBanner} />}
+  function Loading() {
+    return (
+      <>
+        <div>Loading...</div>
+      </>
+    )
+  }
 
-                    <Avaliation hasInsert={false} />
+  return (
+    <CartProvider>
+      <Header />
+      <QuicViewProvider>
+        <main className="flex min-h-screen w-full flex-col items-center">
+          {fullBanners && <FullBanners banners={fullBanners} />}
+          <ListRullerOptions ruller_options={rullerOptions} />
+          {fullBanners && <Selos banners={fullBanners} />}
+          {collections && <ShopCollections collections={collections} />}
 
-                    {settings && <About settings={settings} />}
-                    {blogArticles && (
-                        <BlogArticlesCarousel blogObject={blogArticles} />
-                    )}
+          <Suspense fallback={<Loading />}>
+            {collectionMoreSell && collectionMoreSell.data.collection && (
+              <Collection
+                collection={collectionMoreSell.data.collection}
+                transparent={true}
+                center={true}
+              />
+            )}
+            <QuickView />
+          </Suspense>
+          {productWithMedia && (
+            <FeaturedProductWithMedia product={productWithMedia} />
+          )}
 
-                    {/* {settings && partners && (
+          {featuredKit && (
+            <FeaturedModel2
+              product={featuredKit}
+              title="Seu skin care reinventado"
+            />
+          )}
+
+          {miniBanner && <MiniBanner miniBanner={miniBanner} />}
+
+          <Avaliation hasInsert={false} />
+
+          {settings && <About settings={settings} />}
+          {blogArticles && <BlogArticlesCarousel blogObject={blogArticles} />}
+
+          {/* {settings && partners && (
                         <SectionPartners
                             partners={partners}
                             settings={settings}
                         />
                     )} */}
-                </main>
-            </QuicViewProvider>
-            <Footer />
-        </CartProvider>
-    );
+        </main>
+      </QuicViewProvider>
+      <Footer />
+    </CartProvider>
+  )
 }
