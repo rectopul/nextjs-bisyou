@@ -25,6 +25,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 interface BannerFormPayload extends Prisma.BannersCreateInput {
     file: File;
+    mobileFile: File;
 }
 
 export function BannerForm() {
@@ -124,9 +125,16 @@ export function BannerForm() {
                             />
                         </div>
 
-                        <div>
+                        <div className="grid grid-cols-2 gap-4">
                             <DropZone
                                 onDragFile={(file) => setValue("file", file)}
+                                showMessage={false}
+                            />
+
+                            <DropZone
+                                onDragFile={(mobileFile) =>
+                                    setValue("mobileFile", mobileFile)
+                                }
                                 showMessage={false}
                             />
                         </div>

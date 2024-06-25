@@ -1,11 +1,9 @@
+import { SrcProps } from "@/util/generateThumbnail";
+
 export namespace Sharp {
     export interface OutputInfo {
         name: string;
-        src: {
-            md: string;
-            lg: string;
-            sm: string;
-        };
+        src: SrcProps;
         format: string;
         size: number;
         width: number;

@@ -21,6 +21,16 @@ export async function POST(req: NextRequest) {
             const status = "active";
             const position = String(formData.get("position"));
 
+            if (!position) {
+                return Response.json(
+                    {
+                        name: "missing argument",
+                        message: "por favor informe a posição do banner",
+                    },
+                    { status: 400 }
+                );
+            }
+
             const banner = await prisma.banners.create({
                 data: {
                     title,
@@ -65,8 +75,13 @@ export async function POST(req: NextRequest) {
                             banners_id: banner_image.id,
                             name,
                             alt: image_slug,
-                            src: thumbnail.src.md,
-                            ...thumbnail.src,
+                            src: thumbnail.src.md.name,
+                            lg: thumbnail.src.lg.name,
+                            md: thumbnail.src.md.name,
+                            sm: thumbnail.src.sm.name,
+                            lg_key: thumbnail.src.lg.key,
+                            md_key: thumbnail.src.md.key,
+                            sm_key: thumbnail.src.sm.key,
                         },
                     });
                 }

@@ -95,6 +95,7 @@ export function BannersTable({ banners }: BannersTableProps) {
                                                     }
                                                     className="h-full w-auto max-w-[initial] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                                                     alt={b.image.alt}
+                                                    unoptimized
                                                 />
                                             )}
                                         </figure>

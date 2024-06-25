@@ -1,8 +1,18 @@
 import sharp from "sharp";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
 import path from "path";
-import { Sharp } from "@/@types/Sharp";
+
+export interface SrcProps {
+    md: ThumbnailFile;
+    sm: ThumbnailFile;
+    lg: ThumbnailFile;
+}
+
+export interface ThumbnailFile {
+    name: string;
+    key: string;
+}
 
 // Função para gerar a thumbnail
 const createThumbnail = async (
@@ -10,7 +20,10 @@ const createThumbnail = async (
     filename: string,
     s3Client: S3Client,
     bucket: string
-): Promise<{ name: string; src: { md: string; sm: string; lg: string } }> => {
+): Promise<{
+    name: string;
+    src: SrcProps;
+}> => {
     try {
         const { name } = path.parse(filename);
 
@@ -68,10 +81,19 @@ const createThumbnail = async (
             },
         }).done();
 
-        const src = {
-            md: md.Location || "",
-            sm: sm.Location || "",
-            lg: lg.Location || "",
+        const src: SrcProps = {
+            md: {
+                name: md.Location || "",
+                key: mdKey,
+            },
+            sm: {
+                name: sm.Location || "",
+                key: smKey,
+            },
+            lg: {
+                name: lg.Location || "",
+                key: lgKey,
+            },
         };
 
         return { name, src };

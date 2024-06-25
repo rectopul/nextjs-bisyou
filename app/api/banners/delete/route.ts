@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import { fileCreator } from "@/util/fileCreator";
 import { validImageMimeTypes } from "@/util/imageMimeTypes";
+import { fileDelete } from "@/util/fileDelete";
 
 export const dynamic = "force-dynamic";
 export async function DELETE(req: NextRequest) {
@@ -25,27 +26,13 @@ export async function DELETE(req: NextRequest) {
         }
 
         if (banner.image) {
-            const pathDir = path.join(process.cwd(), "public", "file");
+            if (banner.image.key !== "AWS_BUCKET") {
+                await fileDelete(banner.image.key);
 
-            if (fs.existsSync(`${pathDir}/${banner.image.src}`)) {
-                console.log(`has file`);
-                fs.unlinkSync(`${pathDir}/${banner.image.src}`);
-            }
-
-            if (banner.image.thumbnail) {
-                if (fs.existsSync(`${pathDir}/${banner.image.thumbnail.sm}`)) {
-                    console.log(`has file`);
-                    fs.unlinkSync(`${pathDir}/${banner.image.thumbnail.sm}`);
-                }
-
-                if (fs.existsSync(`${pathDir}/${banner.image.thumbnail.md}`)) {
-                    console.log(`has file`);
-                    fs.unlinkSync(`${pathDir}/${banner.image.thumbnail.md}`);
-                }
-
-                if (fs.existsSync(`${pathDir}/${banner.image.thumbnail.lg}`)) {
-                    console.log(`has file`);
-                    fs.unlinkSync(`${pathDir}/${banner.image.thumbnail.lg}`);
+                if (banner.image.thumbnail) {
+                    await fileDelete(banner.image.thumbnail.sm_key);
+                    await fileDelete(banner.image.thumbnail.md_key);
+                    await fileDelete(banner.image.thumbnail.lg_key);
                 }
             }
         }
