@@ -137,6 +137,9 @@ model BannersThumbnail {
   md         String
   sm         String
   lg         String
+  md_key     String       @default("MD_AWSBUCKET")
+  sm_key     String       @default("SM_AWSBUCKET")
+  lg_key     String       @default("LG_AWSBUCKET")
   image      BannersImage @relation(fields: [banners_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   banners_id Int          @unique
 
@@ -180,6 +183,7 @@ model BannersImage {
   alt        String
   width      Int
   heigth     Int
+  key        String            @default("AWS_BUCKET")
   banner     Banners           @relation(fields: [banners_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   banners_id Int               @unique
   thumbnail  BannersThumbnail?

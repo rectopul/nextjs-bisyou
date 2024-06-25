@@ -86,7 +86,7 @@ export function BannersTable({ banners }: BannersTableProps) {
                                         <figure className="p-2 w-12 h-12 relative bg-white rounded-sm flex justify-center items-center overflow-hidden border border-slate-900">
                                             {b.image && b.image.thumbnail && (
                                                 <Image
-                                                    src={`/file/${b.image.thumbnail.sm}`}
+                                                    src={b.image.thumbnail.sm}
                                                     width={
                                                         b.image.thumbnail.width
                                                     }

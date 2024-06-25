@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
                 metadata,
                 slug: image_slug,
                 thumbnail,
+                key,
                 src,
                 name,
             } = await fileCreator(file);
@@ -49,6 +50,7 @@ export async function POST(req: NextRequest) {
                         alt: image_slug,
                         src: src,
                         heigth: dimensions.height,
+                        key,
                         width: dimensions.width,
                         name,
                         banners_id: banner.id,

@@ -9,17 +9,14 @@ const pump = promisify(pipeline);
 import path from "path";
 import { createThumbnail } from "./generateThumbnail";
 import { Sharp } from "@/@types/Sharp";
-import {
-    PutObjectCommand,
-    PutObjectCommandInput,
-    S3Client,
-} from "@aws-sdk/client-s3";
+import { PutObjectCommandInput, S3Client } from "@aws-sdk/client-s3";
 
 interface fileCreatorObject {
     name: string;
     slug: string;
     src: string;
     thumbnail?: Sharp.OutputInfo;
+    key: string;
     metadata: {
         width: number;
         heigth: number;
@@ -80,6 +77,7 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
             name: file.name,
             slug: image_slug,
             src: fileS3.Location || "",
+            key: newFilename,
             thumbnail: {
                 name: thumbnail.name,
                 src: thumbnail.src,
