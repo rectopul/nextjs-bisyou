@@ -99,8 +99,6 @@ export default function CartProvider({ children }: CartProviderProps) {
             const updatedCartId =
                 itemAdded.data.checkoutLineItemsAdd.checkout.id;
 
-            console.log(`check id:`, checkoutId);
-            console.log(`added id:`, updatedCartId);
             const cartData = await getCart(updatedCartId);
 
             if (cartData && cartData.node) {

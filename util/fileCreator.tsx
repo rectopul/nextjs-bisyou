@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import sharp from "sharp";
 import fs from "fs";
+import { Upload } from "@aws-sdk/lib-storage";
 import CryptoJS from "crypto-js";
 import { pipeline } from "stream";
 import { promisify } from "util";
@@ -8,6 +9,11 @@ const pump = promisify(pipeline);
 import path from "path";
 import { createThumbnail } from "./generateThumbnail";
 import { Sharp } from "@/@types/Sharp";
+import {
+    PutObjectCommand,
+    PutObjectCommandInput,
+    S3Client,
+} from "@aws-sdk/client-s3";
 
 interface fileCreatorObject {
     name: string;
@@ -22,21 +28,47 @@ interface fileCreatorObject {
 
 export async function fileCreator(file: File): Promise<fileCreatorObject> {
     try {
+        const region = process.env.AWS_DEFAULT_REGION;
+        const secretAccessKey = process.env.AWS_ACESS_KEY;
+        const accessKeyId = process.env.AWS_ACESS_KEY_ID;
+        const bucket = process.env.AWS_BUCKET;
         const pathDir = path.join(process.cwd(), "public", "file");
         const hash = CryptoJS.SHA256(
             file.name + Date.now().toString()
         ).toString(CryptoJS.enc.Hex);
 
+        if (!secretAccessKey || !accessKeyId || !region || !bucket)
+            throw new Error(`Forneça as credenciais`);
+
+        const s3Client = new S3Client({
+            region,
+            credentials: { accessKeyId, secretAccessKey },
+        });
+
         const ext = path.extname(file.name || "");
         const newFilename = `${hash}${ext}`;
         const filePath = `${pathDir}/${newFilename}`;
-        const anyFile = file as any;
-        await pump(anyFile.stream(), fs.createWriteStream(filePath));
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
+        const fileInput: PutObjectCommandInput = {
+            Body: file.stream(),
+            Bucket: bucket,
+            Key: newFilename,
+            ACL: "public-read",
+        };
 
-        const metadata = await sharp(filePath).metadata();
+        const upload = new Upload({
+            client: s3Client,
+            params: fileInput,
+        });
+
+        const fileS3 = await upload.done();
+
+        const metadata = await sharp(fileBuffer).metadata();
         const thumbnail = await createThumbnail(
-            filePath,
-            `${pathDir}/thumbnails/${newFilename}`
+            fileBuffer,
+            newFilename,
+            s3Client,
+            bucket
         );
 
         const image_slug = slugify(file.name, {
@@ -47,8 +79,17 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
         return {
             name: file.name,
             slug: image_slug,
-            src: newFilename,
-            thumbnail,
+            src: fileS3.Location || "",
+            thumbnail: {
+                name: thumbnail.name,
+                src: thumbnail.src,
+                format: "webp",
+                size: metadata.size || 0,
+                width: 600,
+                height: 600,
+                channels: 1,
+                premultiplied: true,
+            },
             metadata: {
                 width: metadata.width as number,
                 heigth: metadata.height as number,

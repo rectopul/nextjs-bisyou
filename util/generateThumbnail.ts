@@ -1,50 +1,80 @@
 import sharp from "sharp";
-import fs from "fs";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import path from "path";
 import { Sharp } from "@/@types/Sharp";
 
 // Função para gerar a thumbnail
 const createThumbnail = async (
-    inputPath: string,
-    outputPath: string
-): Promise<Sharp.OutputInfo> => {
+    fileBuffer: Buffer,
+    filename: string,
+    s3Client: S3Client,
+    bucket: string
+): Promise<{ name: string; src: { md: string; sm: string; lg: string } }> => {
     try {
-        const metaData = await sharp(inputPath)
-            .resize({ width: 400 }) // Define a largura da thumbnail, mantém a proporção
-            .toFile(outputPath);
+        const { name } = path.parse(filename);
 
-        const basePath = path.join(
-            process.cwd(),
-            "public",
-            "file",
-            "thumbnails"
-        );
-
-        // Usar path.parse para dividir o caminho
-        const { name } = path.parse(inputPath);
-
-        await sharp(inputPath)
+        const smBuffer = await sharp(fileBuffer)
             .resize({ width: 600 })
-            .webp({ quality: 90 }) // Define a largura da thumbnail, mantém a proporção
-            .toFile(`${basePath}/sm/${name}.webp`);
-
-        await sharp(inputPath)
-            .resize({ width: 800 }) // Define a largura da thumbnail, mantém a proporção
             .webp({ quality: 90 })
-            .toFile(`${basePath}/md/${name}.webp`);
+            .toBuffer();
 
-        await sharp(inputPath)
-            .resize({ width: 1024 }) // Define a largura da thumbnail, mantém a proporção
+        const smKey = `thumbnails/sm/${name}.webp`;
+
+        const sm = await new Upload({
+            client: s3Client,
+            params: {
+                Bucket: bucket,
+                Key: smKey,
+                Body: smBuffer,
+                ContentType: "image/webp",
+                ACL: "public-read",
+            },
+        }).done();
+
+        // Create and upload the medium thumbnail
+        const mdBuffer = await sharp(fileBuffer)
+            .resize({ width: 800 })
             .webp({ quality: 90 })
-            .toFile(`${basePath}/lg/${name}.webp`);
+            .toBuffer();
+
+        const mdKey = `thumbnails/md/${name}.webp`;
+        const md = await new Upload({
+            client: s3Client,
+            params: {
+                Bucket: bucket,
+                Key: mdKey,
+                Body: mdBuffer,
+                ContentType: "image/webp",
+                ACL: "public-read",
+            },
+        }).done();
+
+        // Create and upload the large thumbnail
+        const lgBuffer = await sharp(fileBuffer)
+            .resize({ width: 1024 })
+            .webp({ quality: 90 })
+            .toBuffer();
+
+        const lgKey = `thumbnails/lg/${name}.webp`;
+        const lg = await new Upload({
+            client: s3Client,
+            params: {
+                Bucket: bucket,
+                Key: lgKey,
+                Body: lgBuffer,
+                ContentType: "image/webp",
+                ACL: "public-read",
+            },
+        }).done();
 
         const src = {
-            md: `thumbnails/md/${name}.webp`,
-            sm: `thumbnails/sm/${name}.webp`,
-            lg: `thumbnails/lg/${name}.webp`,
+            md: md.Location || "",
+            sm: sm.Location || "",
+            lg: lg.Location || "",
         };
 
-        return { ...metaData, name, src };
+        return { name, src };
     } catch (error) {
         console.error("Erro ao criar a thumbnail:", error);
         throw error;
