@@ -5,7 +5,7 @@ import { Prisma, Settings } from "@prisma/client"
 import { toast } from "sonner"
 
 interface SettingsPorps {
-  update: (data: Prisma.SettingsUpdateInput, id: number) => void
+  update: (data: Prisma.SettingsUpdateInput, id: number) => Promise<Settings>
 }
 
 const urlPath = `/api/settings`
@@ -33,6 +33,7 @@ export const settings: SettingsPorps = {
             onClick: console.log,
           },
         })
+        return Promise.reject(new Error(error.message))
       }
 
       const res: Settings = await req.json()
