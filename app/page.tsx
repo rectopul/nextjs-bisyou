@@ -56,8 +56,6 @@ const fetchData = async () => {
       (b) => b.position === "mini",
     )[0]
 
-    console.log(`minibanner get`, fullBanners)
-
     const settings = await prisma.settings.findFirst({
       orderBy: { id: "desc" },
     })
