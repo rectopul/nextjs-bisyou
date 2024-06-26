@@ -22,10 +22,12 @@ import {
 interface BannerItemProps {
   banner: BannersWithImages
   onDelete: (data: Banners) => void
+  onUpdated: (data: BannersWithImages) => void
 }
 
-export function BannerItem({ banner, onDelete }: BannerItemProps) {
+export function BannerItem({ banner, onDelete, onUpdated }: BannerItemProps) {
   const [isLoad, setIsLoad] = useState<boolean>(false)
+  const [updateLoad, setUpdateLoad] = useState<boolean>(false)
 
   const handleDelete = async (id: number) => {
     try {
@@ -54,6 +56,7 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
 
   const handleUpdate = async (data: Prisma.BannersUpdateInput) => {
     try {
+      setUpdateLoad(true)
       const options: RequestInit = {
         method: "PUT",
         body: JSON.stringify(data),
@@ -73,7 +76,9 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
         })
       }
 
-      await req.json()
+      const updated = await req.json()
+
+      onUpdated(updated)
 
       toast.success(`Sucesso`, {
         description: `Banner atualizado com sucesso!`,
@@ -82,6 +87,8 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
           onClick: console.log,
         },
       })
+
+      return setUpdateLoad(false)
     } catch (error: any) {
       toast.error(`Erro ao atualizar banner`, {
         description: error.message,
@@ -90,13 +97,17 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
           onClick: console.log,
         },
       })
+
+      return setUpdateLoad(false)
     }
   }
 
   return (
     <>
       <TableRow key={`p-b-${banner.id}`}>
-        <TableCell className="font-medium">{banner.id}</TableCell>
+        <TableCell className="font-medium">
+          {updateLoad ? <Spinner fill="#82bd69" size="md" /> : banner.id}
+        </TableCell>
         <TableCell>
           <figure className="p-2 w-12 h-12 relative bg-white rounded-sm flex justify-center items-center overflow-hidden border border-slate-900">
             {banner.image && banner.image.thumbnail && (
@@ -114,7 +125,9 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
         <TableCell>
           <DivInput
             initial={banner.title || ""}
-            onBlur={(title) => handleUpdate({ title })}
+            onBlur={(title) =>
+              banner.title !== title && handleUpdate({ title })
+            }
           />
         </TableCell>
         <TableCell>

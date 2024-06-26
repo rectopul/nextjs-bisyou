@@ -22,12 +22,17 @@ export async function PUT(req: NextRequest) {
       )
     }
 
-    const updated = await prisma.banners.update({
+    await prisma.banners.update({
       where: { id },
       data,
     })
 
-    return Response.json(updated)
+    const resp = await prisma.banners.findFirst({
+      where: { id },
+      include: { image: { include: { thumbnail: true } } },
+    })
+
+    return Response.json(resp)
   } catch (error) {
     console.log(error)
     return Response.json(error, { status: 400 })

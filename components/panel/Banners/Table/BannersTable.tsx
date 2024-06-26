@@ -27,6 +27,20 @@ export function BannersTable({ banners }: BannersTableProps) {
     setBann(filter)
   }
 
+  const handleUpdate = (data: BannersWithImages) => {
+    setBann((prevBann) => {
+      const index = prevBann.findIndex((b) => b.id === data.id)
+      if (index !== -1) {
+        // Create a new array with the updated item in the same position
+        const updatedBann = [...prevBann]
+        updatedBann[index] = data
+        return updatedBann
+      }
+      // If the item is not found, return the previous array
+      return prevBann
+    })
+  }
+
   const onInsert = (data: BannersWithImages) => {
     setBann((prev) => [...prev, data])
   }
@@ -55,6 +69,7 @@ export function BannersTable({ banners }: BannersTableProps) {
                 <BannerItem
                   key={`p-b-${b.id}`}
                   onDelete={handleDelete}
+                  onUpdated={handleUpdate}
                   banner={b}
                 />
               ))}
