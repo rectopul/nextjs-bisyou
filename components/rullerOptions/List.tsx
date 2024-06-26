@@ -15,17 +15,19 @@ interface RullerOptionsProps {
 
 export function ListRullerOptions({ ruller_options }: RullerOptionsProps) {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }))
+  const slides = [...ruller_options, ...ruller_options]
 
   return (
     <Carousel
       className="w-full bg-bisyou-fontLight text-white py-6 uppercase font-medium text-sm"
       opts={{
         loop: true,
+        duration: 3000,
       }}
       plugins={[plugin.current]}
     >
       <CarouselContent className="w-full">
-        {ruller_options.map((r) => (
+        {slides.map((r) => (
           <CarouselItem key={`ro-${r.id}`} className="md:basis-1/4">
             <div className="flex justify-center items-center m-auto text-center">
               {r.title}
