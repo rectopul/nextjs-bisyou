@@ -36,7 +36,6 @@ export function ShopCollections({ collections }: ShopCollections) {
     }
   }, [])
 
-
   return (
     <>
       <div className="w-full px-4 my-[40px]">
@@ -56,10 +55,19 @@ export function ShopCollections({ collections }: ShopCollections) {
                         href={`/collecoes/${c.slug}`}
                         className="xl:w-[200px] xl:h-[200px] mx-auto relative flex justify-center items-center rounded-full overflow-hidden bg-slate-300"
                       >
-                        {c.thumbnail && (
+                        {c.thumbnail ? (
                           <Image
                             alt={c.slug}
                             src={c.thumbnail}
+                            width={300}
+                            height={300}
+                            unoptimized
+                            className="h-full"
+                          />
+                        ) : (
+                          <Image
+                            alt={c.slug}
+                            src={`https://placehold.co/400?text=${c.slug}`}
                             width={300}
                             height={300}
                             unoptimized
