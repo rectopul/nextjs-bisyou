@@ -260,8 +260,13 @@ model Colletions {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   slug              String   @unique
+  title             String?
+  collection_id     String?
+  thumbnail         String?
   position          String
   products_quantity Int
+  order             Int      @default(0)
+  active            Boolean  @default(true)
 
   @@map("collections")
 }

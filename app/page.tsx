@@ -31,8 +31,8 @@ export type BannersWithImages = Prisma.BannersGetPayload<{
 const fetchData = async () => {
   try {
     const collectionHome = await prisma.colletions.findFirst({
-      where: { position: "homepage" },
-      orderBy: { updatedAt: "desc" },
+      where: { position: "homepage", active: true },
+      orderBy: { order: "desc" },
     })
 
     if (!collectionHome) return
@@ -45,7 +45,10 @@ const fetchData = async () => {
 
     const rullerOptions = await prisma.rullerOptions.findMany()
 
-    const collections = await getCollections(5)
+    const collections = await prisma.colletions.findMany({
+      where: { position: "homepage", active: true },
+      orderBy: { order: "asc" },
+    })
 
     const collectionMoreSell = await getCollection(
       collectionHome.slug,

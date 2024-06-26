@@ -20,6 +20,7 @@ import { ProductCategoryEdge } from "./@types/shopify/ProductCategory"
 import { FilterChangeProps } from "./components/pageSearch/Filter"
 import { generateFilter } from "./util/generateFilters"
 import { CollectionData } from "./@types/shopify/SimpleCollections"
+import prisma from "./lib/client"
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || ""
 const storeFrontAccessToken =
@@ -548,27 +549,28 @@ export async function getProductWithMediaShopify(
 export async function getCollections(
   qtd?: number,
 ): Promise<CollectionObject | null> {
-  const query = `{
-      collections(first: ${qtd || 10}) {
-        edges {
-          node {
-            title
-            handle
-            id
-            image {
-              altText
-              width
-              height
+  try {
+    const query = `{
+        collections(first: ${qtd || 10}) {
+          edges {
+            node {
+              title
+              handle
               id
-              url
-              thumbnail: url(transform: {maxWidth: 250, maxHeight: 250, crop: CENTER})
+              image {
+                altText
+                width
+                height
+                id
+                url
+                thumbnail: url(transform: {maxWidth: 250, maxHeight: 250, crop: CENTER})
+              }
             }
           }
         }
       }
-    }`
+      `
 
-  try {
     const response: CollectionObject = await ShopifyData(query)
 
     const collections: CollectionObject | null = response

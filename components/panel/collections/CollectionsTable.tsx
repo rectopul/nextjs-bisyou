@@ -26,7 +26,9 @@ export async function CollectionsTable() {
           <TableHead>Slug</TableHead>
           <TableHead>Nome</TableHead>
           <TableHead>Posição</TableHead>
-          <TableHead className="text-right">Quantidade de produtos</TableHead>
+          <TableHead>Quantidade</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead className="text-right">Ordem</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
