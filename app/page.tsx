@@ -48,6 +48,7 @@ const fetchData = async () => {
     const collections = await prisma.colletions.findMany({
       where: { position: "homepage", active: true },
       orderBy: { order: "asc" },
+      take: 5,
     })
 
     const collectionMoreSell = await getCollection(

@@ -20,8 +20,6 @@ export default async function Banners() {
         </div>
 
         <div className="w-full flex flex-col gap-4">
-          <h3>Lista</h3>
-
           <div>
             <BannersTable banners={banners} />
           </div>

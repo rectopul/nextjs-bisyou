@@ -251,6 +251,11 @@ model Settings {
   logo                   String?
   product_video          String?
   shopping_cards         String?
+  facebook               String?
+  instagram              String?
+  pinterest              String?
+  tiktok                 String?
+  youtube                String?
 
   @@map("settings")
 }

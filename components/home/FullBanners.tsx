@@ -77,7 +77,7 @@ export function FullBanners({ banners }: FullBanners) {
         >
           <CarouselContent className="max-h-[500px]">
             {filtred.map((b) => (
-              <CarouselItem key={`bn-${b.id}`}>
+              <CarouselItem key={`bn-${b.id}`} className="pl-0">
                 {b.image && (
                   <a href={b.url} className="w-full">
                     {isMobile && b.image.mobile ? (

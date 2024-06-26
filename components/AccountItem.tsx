@@ -68,7 +68,7 @@ export function AccountItem({ user }: AccountItemProps) {
   return (
     <>
       <AlertDialog>
-        <AlertDialogTrigger className="flex items-center text-blue-gray-500 gap-1 hover:bg-slate-200 px-3 py-2 rounded-sm font-light text-sm hover:text-blue-gray-900">
+        <AlertDialogTrigger className="flex items-center text-blue-gray-500 gap-1 hover:bg-blue-gray-500/10 px-3 h-10 rounded-lg font-light text-sm hover:text-blue-gray-900">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

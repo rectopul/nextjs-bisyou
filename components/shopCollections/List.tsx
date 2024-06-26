@@ -6,9 +6,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  type CarouselApi,
 } from "@/components/ui/carousel"
-import useWindowSize from "@/util/useWindowSize"
 import { useEffect, useState } from "react"
 
 interface ShopCollections {
@@ -16,7 +14,7 @@ interface ShopCollections {
 }
 
 export function ShopCollections({ collections }: ShopCollections) {
-  const [offset, setOffset] = useState<number>(0)
+  const [offset, _] = useState<number>(0)
   const [isMobile, setIsMobile] = useState<boolean>(false)
 
   useEffect(() => {
@@ -40,14 +38,24 @@ export function ShopCollections({ collections }: ShopCollections) {
     <>
       <div className="w-full px-4 my-[40px]">
         <div className="w-full max-w-bisyouContainerHome flex justify-between mx-auto *:w-full">
-          <Carousel opts={{ loop: true, align: "start" }}>
-            <CarouselContent className="w-full">
+          <Carousel
+            opts={{
+              loop: true,
+              align: "start",
+              breakpoints: {
+                766: {
+                  align: "center",
+                },
+              },
+            }}
+          >
+            <CarouselContent className="w-full max-md:mx-0">
               {collections &&
                 collections.map((c, k) => (
                   <CarouselItem
                     data-mobile={isMobile}
                     data-off={offset === k}
-                    className="basis-1/2 xl:basis-1/5 data-[mobile=false]:px-4 data-[off=true]:fade-out-20 transition-opacity duration-500"
+                    className="basis-1/2 xl:basis-1/5 px-4 data-[off=true]:fade-out-20 transition-opacity duration-500"
                     key={`cll-${c.id}`}
                   >
                     <div className="max-md:w-full flex flex-col gap-3">
