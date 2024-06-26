@@ -22,7 +22,7 @@ export function MiniBanner({ miniBanner }: MiniBannerProps) {
       window.innerWidth <= 768 && setIsMobile(true)
       window.innerWidth > 768 && window.innerWidth <= 1024 && setIsTab(true)
     }
-  }, [window])
+  }, [])
 
   if (!miniBanner.image) return null
   const mobileBanner = miniBanner.image.mobile

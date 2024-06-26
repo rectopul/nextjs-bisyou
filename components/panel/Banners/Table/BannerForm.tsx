@@ -59,6 +59,7 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
     const title = formData.get("title")
 
     if (!title || title === "") {
+      setIsLoad(false)
       return toast.info(`Atenção`, {
         description: "Informe o titulo do banner",
         action: {
@@ -69,6 +70,7 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
     }
 
     if (!position || position === "") {
+      setIsLoad(false)
       return toast.info(`Atenção`, {
         description: "Selecione a posição do banner",
         action: {
@@ -78,7 +80,8 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
       })
     }
 
-    if (!desktopFile)
+    if (!desktopFile) {
+      setIsLoad(false)
       return toast.info(`Atenção`, {
         description: "Selecione o arquivo de imagem",
         action: {
@@ -86,10 +89,12 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
           onClick: () => console.log,
         },
       })
+    }
 
     if (position) {
       if (position !== "medium" && !mobileFile) {
-        if (!desktopFile)
+        if (!desktopFile) {
+          setIsLoad(false)
           return toast.info(`Atenção`, {
             description: "Selecione a versão desktop da imagem",
             action: {
@@ -97,6 +102,18 @@ export function CreateBanner({ onCreate }: CreateBannerProps) {
               onClick: () => console.log,
             },
           })
+        }
+
+        if (!mobileFile) {
+          setIsLoad(false)
+          return toast.info(`Atenção`, {
+            description: "Selecione a versão mobile da imagem",
+            action: {
+              label: "fechar",
+              onClick: () => console.log,
+            },
+          })
+        }
       }
     }
 

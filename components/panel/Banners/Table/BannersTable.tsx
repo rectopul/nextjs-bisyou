@@ -46,6 +46,7 @@ export function BannersTable({ banners }: BannersTableProps) {
                 <TableHead>Nome</TableHead>
                 <TableHead>Posição</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Mobile</TableHead>
                 <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>

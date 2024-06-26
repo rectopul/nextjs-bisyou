@@ -1,14 +1,23 @@
 "use client"
 
+import { ApiErrorHandler } from "@/@types/ApiError"
 import { BannersWithImages } from "@/app/page"
 import { Spinner } from "@/components/Spinner"
 import { Button } from "@/components/ui/button"
+import { DivInput } from "@/components/ui/divInput"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { Banners } from "@prisma/client"
+import { Banners, Prisma } from "@prisma/client"
 import { Trash2 } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 import { toast } from "sonner"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface BannerItemProps {
   banner: BannersWithImages
@@ -43,6 +52,47 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
     }
   }
 
+  const handleUpdate = async (data: Prisma.BannersUpdateInput) => {
+    try {
+      const options: RequestInit = {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }
+
+      const req = await fetch(`/api/banners/update?id=${banner.id}`, options)
+
+      if (!req.ok) {
+        const error: ApiErrorHandler = await req.json()
+
+        toast.error(`Erro ao atualizar banner`, {
+          description: error.message,
+          action: {
+            label: `Fechar`,
+            onClick: console.log,
+          },
+        })
+      }
+
+      await req.json()
+
+      toast.success(`Sucesso`, {
+        description: `Banner atualizado com sucesso!`,
+        action: {
+          label: `Fechar`,
+          onClick: console.log,
+        },
+      })
+    } catch (error: any) {
+      toast.error(`Erro ao atualizar banner`, {
+        description: error.message,
+        action: {
+          label: `Fechar`,
+          onClick: console.log,
+        },
+      })
+    }
+  }
+
   return (
     <>
       <TableRow key={`p-b-${banner.id}`}>
@@ -61,9 +111,46 @@ export function BannerItem({ banner, onDelete }: BannerItemProps) {
             )}
           </figure>
         </TableCell>
-        <TableCell>{banner.title}</TableCell>
-        <TableCell className="text-right">{banner.position}</TableCell>
-        <TableCell className="text-right">{banner.status}</TableCell>
+        <TableCell>
+          <DivInput
+            initial={banner.title || ""}
+            onBlur={(title) => handleUpdate({ title })}
+          />
+        </TableCell>
+        <TableCell>
+          <Select
+            defaultValue={banner.position || ""}
+            name="position"
+            onValueChange={(position) => handleUpdate({ position })}
+          >
+            <SelectTrigger className="w-[180px] h-8">
+              <SelectValue placeholder="Posição" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="full">Full Banner</SelectItem>
+              <SelectItem value="medium">Icones</SelectItem>
+              <SelectItem value="mini">Mini Banner</SelectItem>
+            </SelectContent>
+          </Select>
+        </TableCell>
+        <TableCell>
+          <Select
+            defaultValue={banner.status || ""}
+            name="status"
+            onValueChange={(status) => handleUpdate({ status })}
+          >
+            <SelectTrigger className="w-[180px] h-8">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="active">Ativo</SelectItem>
+              <SelectItem value="deactive">Inativo</SelectItem>
+            </SelectContent>
+          </Select>
+        </TableCell>
+        <TableCell>
+          {banner.image && banner.image.mobile ? `true` : `false`}
+        </TableCell>
         <TableCell className="text-right">
           <div className="w-full flex justify-end gap-4">
             <Button
