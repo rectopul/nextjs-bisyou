@@ -82,7 +82,13 @@ export function StoreForm({ settings }: SettingsFormProps) {
           </div>
 
           <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="email">Produto Destaque </Label>
+            <Label htmlFor="email">
+              Produto Destaque (
+              <small className="text-red-500 ml-1">
+                * necessario video no produto destaque
+              </small>{" "}
+              )
+            </Label>
             <Input
               id="product_video"
               placeholder="Slug do produto com video para destaque na home page"

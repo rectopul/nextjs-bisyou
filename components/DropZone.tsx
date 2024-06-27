@@ -62,20 +62,22 @@ export function DropZone({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6 px-2">
-              <svg
-                className="w-10 h-10 mb-3 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                ></path>
-              </svg>
+              {!imagePreview && size === "large" && (
+                <svg
+                  className="w-10 h-10 mb-3 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  ></path>
+                </svg>
+              )}
               {isDragActive ? (
                 <p
                   data-size={size}
@@ -89,14 +91,26 @@ export function DropZone({
                     data-size={size}
                     className="mb-2 text-sm data-[size=small]:text-center text-gray-500 dark:text-gray-400"
                   >
-                    {filename ? (
-                      <span className="font-semibold">{filename}</span>
+                    {imagePreview && size === "small" ? (
+                      <Image
+                        src={imagePreview}
+                        alt="preview file"
+                        width={150}
+                        height={150}
+                        className="rounded-md w-auto h-auto"
+                      />
                     ) : (
                       <>
-                        <span className="font-semibold">
-                          Clique para selecionar
-                        </span>{" "}
-                        ou arraste aqui
+                        {filename ? (
+                          <span className="font-semibold">{filename}</span>
+                        ) : (
+                          <>
+                            <span className="font-semibold">
+                              Clique para selecionar
+                            </span>{" "}
+                            ou arraste aqui
+                          </>
+                        )}
                       </>
                     )}
                   </p>
@@ -134,7 +148,7 @@ export function DropZone({
             </span>
           ))}
 
-        {imagePreview && (
+        {imagePreview && size == "large" && (
           <div className="mt-4 w-32 h-32">
             <p className="">Preview:</p>
             <div className="w-full overflow-hidden h-full flex justify-center items-center">

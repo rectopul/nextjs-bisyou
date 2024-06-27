@@ -79,7 +79,7 @@ export function FullBanners({ banners }: FullBanners) {
             {filtred.map((b) => (
               <CarouselItem key={`bn-${b.id}`} className="pl-0">
                 {b.image && (
-                  <a href={b.url} className="w-full">
+                  <a href={b.url || ""} className="w-full">
                     {isMobile && b.image.mobile ? (
                       <Image
                         src={b.image.mobile}

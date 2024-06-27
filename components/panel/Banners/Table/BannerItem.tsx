@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { DivInput } from "@/components/ui/divInput"
 import { TableCell, TableRow } from "@/components/ui/table"
 import { Banners, Prisma } from "@prisma/client"
-import { Trash2 } from "lucide-react"
+import { SquarePenIcon, Trash2 } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 import { toast } from "sonner"
@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { BannerFormImage } from "./BannerFormImage"
 
 interface BannerItemProps {
   banner: BannersWithImages
@@ -28,6 +29,7 @@ interface BannerItemProps {
 export function BannerItem({ banner, onDelete, onUpdated }: BannerItemProps) {
   const [isLoad, setIsLoad] = useState<boolean>(false)
   const [updateLoad, setUpdateLoad] = useState<boolean>(false)
+  const [isImageEdit, setIsImageEdit] = useState<boolean>(false)
 
   const handleDelete = async (id: number) => {
     try {
@@ -104,12 +106,26 @@ export function BannerItem({ banner, onDelete, onUpdated }: BannerItemProps) {
 
   return (
     <>
+      {isImageEdit && (
+        <BannerFormImage
+          onClose={() => setIsImageEdit(!isImageEdit)}
+          banner={banner}
+          key={`bi-${banner.id}`}
+          onUpdate={onUpdated}
+        />
+      )}
       <TableRow key={`p-b-${banner.id}`}>
         <TableCell className="font-medium">
           {updateLoad ? <Spinner fill="#82bd69" size="md" /> : banner.id}
         </TableCell>
         <TableCell>
-          <figure className="p-2 w-12 h-12 relative bg-white rounded-sm flex justify-center items-center overflow-hidden border border-slate-900">
+          <figure className="p-2 w-12 group h-12 relative bg-white rounded-sm flex justify-center items-center overflow-hidden border border-slate-900">
+            <button
+              onClick={() => setIsImageEdit(!isImageEdit)}
+              className="absolute group-hover:opacity-100 group-hover:scale-100 rounded-sm scale-50 z-10 top-0 left-0 w-full h-full flex justify-center items-center text-white bg-black/50 transition-all duration-150 opacity-0"
+            >
+              <SquarePenIcon size={15} />
+            </button>
             {banner.image && banner.image.thumbnail && (
               <Image
                 src={banner.image.thumbnail.sm}
