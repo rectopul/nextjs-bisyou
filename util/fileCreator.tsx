@@ -47,7 +47,7 @@ export async function fileCreator(file: File): Promise<fileCreatorObject> {
     const convertFile = Buffer.from(await file.arrayBuffer())
     const sharpFile = await await sharp(convertFile)
       .resize({ width: 800 })
-      .webp({ quality: 90 })
+      .webp({ quality: 100 })
       .toBuffer()
     const fileInput: PutObjectCommandInput = {
       Body: sharpFile,
