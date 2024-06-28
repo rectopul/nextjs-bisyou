@@ -10,7 +10,7 @@ interface ChangeLogoProps {
   onImageChange: (data: Settings) => void
 }
 
-export const ChangeLogo = forwardRef(
+const ChangeLogo = forwardRef(
   ({ settings, onImageChange }: ChangeLogoProps, ref) => {
     const inputLogo = useRef<HTMLInputElement>(null)
 
@@ -96,3 +96,7 @@ export const ChangeLogo = forwardRef(
     )
   },
 )
+
+ChangeLogo.displayName = "ChangeLogo"
+
+export { ChangeLogo }
