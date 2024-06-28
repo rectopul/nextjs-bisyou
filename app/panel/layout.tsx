@@ -1,5 +1,6 @@
 import { AccountItem } from "@/components/AccountItem"
 import { Aside } from "@/components/panel/Sidebar"
+import prisma from "@/lib/client"
 import { UserByToken } from "@/util/auth"
 import { cookies, headers } from "next/headers"
 import { redirect } from "next/navigation"
@@ -33,6 +34,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const settings = await prisma.settings.findFirst()
   const header = await headers()
 
   const keys = await header.get("x-pathname")
@@ -143,7 +145,9 @@ export default async function RootLayout({
             </nav>
 
             <div className="min-h-screen bg-blue-gray-50/50">
-              {userData && <Aside name={userData.name} />}
+              {userData && settings && (
+                <Aside name={userData.name} settings={settings} />
+              )}
               <div className="w-full flex flex-col">{children}</div>
             </div>
           </div>

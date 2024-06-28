@@ -3,9 +3,10 @@
 import { shops } from "@/api/shops.service"
 import { Button } from "@/components/ui/button"
 import { DivInput } from "@/components/ui/divInput"
+import { handleShopChange } from "@/util/shops/update"
 import { Prisma, ShopLocations } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
-import { Trash, Trash2 } from "lucide-react"
+import { Trash2 } from "lucide-react"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -14,17 +15,6 @@ export type ShopsLo = {
   amount: number
   status: "pending" | "processing" | "success" | "failed"
   email: string
-}
-
-const handleChange = async (
-  data: Prisma.ShopLocationsUpdateInput,
-  id: number,
-) => {
-  try {
-    await shops.update(data, id)
-  } catch (error) {
-    console.log(error)
-  }
 }
 
 export const columns: ColumnDef<ShopLocations>[] = [
@@ -41,7 +31,9 @@ export const columns: ColumnDef<ShopLocations>[] = [
       return (
         <DivInput
           initial={data.address_line1}
-          onBlur={(address_line1) => handleChange({ address_line1 }, data.id)}
+          onBlur={(address_line1) =>
+            handleShopChange({ address_line1 }, data.id)
+          }
         />
       )
     },
@@ -49,13 +41,13 @@ export const columns: ColumnDef<ShopLocations>[] = [
   {
     accessorKey: "city",
     header: "Cidade",
-    cell: async ({ row }) => {
+    cell: ({ row }) => {
       const data = row.original
 
       return (
         <DivInput
           initial={data.city}
-          onBlur={(city) => handleChange({ city }, data.id)}
+          onBlur={(city) => handleShopChange({ city }, data.id)}
         />
       )
     },
@@ -63,13 +55,13 @@ export const columns: ColumnDef<ShopLocations>[] = [
   {
     accessorKey: "state",
     header: "Estado",
-    cell: async ({ row }) => {
+    cell: ({ row }) => {
       const data = row.original
 
       return (
         <DivInput
           initial={data.state}
-          onBlur={(state) => handleChange({ state }, data.id)}
+          onBlur={(state) => handleShopChange({ state }, data.id)}
         />
       )
     },
