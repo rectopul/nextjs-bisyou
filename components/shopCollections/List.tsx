@@ -7,32 +7,15 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 interface ShopCollections {
   collections: PrismaCollection[]
+  viewPort: string
 }
 
-export function ShopCollections({ collections }: ShopCollections) {
+export function ShopCollections({ collections, viewPort }: ShopCollections) {
   const [offset, _] = useState<number>(0)
-  const [isMobile, setIsMobile] = useState<boolean>(false)
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768) // ajuste o valor conforme necessário
-    }
-
-    // Verifica o tamanho da tela no momento da montagem
-    handleResize()
-
-    // Adiciona o event listener
-    window.addEventListener("resize", handleResize)
-
-    // Limpa o event listener ao desmontar
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
 
   return (
     <>
@@ -53,7 +36,7 @@ export function ShopCollections({ collections }: ShopCollections) {
               {collections &&
                 collections.map((c, k) => (
                   <CarouselItem
-                    data-mobile={isMobile}
+                    data-mobile={viewPort === "mobile"}
                     data-off={offset === k}
                     className="basis-1/2 xl:basis-1/5 px-4 data-[off=true]:fade-out-20 transition-opacity duration-500"
                     key={`cll-${c.id}`}

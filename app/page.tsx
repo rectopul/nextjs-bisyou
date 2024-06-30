@@ -144,7 +144,9 @@ export default async function Home() {
           )}
           <ListRullerOptions ruller_options={rullerOptions} />
           {fullBanners && <Selos banners={fullBanners} />}
-          {collections && <ShopCollections collections={collections} />}
+          {collections && viewPort && (
+            <ShopCollections collections={collections} viewPort={viewPort} />
+          )}
 
           <Suspense fallback={<Loading />}>
             {collectionMoreSell && collectionMoreSell.data.collection && (
