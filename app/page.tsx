@@ -35,8 +35,6 @@ const fetchData = async () => {
       orderBy: { order: "asc" },
     })
 
-    console.log(`collection home`, collectionHome)
-
     if (!collectionHome) return
 
     const banners = await prisma.banners.findMany({
