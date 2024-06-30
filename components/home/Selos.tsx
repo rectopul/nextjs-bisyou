@@ -1,20 +1,14 @@
 "use client"
 
-import { Banners, BannersImage, BannersThumbnail } from "@prisma/client"
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
-import useWindowSize from "@/util/useWindowSize"
+import { useRef } from "react"
 import Autoplay from "embla-carousel-autoplay"
 import { FullBanner } from "./FullBanners"
-
-interface ImageBanner extends BannersImage {
-  thumbnail: BannersThumbnail | null
-}
 
 interface FullBanners {
   banners: FullBanner[]
@@ -24,8 +18,6 @@ export function Selos({ banners }: FullBanners) {
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }))
 
   const filtred = banners.filter((b) => b.position && b.position === "medium")
-
-  const screenSize = useWindowSize().width
 
   return (
     <>

@@ -13,7 +13,6 @@ import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useWindowSize from "@/util/useWindowSize";
 import { Shopify } from "@/@types/shopify";
-import { generateFilter } from "@/util/generateFilters";
 
 type Parametros = "topo_de_pelle" | "necessidade" | "tipo_de_produto";
 
