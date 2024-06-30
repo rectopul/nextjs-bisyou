@@ -53,7 +53,7 @@ export function MobileMenu({ menu }: MobileMenuProps) {
                   {m.items.length > 0 ? (
                     <AccordionItem
                       value={m.id}
-                      key={`hm-${m.id}`}
+                      key={`hm-lvl1-${m.id}`}
                       className="last:border-none"
                     >
                       <AccordionTrigger className="text-sm text-bisyou-font [&>svg]:hidden [&[data-state=open]>span]:rotate-90">
@@ -80,7 +80,7 @@ export function MobileMenu({ menu }: MobileMenuProps) {
                   ) : (
                     <AccordionItem
                       value={m.id}
-                      key={`hm-${m.id}`}
+                      key={`hm-lvl1-link-${m.id}`}
                       className="last:border-none"
                     >
                       <a
