@@ -18,7 +18,6 @@ import QuicViewProvider from "@/providers/QuickView"
 import {
   getBlogArticles,
   getCollection,
-  getCollections,
   getProductWithMediaShopify,
 } from "@/shopify"
 import { Prisma } from "@prisma/client"

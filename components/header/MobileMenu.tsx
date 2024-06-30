@@ -49,13 +49,13 @@ export function MobileMenu({ menu }: MobileMenuProps) {
             </Button>
             <Accordion type="single" collapsible>
               {menu.data.menu.items.map((m) => (
-                <>
+                <AccordionItem
+                  value={m.id}
+                  key={`hm-lvl1-${m.id}`}
+                  className="last:border-none"
+                >
                   {m.items.length > 0 ? (
-                    <AccordionItem
-                      value={m.id}
-                      key={`hm-lvl1-${m.id}`}
-                      className="last:border-none"
-                    >
+                    <>
                       <AccordionTrigger className="text-sm text-bisyou-font [&>svg]:hidden [&[data-state=open]>span]:rotate-90">
                         <div className="text-sm">{m.title}</div>
                         <span className="bg-white w-5 h-5 transition-all duration-300 text-bisyou-font rounded-full flex items-center justify-center">
@@ -76,22 +76,16 @@ export function MobileMenu({ menu }: MobileMenuProps) {
                           ))}
                         </ul>
                       </AccordionContent>
-                    </AccordionItem>
+                    </>
                   ) : (
-                    <AccordionItem
-                      value={m.id}
-                      key={`hm-lvl1-link-${m.id}`}
-                      className="last:border-none"
+                    <a
+                      href={m.url}
+                      className="text-sm text-bisyou-font text-left w-full py-3 rounded-lg inline-flex"
                     >
-                      <a
-                        href={m.url}
-                        className="text-sm text-bisyou-font text-left w-full py-3 rounded-lg inline-flex"
-                      >
-                        {m.title}
-                      </a>
-                    </AccordionItem>
+                      {m.title}
+                    </a>
                   )}
-                </>
+                </AccordionItem>
               ))}
             </Accordion>
           </div>

@@ -2,6 +2,12 @@
 
 import { Banners, BannersImage, BannersThumbnail } from "@prisma/client"
 import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect"
+import {
   Carousel,
   CarouselContent,
   CarouselItem,
@@ -13,6 +19,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import useWindowSize from "@/util/useWindowSize"
 import Autoplay from "embla-carousel-autoplay"
+import * as rdd from "react-device-detect"
 
 interface ImageBanner extends BannersImage {
   thumbnail: BannersThumbnail | null
@@ -26,22 +33,20 @@ interface FullBanners {
   banners: FullBanner[]
 }
 
+enum ModeProps {
+  desktop,
+  mobile,
+}
+
 export function FullBanners({ banners }: FullBanners) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
-  const [isMobile, setIsMobile] = useState<boolean>(false)
   const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }))
   const handleNext = () => api && api.scrollNext()
   const handlePrev = () => api && api.scrollPrev()
 
   const filtred = banners.filter((b) => b.position && b.position !== "medium")
-  useEffect(() => {
-    const { innerWidth: width, innerHeight: height } = window
-
-    if (width > 766) setIsMobile(false)
-    else setIsMobile(true)
-  }, [])
 
   useEffect(() => {
     if (!api) {
@@ -78,9 +83,9 @@ export function FullBanners({ banners }: FullBanners) {
           <CarouselContent className="max-h-[500px]">
             {filtred.map((b) => (
               <CarouselItem key={`bn-${b.id}`} className="pl-0">
-                {b.image && (
+                {b.image && b.image.mobile && (
                   <a href={b.url || ""} className="w-full">
-                    {isMobile && b.image.mobile ? (
+                    <MobileView>
                       <Image
                         src={b.image.mobile}
                         alt={b.image.alt}
@@ -88,7 +93,9 @@ export function FullBanners({ banners }: FullBanners) {
                         height={400}
                         className="w-full isThumb"
                       />
-                    ) : (
+                    </MobileView>
+
+                    <BrowserView>
                       <Image
                         src={b.image.src}
                         alt={b.image.alt}
@@ -96,7 +103,7 @@ export function FullBanners({ banners }: FullBanners) {
                         height={1000}
                         className="w-full"
                       />
-                    )}
+                    </BrowserView>
                   </a>
                 )}
               </CarouselItem>

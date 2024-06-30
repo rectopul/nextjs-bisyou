@@ -95,7 +95,7 @@ export function BannerFormImage({
   useEffect(() => {
     registerEdit("file", { required: true })
     registerEdit("mobile", { required: false })
-  }, [])
+  }, [registerEdit])
 
   return (
     <div className="w-full h-full bg-black/40 z-30  fixed top-0 left-0 flex justify-center items-center shadow">

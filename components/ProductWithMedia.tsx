@@ -3,7 +3,6 @@ import { moneyFormat } from "@/util/moneyFormat"
 import Image from "next/image"
 import { BuyButton } from "./product/BuyButton"
 import { ProductVideo } from "./product/ProductVideo"
-import { Shopify } from "@/@types/shopify"
 import { ProductWidthMedia } from "@/shopify"
 
 export interface FeaturedProductWithMediaProps {
