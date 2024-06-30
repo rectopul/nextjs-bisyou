@@ -2,6 +2,7 @@ import { AccountItem } from "@/components/AccountItem"
 import { Aside } from "@/components/panel/Sidebar"
 import prisma from "@/lib/client"
 import { UserByToken } from "@/util/auth"
+import { LogOut } from "lucide-react"
 import { cookies, headers } from "next/headers"
 import { redirect } from "next/navigation"
 import React from "react"
@@ -138,6 +139,15 @@ export default async function RootLayout({
                           clipRule="evenodd"
                         ></path>
                       </svg>
+                    </span>
+                  </a>
+                  <a
+                    className="align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30 relative overflow-hidden"
+                    type="button"
+                    href="/panel/logout"
+                  >
+                    <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                      <LogOut size={16} strokeWidth={3} />
                     </span>
                   </a>
                 </div>

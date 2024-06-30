@@ -1,80 +1,21 @@
-export function NavigationMenu() {
-    return (
-        <>
-            <ul className="hidden xl:flex justify-between gap-10 font-normal font-fabriga text-[14px]">
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        HOME
-                    </a>
-                </li>
-                <li className="font-medium">
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font font-semibold"
-                    >
-                        NECESSIDADE
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        TIPO DE PELE
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        KITS
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        SOMOS A BISYOU
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        BLOG
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        RASTREADOR
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        PARCERIAS
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="/busca"
-                        className="hover:underline text-bisyou-font"
-                    >
-                        LOJAS
-                    </a>
-                </li>
-            </ul>
-        </>
-    );
+import { Shopify } from "@/@types/shopify"
+
+interface NavigationMenuProps {
+  menu: Shopify.Menu.MenuList
+}
+
+export async function NavigationMenu({ menu }: NavigationMenuProps) {
+  return (
+    <>
+      <ul className="hidden xl:flex justify-between gap-10 font-normal font-fabriga text-[14px]">
+        {menu.data.menu.items.map((m) => (
+          <li key={m.id}>
+            <a href={m.url} className="hover:underline text-bisyou-font">
+              {m.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </>
+  )
 }

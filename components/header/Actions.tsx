@@ -22,9 +22,9 @@ export function HeaderActions() {
 
   return (
     <>
-      <div className="absolute right-0 top-[50%] -translate-y-[50%] flex">
+      <div className="md:absolute md:right-0 md:top-[50%] md:-translate-y-[50%] flex">
         <Button
-          className="bg-transparent text-bisyou-font hover:text-rose-fog-300 hover:bg-transparent"
+          className="bg-transparent text-bisyou-font hover:text-rose-fog-300 hover:bg-transparent max-md:px-2"
           onClick={handleShow}
         >
           <SearchIcon size={25} />

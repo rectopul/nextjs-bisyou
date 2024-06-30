@@ -21,6 +21,8 @@ import { FilterChangeProps } from "./components/pageSearch/Filter"
 import { generateFilter } from "./util/generateFilters"
 import { CollectionData } from "./@types/shopify/SimpleCollections"
 import prisma from "./lib/client"
+import { GET_MENUS, LIST_MENUS } from "./queries/typescript/listMenusShopify"
+import { MenuListData } from "./@types/shopify/MenuList"
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || ""
 const storeFrontAccessToken =
@@ -80,6 +82,27 @@ export async function productsByTermAdmin(
     return productsByTerm
   } catch (error) {
     throw error
+  }
+}
+
+export async function getMenu(handle: string): Promise<Shopify.Menu.MenuList> {
+  try {
+    const variables = { handle }
+    const menu: Shopify.Menu.MenuList = await ShopifyData(GET_MENUS, variables)
+
+    return menu
+  } catch (error: any) {
+    throw new Error(error)
+  }
+}
+
+export async function listMenus(): Promise<MenuListData> {
+  try {
+    const menuItems: MenuListData = await ShopifyAdminData(LIST_MENUS)
+
+    return menuItems
+  } catch (error: any) {
+    throw new Error(error)
   }
 }
 

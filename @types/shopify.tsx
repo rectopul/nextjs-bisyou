@@ -16,9 +16,9 @@ import {
   AllProductCategory,
   ProductCategoryEdge,
 } from "./shopify/ProductCategory"
-import { CollectionNode } from "./shopify/SimpleCollections"
 import { CartGet } from "./shopify/cart/get"
 import { CheckoutCreateData } from "./shopify/cart/create"
+import { MenuListData } from "./shopify/MenuList"
 
 export namespace Shopify {
   export namespace MetaObjects {
@@ -49,6 +49,18 @@ export namespace Shopify {
           }[]
         }
       }
+    }
+  }
+
+  export namespace Menu {
+    export interface MenuList extends MenuListData {}
+    export interface Item {
+      id: string
+      tags: string[]
+      title: string
+      type: string
+      url: string
+      items: Item[]
     }
   }
 

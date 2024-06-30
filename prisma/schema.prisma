@@ -276,6 +276,27 @@ model Colletions {
   @@map("collections")
 }
 
+enum MenuPosition {
+  header_menu
+  institutional_menu
+  sidebar_menu
+  mobile_menu
+}
+
+model Menus {
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  shopify_id String
+  type       String
+  locate     String
+  title      String
+  slug       String
+  position   MenuPosition @default(header_menu)
+
+  @@map("menus")
+}
+
 model Partners {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
