@@ -434,7 +434,7 @@ export async function getProductShopify(
 
 export async function listCollections(): Promise<Shopify.Collection[] | null> {
   const query = `query ListCollections {
-      collections(first: 10) {
+      collections(first: 20) {
         edges {
           node {
             description
@@ -453,6 +453,8 @@ export async function listCollections(): Promise<Shopify.Collection[] | null> {
 
   try {
     const response: CollectionData = await ShopifyData(query)
+
+    console.log(`coleções`, response.data.collections.edges)
 
     const product = response.data.collections.edges
 
