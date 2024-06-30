@@ -49,21 +49,10 @@ export function FullBanners({ banners, agent }: FullBanners) {
     setCount(api.scrollSnapList().length)
     setCurrent(api.selectedScrollSnap() + 1)
 
-    // api.on("slidesInView", (api, evt) => {
-    //     console.log(
-    //         `current: `,
-    //         api.selectedScrollSnap() + 1,
-    //         "count: ",
-    //         count
-    //     );
-    // });
-
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1)
     })
   }, [api])
-
-  console.log(`user agent:`, agent)
 
   return (
     <>
