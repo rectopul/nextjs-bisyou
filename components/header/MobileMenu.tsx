@@ -65,7 +65,7 @@ export function MobileMenu({ menu }: MobileMenuProps) {
                       <AccordionContent>
                         <ul className="flex flex-col gap-2 w-full">
                           {m.items.map((i) => (
-                            <li className="w-full">
+                            <li className="w-full" key={i.id}>
                               <a
                                 href={i.url}
                                 className="w-full flex p-2 rounded-lg hover:bg-bisyou-icon hover:text-white transition-all duration-300"
