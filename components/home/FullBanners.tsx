@@ -1,7 +1,6 @@
 "use client"
 
 import { Banners, BannersImage, BannersThumbnail } from "@prisma/client"
-import { isMobile } from "react-device-detect"
 import {
   Carousel,
   CarouselContent,
@@ -24,6 +23,7 @@ export interface FullBanner extends Banners {
 
 interface FullBanners {
   banners: FullBanner[]
+  agent: string
 }
 
 enum ModeProps {
@@ -31,7 +31,7 @@ enum ModeProps {
   mobile,
 }
 
-export function FullBanners({ banners }: FullBanners) {
+export function FullBanners({ banners, agent }: FullBanners) {
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
@@ -63,6 +63,8 @@ export function FullBanners({ banners }: FullBanners) {
     })
   }, [api])
 
+  console.log(`user agent:`, agent)
+
   return (
     <>
       <div className="w-full">
@@ -78,21 +80,23 @@ export function FullBanners({ banners }: FullBanners) {
               <CarouselItem key={`bn-${b.id}`} className="pl-0">
                 {b.image && b.image.mobile && (
                   <a href={b.url || ""} className="w-full">
-                    {isMobile ? (
+                    {agent && agent === "mobile" ? (
                       <Image
                         src={b.image.mobile}
                         alt={b.image.alt}
                         width={400}
                         height={400}
                         className="w-full isThumb"
+                        layout="responsive"
                       />
                     ) : (
                       <Image
                         src={b.image.src}
                         alt={b.image.alt}
                         width={2000}
-                        height={1000}
+                        height={2000}
                         className="w-full"
+                        layout="responsive"
                       />
                     )}
                   </a>

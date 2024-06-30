@@ -21,6 +21,7 @@ import {
   getProductWithMediaShopify,
 } from "@/shopify"
 import { Prisma } from "@prisma/client"
+import { headers } from "next/headers"
 import { Suspense } from "react"
 
 export type BannersWithImages = Prisma.BannersGetPayload<{
@@ -96,6 +97,9 @@ const fetchData = async () => {
 
 export default async function Home() {
   const shopParameters = await fetchData()
+  const header = await headers()
+
+  const viewPort = await header.get("viewport")
 
   if (!shopParameters)
     return (
@@ -122,7 +126,6 @@ export default async function Home() {
   if (!collectionMoreSell) {
     return <h1>Erro de servidor</h1>
   }
-
   function Loading() {
     return (
       <>
@@ -136,7 +139,9 @@ export default async function Home() {
       <Header />
       <QuicViewProvider>
         <main className="flex min-h-screen w-full flex-col items-center">
-          {fullBanners && <FullBanners banners={fullBanners} />}
+          {fullBanners && viewPort && (
+            <FullBanners banners={fullBanners} agent={viewPort} />
+          )}
           <ListRullerOptions ruller_options={rullerOptions} />
           {fullBanners && <Selos banners={fullBanners} />}
           {collections && <ShopCollections collections={collections} />}
