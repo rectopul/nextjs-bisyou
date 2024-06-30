@@ -13,12 +13,14 @@
   src: url("/fonts/fabriga/FabrigaLight.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
+  font-display: fallback;
 }
 @font-face {
   font-family: "Fabriga";
   src: url("/fonts/fabriga/Fabriga_Regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
+  font-display: fallback;
 }
 
 @font-face {
@@ -26,6 +28,7 @@
   src: url("/fonts/fabriga/Fabriga_Medium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
+  font-display: fallback;
 }
 
 @font-face {
@@ -33,6 +36,7 @@
   src: url("/fonts/fabriga/Fabriga_Black.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
+  font-display: fallback;
 }
 
 @font-face {
@@ -40,6 +44,7 @@
   src: url("/fonts/fabriga/Fabriga_Bold.otf") format("opentype");
   font-weight: 600;
   font-style: normal;
+  font-display: fallback;
 }
 
 /* Set content font-families */

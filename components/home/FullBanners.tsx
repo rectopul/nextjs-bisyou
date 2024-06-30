@@ -87,7 +87,7 @@ export function FullBanners({ banners, agent }: FullBanners) {
                         width={400}
                         height={400}
                         className="w-full isThumb"
-                        layout="responsive"
+                        priority={true}
                       />
                     ) : (
                       <Image
@@ -96,7 +96,7 @@ export function FullBanners({ banners, agent }: FullBanners) {
                         width={2000}
                         height={2000}
                         className="w-full"
-                        layout="responsive"
+                        priority={true}
                       />
                     )}
                   </a>
