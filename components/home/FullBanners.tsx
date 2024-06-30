@@ -1,12 +1,7 @@
 "use client"
 
 import { Banners, BannersImage, BannersThumbnail } from "@prisma/client"
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect"
+import { isMobile } from "react-device-detect"
 import {
   Carousel,
   CarouselContent,
@@ -17,9 +12,7 @@ import Image from "next/image"
 import { Button } from "../ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
-import useWindowSize from "@/util/useWindowSize"
 import Autoplay from "embla-carousel-autoplay"
-import * as rdd from "react-device-detect"
 
 interface ImageBanner extends BannersImage {
   thumbnail: BannersThumbnail | null
@@ -85,7 +78,7 @@ export function FullBanners({ banners }: FullBanners) {
               <CarouselItem key={`bn-${b.id}`} className="pl-0">
                 {b.image && b.image.mobile && (
                   <a href={b.url || ""} className="w-full">
-                    <MobileView>
+                    {isMobile ? (
                       <Image
                         src={b.image.mobile}
                         alt={b.image.alt}
@@ -93,9 +86,7 @@ export function FullBanners({ banners }: FullBanners) {
                         height={400}
                         className="w-full isThumb"
                       />
-                    </MobileView>
-
-                    <BrowserView>
+                    ) : (
                       <Image
                         src={b.image.src}
                         alt={b.image.alt}
@@ -103,7 +94,7 @@ export function FullBanners({ banners }: FullBanners) {
                         height={1000}
                         className="w-full"
                       />
-                    </BrowserView>
+                    )}
                   </a>
                 )}
               </CarouselItem>
