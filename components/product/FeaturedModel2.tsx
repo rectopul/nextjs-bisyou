@@ -1,5 +1,3 @@
-"use client"
-
 import { moneyFormat } from "@/util/moneyFormat"
 import Image from "next/image"
 import { BuyButton } from "./BuyButton"
@@ -11,6 +9,11 @@ interface FeaturedModel2Props {
 }
 
 export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
+  const lastImage =
+    product.images && product.images.edges.length > 1
+      ? product.images.edges.at(-1)
+      : null
+
   return (
     <>
       <div className="w-full px-4 my-[40px]">
@@ -20,7 +23,7 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
           </div>
 
           <div className="w-full max-md:px-4 xl:max-w-[900px] my-16 xl:mx-auto xl:h-[405px] flex md:grid xl:grid-cols-[400px_auto] max-md:flex-col justify-between gap-16">
-            <figure className="w-full max-w-[405px] relative self-start">
+            <figure className="w-full max-w-[405px] relative self-start group">
               <span className="absolute top-5 left-5 bg-bisyou-yellow text-bisyou-font text-sm font-semibold rounded-full px-3 py-1">
                 {product.variants.edges[0].node.selectedOptions[0].value}
               </span>
@@ -34,6 +37,18 @@ export function FeaturedModel2({ product, title }: FeaturedModel2Props) {
               <span className="absolute bottom-5 left-5 bg-bisyou-yellow text-bisyou-font text-sm font-semibold rounded-full px-3 py-1">
                 frete grátis
               </span>
+
+              <div className="w-full absolute top-0 left-0 transition-opacity duration-700 opacity-0 group-hover:opacity-100">
+                {lastImage && (
+                  <Image
+                    width={300}
+                    height={300}
+                    src={lastImage.node.thumbnail}
+                    className="h-auto !w-full rounded-t-xl"
+                    alt={lastImage.node.altText || product.handle}
+                  />
+                )}
+              </div>
             </figure>
 
             <div className="flex flex-col gap-4 xl:h-full">
