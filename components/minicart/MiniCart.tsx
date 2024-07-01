@@ -10,8 +10,6 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 export function MiniCart() {
   const { cart, state } = useCart()
 
-  console.log(`updated cart: `, cart)
-
   const variants = {
     visible: { x: 0 },
     hidden: { x: 395 },

@@ -207,7 +207,6 @@ export function CollectionItem({
           />
         </TableCell>
       )}
-      <TableCell>{collection.node.handle}</TableCell>
       <TableCell>{collection.node.title}</TableCell>
       <TableCell>
         <Select

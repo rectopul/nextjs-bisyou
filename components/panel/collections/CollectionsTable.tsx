@@ -23,7 +23,6 @@ export async function CollectionsTable() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Thumbnail</TableHead>
-          <TableHead>Slug</TableHead>
           <TableHead>Nome</TableHead>
           <TableHead>Posição</TableHead>
           <TableHead>Quantidade</TableHead>
