@@ -15,7 +15,11 @@ import {
   PRODUCT_FRAGMENT_WHIT_COLLECTION,
   VARIANT_FRAGMENT,
 } from "./queries/typescript/product"
-import { ADD_TO_CART } from "./queries/typescript/addToCart"
+import {
+  ADD_TO_CART,
+  REMOVE_TO_CART,
+  UPDATE_ITEM_CART,
+} from "./queries/typescript/addToCart"
 import { ProductCategoryEdge } from "./@types/shopify/ProductCategory"
 import { FilterChangeProps } from "./components/pageSearch/Filter"
 import { generateFilter } from "./util/generateFilters"
@@ -748,6 +752,52 @@ export async function addToCart(
 
   try {
     const response: Shopify.Cart.Checkout = await ShopifyData(query, {
+      checkoutId,
+      lineItems,
+    })
+
+    return response
+  } catch (error) {
+    console.log(`erro na busca do carrinho`, error)
+    throw error
+  }
+}
+
+export async function removeToCart(
+  checkoutId: string,
+  lineItemIds: string[],
+): Promise<Shopify.Cart.CheckoutRemove | null> {
+  try {
+    const response: Shopify.Cart.CheckoutRemove = await ShopifyData(
+      REMOVE_TO_CART,
+      {
+        checkoutId,
+        lineItemIds,
+      },
+    )
+
+    return response
+  } catch (error) {
+    console.log(`erro na busca do carrinho`, error)
+    throw error
+  }
+}
+
+export interface CheckoutLineItemUpdateInput {
+  id: string
+  quantity: number
+  variantId: string
+}
+
+export async function checkoutUpdateIem(
+  checkoutId: string,
+  lineItems: CheckoutLineItemUpdateInput[],
+): Promise<Shopify.Cart.CheckoutUpdate | null> {
+  try {
+    const query = `
+    ${UPDATE_ITEM_CART}
+    `
+    const response: Shopify.Cart.CheckoutUpdate = await ShopifyData(query, {
       checkoutId,
       lineItems,
     })

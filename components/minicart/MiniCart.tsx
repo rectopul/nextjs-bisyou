@@ -2,16 +2,15 @@
 
 import { useCart } from "@/providers/Cart"
 import { moneyFormat } from "@/util/moneyFormat"
-import { ChevronLeft } from "lucide-react"
-import { Button } from "../ui/button"
 import { CartItem } from "./CartItem"
 import { motion } from "framer-motion"
 import { ButtonClose } from "./ButtonClose"
-import { useEffect } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function MiniCart() {
   const { cart, state } = useCart()
+
+  console.log(`updated cart: `, cart)
 
   const variants = {
     visible: { x: 0 },

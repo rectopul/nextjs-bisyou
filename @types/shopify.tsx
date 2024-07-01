@@ -73,6 +73,24 @@ export namespace Shopify {
     }
     export interface Item extends LineItemNode {}
     export interface Checkout extends CheckoutData {}
+    export interface CheckoutRemove {
+      data: {
+        checkoutLineItemsRemove: {
+          checkout: {
+            id: string
+          }
+        }
+      } | null
+    }
+    export interface CheckoutUpdate {
+      data: {
+        checkoutLineItemsUpdate: {
+          checkout: {
+            id: string
+          }
+        }
+      } | null
+    }
   }
 
   export interface ProductsByTerm extends ProductByTerm {}

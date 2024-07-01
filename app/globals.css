@@ -143,6 +143,37 @@
   }
 }
 
+.dotLoader {
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow:
+    20px 0 #ffffff22,
+    -20px 0 #ffffff;
+  animation: d5 1s infinite linear alternate;
+}
+@keyframes d5 {
+  0% {
+    box-shadow:
+      20px 0 #ffffff,
+      -20px 0 #ffffff22;
+    background: #ffffff;
+  }
+  33% {
+    box-shadow:
+      20px 0 #ffffff,
+      -20px 0 #ffffff22;
+    background: #ffffff22;
+  }
+  66% {
+    box-shadow:
+      20px 0 #ffffff22,
+      -20px 0 #ffffff;
+    background: #ffffff22;
+  }
+}
+
 .descriptionProduct ul li {
   display: flex;
   align-items: center;
