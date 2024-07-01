@@ -174,22 +174,6 @@ export function SearchFilter({
               </div>
             </div>
           ))}
-
-        <ul className="w-full text-sm flex flex-col gap-2 pl-6 font-medium">
-          <li className="text-bisyou-icon text-lg data-[active=true]:font-bold hover:underline">
-            Categorias:
-          </li>
-          {categories.map((c, k) => (
-            <li key={c.category.id}>
-              <a
-                href={`/busca?category=${c.category.name}`}
-                className="text-bisyou-icon data-[active=true]:font-bold hover:underline"
-              >
-                {c.category.name}
-              </a>
-            </li>
-          ))}
-        </ul>
       </motion.div>
     </>
   )

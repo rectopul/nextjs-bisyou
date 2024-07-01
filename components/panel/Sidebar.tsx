@@ -6,7 +6,6 @@ import {
   Images,
   ImageUp,
   Menu,
-  MessagesSquare,
   Settings,
   SquareStack,
   Store,
@@ -21,9 +20,10 @@ import { ChangeLogo } from "./ChangeLogo"
 interface AsideProps {
   name: string
   settings: SettingsInput
+  pathName: string
 }
 
-export function Aside({ name, settings }: AsideProps) {
+export function Aside({ name, settings, pathName }: AsideProps) {
   const [logo, setLogo] = useState<string | null>(settings.logo)
   const changeLogoRef = useRef<{ openFileDialog: () => void }>(null)
 

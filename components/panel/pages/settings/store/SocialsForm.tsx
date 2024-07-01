@@ -95,6 +95,32 @@ export function SocialsForm({ settings }: SettingsFormProps) {
             />
           </div>
 
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">Youtube</Label>
+            <Input
+              id="youtube"
+              placeholder="Link do Youtube"
+              className="outline-none h-9 !py-1 focus:outline-none active:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:!shadow-none"
+              type="url"
+              inputMode="url"
+              defaultValue={settings.youtube || ""}
+              {...register("youtube")}
+            />
+          </div>
+
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="name">Twitter / X</Label>
+            <Input
+              id="twitter"
+              placeholder="Link do Twitter/X"
+              className="outline-none h-9 !py-1 focus:outline-none active:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:!shadow-none"
+              type="url"
+              inputMode="url"
+              defaultValue={settings.twitter || ""}
+              {...register("twitter")}
+            />
+          </div>
+
           <div className="items-center py-6 pt-0 flex justify-between">
             <Button variant="default" type="submit">
               {isLoad ? <Spinner size="sm" /> : "Atualizar"}

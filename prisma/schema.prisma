@@ -256,6 +256,7 @@ model Settings {
   pinterest              String?
   tiktok                 String?
   youtube                String?
+  twitter                String?
 
   @@map("settings")
 }

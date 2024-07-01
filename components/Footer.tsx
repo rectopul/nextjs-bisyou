@@ -3,7 +3,14 @@ import Image from "next/image"
 import logo from "../public/assets/img/logo-small_large.webp"
 import { FormNews } from "./FormNews"
 import { Facebook } from "lucide-react"
-import { FacebookIcon, Instagram, Pinterest, TikTok } from "./icons/Icons"
+import {
+  FacebookIcon,
+  Instagram,
+  Pinterest,
+  TikTok,
+  TwitterIcon,
+  YoutubeIcon,
+} from "./icons/Icons"
 import { CardSelect } from "./CardSelect"
 
 //Footer Site
@@ -107,6 +114,26 @@ export default async function Footer() {
                   aria-label="Pagina do facebook da bisyou"
                 >
                   <TikTok size={30} />
+                </a>
+              )}
+
+              {settings && settings.twitter && (
+                <a
+                  href={settings.twitter}
+                  className="hover:text-bisyou-green"
+                  aria-label="Pagina do twitter da bisyou"
+                >
+                  <TwitterIcon size={30} />
+                </a>
+              )}
+
+              {settings && settings.youtube && (
+                <a
+                  href={settings.youtube}
+                  className="hover:text-bisyou-green"
+                  aria-label="Pagina do youtube da bisyou"
+                >
+                  <YoutubeIcon size={30} />
                 </a>
               )}
             </div>

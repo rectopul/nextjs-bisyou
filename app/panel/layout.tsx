@@ -42,8 +42,6 @@ export default async function RootLayout({
 
   const finalPath = keys?.split("/").at(-1)
 
-  console.log(`final path`, finalPath)
-
   let pageName = ""
 
   switch (finalPath) {
@@ -157,8 +155,12 @@ export default async function RootLayout({
             </nav>
 
             <div className="min-h-screen bg-blue-gray-50/50">
-              {userData && settings && (
-                <Aside name={userData.name} settings={settings} />
+              {userData && keys && settings && (
+                <Aside
+                  name={userData.name}
+                  settings={settings}
+                  pathName={keys}
+                />
               )}
               <div className="w-full flex flex-col">{children}</div>
             </div>
