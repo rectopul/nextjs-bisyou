@@ -39,7 +39,7 @@ export async function Header() {
         <HeaderActions />
       </div>
 
-      <div className="w-full mx-auto bg-bisyou-gray">
+      <div className="max-md:hidden w-full mx-auto bg-bisyou-gray">
         <div className="w-full max-w-bisyouContainer mx-auto py-4">
           {menu && <NavigationMenu menu={shopifyMenu} />}
         </div>

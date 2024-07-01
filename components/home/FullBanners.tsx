@@ -73,10 +73,11 @@ export function FullBanners({ banners, agent }: FullBanners) {
                       <Image
                         src={b.image.mobile}
                         alt={b.image.alt}
-                        width={400}
-                        height={400}
+                        width={500}
+                        height={500}
                         className="w-full isThumb"
                         priority={true}
+                        unoptimized
                       />
                     ) : (
                       <Image
@@ -86,6 +87,7 @@ export function FullBanners({ banners, agent }: FullBanners) {
                         height={2000}
                         className="w-full"
                         priority={true}
+                        unoptimized
                       />
                     )}
                   </a>
