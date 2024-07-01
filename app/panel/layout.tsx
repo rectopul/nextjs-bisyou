@@ -42,6 +42,8 @@ export default async function RootLayout({
 
   const finalPath = keys?.split("/").at(-1)
 
+  console.log(`final path`, finalPath)
+
   let pageName = ""
 
   switch (finalPath) {
@@ -77,7 +79,7 @@ export default async function RootLayout({
       break
   }
 
-  const isOnLoginPage = keys && keys.includes("panel/login")
+  const isOnLoginPage = finalPath === "login"
 
   let userData = null
 

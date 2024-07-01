@@ -15,6 +15,7 @@ export async function middleware(req: NextRequest) {
     const { device } = userAgent(req)
     const viewport = device.type === "mobile" ? "mobile" : "desktop"
 
+    requestHeaders.set("x-pathname", req.url)
     requestHeaders.set("viewport", viewport)
 
     const preflightHeaders = {
