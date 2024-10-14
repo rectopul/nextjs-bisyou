@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from "@/lib/client"
 import { fileCreator } from "@/util/fileCreator"
+import { Prisma } from "@prisma/client"
+import { ApiErrorHandler } from "@/@types/ApiError"
 
 /**
  *
@@ -111,9 +113,17 @@ export async function POST(req: NextRequest) {
       { name: "image not found", message: "por favor envie a imagem" },
       { status: 400 },
     )
-  } catch (error) {
-    console.log(`erro no banner`, error)
-    return Response.json(error, { status: 400 })
+  } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        const response: ApiErrorHandler = {
+          message: `There is a unique constraint violation, a ${e.name}`,
+          name: `constraint violation`,
+        }
+        return NextResponse.json(response, { status: 400 })
+      }
+    }
+    return NextResponse.json(e, { status: 400 })
   } finally {
     await prisma.$disconnect()
   }
